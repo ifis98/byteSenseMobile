@@ -49,15 +49,15 @@ yarn.lock
 package-lock.json
 
 # Metro Bundler (React Native)
-*.log
-*.tflite
-.expo
-.buckconfig
-/buck-out/
-/.mono-repo/
-metro.config.js
-webpack.config.js
-/ios/Pods/
+# *.log
+# *.tflite
+# .expo
+# .buckconfig
+# /buck-out/
+# /.mono-repo/
+# metro.config.js
+# webpack.config.js
+# /ios/Pods/
 
 # Fastlane
 **/fastlane/report.xml
@@ -74,22 +74,22 @@ webpack.config.js
 .metro-health-check*
 
 # Code signing
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Generated.xcconfig
-**/ios/ServiceDefinitions.json
-**/ios/Runner.xcworkspace/
-**/ios/Runner.xcproj/
-**/ios/*.xcodeproj/
-!ios/Runner/Info.plist
+# **/ios/Flutter/App.framework
+# **/ios/Flutter/Flutter.framework
+# **/ios/Flutter/Generated.xcconfig
+# **/ios/ServiceDefinitions.json
+# **/ios/Runner.xcworkspace/
+# **/ios/Runner.xcproj/
+# **/ios/*.xcodeproj/
+# !ios/Runner/Info.plist
 
 # Temporary IDEs
 .vscode/
 .idea/
 
 # Build artifacts
-build/
-dist/
+# build/
+# dist/
 *.log
 
 # Misc
