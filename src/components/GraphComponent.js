@@ -3,16 +3,18 @@ import { View, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
 const GraphComponent = (props) => {
+  const { data, color } = props;
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <LineChart
           data={{
-            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'],
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             datasets: [
               {
-                data: [30, 80, 50, 70, 40, 90, 100], // Your actual data
-                color: (opacity = 1) => props.color || `rgba(39, 255, 233, ${opacity})`, // Line color
+                data: data, // Dynamic data passed via props
+                color: (opacity = 1) => color || `rgba(39, 255, 233, ${opacity})`, // Dynamic color via props
                 strokeWidth: 1, // Line thickness
               },
             ],
@@ -24,7 +26,7 @@ const GraphComponent = (props) => {
             backgroundColor: "#232323", // Set to transparent
             backgroundGradientFrom: "#232323", // Set to transparent
             backgroundGradientTo: "#232323", // Set to transparent
-            decimalPlaces: 2, // Keep decimal places or change as necessary
+            decimalPlaces: 2, // Adjust as necessary
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // Line color
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // Axis label color
             style: {
@@ -37,9 +39,6 @@ const GraphComponent = (props) => {
               strokeDasharray: '5', // Dotted X-axis lines
               strokeWidth: 1, // X-axis lines
               stroke: '#333', // Grid line color
-            },
-            propsForHorizontalLabels: {
-              strokeDasharray: '0', // Hide Y-axis grid lines
             },
           }}
           withDots={false} // No dots on the line

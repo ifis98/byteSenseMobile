@@ -2,25 +2,18 @@ import React from 'react';
 import { View, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-const GraphComponentMultiple = (props) => {
+const GraphComponentMultiple = ({ datasets }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <LineChart
           data={{
             labels: ['0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0'], // Time in seconds
-            datasets: [
-              {
-                data: [318, 150, 80, 120, 90, 60, 0], // First dataset (Green line)
-                color: (opacity = 1) => `rgba(0, 190, 42, ${opacity})`, // Line color for the first line
-                strokeWidth: 2, // Line thickness for the first line
-              },
-              {
-                data: [0, 50, 100, 200, 250, 150, 100], // Second dataset (Orange line)
-                color: (opacity = 1) => `rgba(255, 139, 2, ${opacity})`, // Line color for the second line
-                strokeWidth: 2, // Line thickness for the second line
-              },
-            ],
+            datasets: datasets.map((dataset, index) => ({
+              data: dataset.data, // Pass data for each line
+              color: (opacity = 1) => dataset.color || `rgba(0, 190, 42, ${opacity})`, // Dynamic color
+              strokeWidth: 2, // Line thickness for the line
+            })),
           }}
           width={Dimensions.get('window').width - 32} // Adjust width to consider margins
           height={250}

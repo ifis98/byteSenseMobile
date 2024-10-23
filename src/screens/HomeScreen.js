@@ -8,7 +8,7 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import { Svg, Path, G, ClipPath, Rect, Defs } from 'react-native-svg';
+import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
 
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -36,14 +36,26 @@ import CustomGraph from '../components/CustomGraph';
 
 const {width} = Dimensions.get('window');
 
-const downIcon = () =>{
-  return(<Svg xmlns="http://www.w3.org/2000/svg" width="7" height="8" viewBox="0 0 7 8" fill="none">
-    <Path d="M3.26028 6.2073C3.28703 6.24616 3.32284 6.27794 3.3646 6.29989C3.40637 6.32184 3.45284 6.33331 3.50003 6.33331C3.54721 6.33331 3.59369 6.32184 3.63545 6.29989C3.67722 6.27794 3.71302 6.24616 3.73978 6.2073L6.36478 2.41563C6.39516 2.3719 6.41298 2.32068 6.4163 2.26753C6.41961 2.21438 6.4083 2.16134 6.38359 2.11416C6.35887 2.06699 6.32171 2.0275 6.27612 1.99997C6.23054 1.97244 6.17828 1.95792 6.12503 1.95801H0.875027C0.821898 1.95823 0.769834 1.97293 0.724434 2.00052C0.679034 2.02812 0.642016 2.06757 0.61736 2.11463C0.592704 2.16169 0.581344 2.21459 0.584501 2.26762C0.587658 2.32066 0.605213 2.37183 0.635277 2.41563L3.26028 6.2073Z" fill="#F1F1F1"/>
-  </Svg>)
-}
+const downIcon = () => {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="7"
+      height="8"
+      viewBox="0 0 7 8"
+      fill="none">
+      <Path
+        d="M3.26028 6.2073C3.28703 6.24616 3.32284 6.27794 3.3646 6.29989C3.40637 6.32184 3.45284 6.33331 3.50003 6.33331C3.54721 6.33331 3.59369 6.32184 3.63545 6.29989C3.67722 6.27794 3.71302 6.24616 3.73978 6.2073L6.36478 2.41563C6.39516 2.3719 6.41298 2.32068 6.4163 2.26753C6.41961 2.21438 6.4083 2.16134 6.38359 2.11416C6.35887 2.06699 6.32171 2.0275 6.27612 1.99997C6.23054 1.97244 6.17828 1.95792 6.12503 1.95801H0.875027C0.821898 1.95823 0.769834 1.97293 0.724434 2.00052C0.679034 2.02812 0.642016 2.06757 0.61736 2.11463C0.592704 2.16169 0.581344 2.21459 0.584501 2.26762C0.587658 2.32066 0.605213 2.37183 0.635277 2.41563L3.26028 6.2073Z"
+        fill="#F1F1F1"
+      />
+    </Svg>
+  );
+};
 const SplashScreen = () => {
   const navigation = useNavigation();
-
+  const dailyByteScoreData = [30, 80, 50, 70, 40, 90, 100];
+  const bruxismData = [10, 50, 20, 60, 30, 80, 45];
+  
   return (
     <LinearGradient
       colors={['#232323', '#232323', '#232323']}
@@ -148,21 +160,26 @@ const SplashScreen = () => {
           <View style={styles.yourTrendsView}>
             <View style={styles.yourTrendsTextView}>
               <Text style={styles.sectionTitle}>Your Trends</Text>
-              <Text style={styles.sectionTitleCalender}>01 Jul - 07 Jul {downIcon()}</Text>
+              <Text style={styles.sectionTitleCalender}>
+                01 Jul - 07 Jul {downIcon()}
+              </Text>
             </View>
             <LinearGradient
-    colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
-    start={{x: 0, y: 0}}
-    end={{x: 1, y: 0}}
-    style={styles.yourTrendViewMonth}>
+              colors={[
+                'rgba(255, 255, 255, 0.04)',
+                'rgba(255, 255, 255, 0.02)',
+              ]}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              style={styles.yourTrendViewMonth}>
               {/* <View style={styles.trendTabs}> */}
               <View style={styles.weekView}>
-                <Text style={styles.textMonthRed}>Week</Text> 
+                <Text style={styles.textMonthRed}>Week</Text>
               </View>
               <View style={styles.monthView}>
-              <Text style={styles.textMonth}>Month</Text> 
+                <Text style={styles.textMonth}>Month</Text>
               </View>
-              
+
               {/* </View> */}
             </LinearGradient>
           </View>
@@ -170,11 +187,19 @@ const SplashScreen = () => {
           <Text style={styles.sectionTitle}>Daily Byte Score</Text>
 
           {/* <View style={{backgroundColor:'red'}}> */}
-          <GraphComponent />
+          {/* <GraphComponent /> */}
+          <GraphComponent 
+            data={dailyByteScoreData} 
+            color="#27FFE9" 
+          />
+
           <Text style={styles.sectionTitle}>Bruxism</Text>
 
           {/* <View style={{backgroundColor:'red'}}> */}
-          <GraphComponent color="#FF8B02" />
+          <GraphComponent 
+            data={bruxismData} 
+            color="#FF8B02" 
+          />
 
           <Text style={styles.sectionTitle}>Activities</Text>
 
@@ -288,33 +313,31 @@ const styles = StyleSheet.create({
     height: 189,
     // backgroundColor:"red"
   },
-  weekView:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
+  weekView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 4,
-backgroundColor: '#232323',
-marginRight:10,
-height:36,
-// width:'70%',
-
+    backgroundColor: '#232323',
+    marginRight: 10,
+    height: 36,
+    // width:'70%',
   },
-  textMonth:{
-    color:"#FFF"
+  textMonth: {
+    color: '#FFF',
   },
-  textMonthRed:{
-    color:"#FF0405"
+  textMonthRed: {
+    color: '#FF0405',
   },
-  monthView:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
+  monthView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 4,
-// backgroundColor: '#232323',
-height:36,
-color:"#FFF"
-// width:'100%',
-
+    // backgroundColor: '#232323',
+    height: 36,
+    color: '#FFF',
+    // width:'100%',
   },
   activityIconView: {
     flex: 1,
@@ -360,11 +383,11 @@ color:"#FFF"
     width: 16,
     height: 16,
   },
-  yourTrendsTextView:{
-    flexDirection:'row'
-    ,justifyContent:'space-between',
-    alignItems:'center',
-    paddingRight:20,
+  yourTrendsTextView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: 20,
   },
   heartImage: {
     width: 16,
@@ -399,9 +422,9 @@ color:"#FFF"
     alignItems: 'flex-start',
     // width: '40%',
   },
-  calenderFont:{
+  calenderFont: {
     color: '#F1F1F1',
-fontSize: 14,
+    fontSize: 14,
   },
   lineWrapper: {
     width: '100%',
@@ -543,10 +566,9 @@ fontSize: 14,
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 16,
-    marginHorizontal:20,
-    borderRadius:12,
+    marginHorizontal: 20,
+    borderRadius: 12,
     paddingVertical: 6,
-
   },
   activityText: {
     color: '#fff',
