@@ -308,7 +308,6 @@ const DeviceDataScreen = () => {
                   <Text style={styles.statusTextBold}>96</Text>
                 </View>
               </View>
-              
             </View>
           </LinearGradient>
 
