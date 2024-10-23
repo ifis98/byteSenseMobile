@@ -32,15 +32,7 @@ yarn.lock
 package-lock.json
 
 # Metro Bundler (React Native)
-*.log
-*.tflite
-.expo
-.buckconfig
-/buck-out/
-/.mono-repo/
-metro.config.js
-webpack.config.js
-/ios/Pods/
+
 
 # Fastlane
 **/fastlane/report.xml

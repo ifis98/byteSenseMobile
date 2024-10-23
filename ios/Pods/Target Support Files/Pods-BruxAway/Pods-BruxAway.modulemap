@@ -1,0 +1,6 @@
+module Pods_BruxAway {
+  umbrella header "Pods-BruxAway-umbrella.h"
+
+  export *
+  module * { export * }
+}
