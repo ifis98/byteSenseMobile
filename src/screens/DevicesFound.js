@@ -151,7 +151,7 @@ const DevicesFoundScreen = () => {
           setIsScanning(false);
           scaleAnim.setValue(0); // Reset the animation
         });
-      }, 60000); // Stop scan after 30 seconds
+      }, 20000); // Stop scan after 30 seconds
     }
   };
 
