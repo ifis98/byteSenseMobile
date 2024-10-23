@@ -125,8 +125,8 @@ const DeviceDataScreen = () => {
           const characteristic = peripheralInfo.characteristics[0]; // Example: Use the first characteristic
           monitorDevice(
             deviceId,
-            characteristic.service,
-            characteristic.characteristic,
+            SERVICEUUID,
+            characteristicNUUID,
           );
         }
       })
@@ -148,6 +148,11 @@ const DeviceDataScreen = () => {
             const bufferValue = Buffer.from(value);
             const hexValue = bufferValue.toString('hex');
             const asciiValue = bufferValue.toString('ascii');
+            // const payllad = [
+            //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
+            //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
+            // ];
+            // setGraphData(payllad);
 
             console.log('Received hex data:', hexValue);
             console.log('Received ASCII data:', asciiValue);
@@ -607,5 +612,9 @@ const styles = StyleSheet.create({
     // marginLeft:-10
   },
 });
+
+const SERVICEUUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
+const characteristicWUUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
+const characteristicNUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
 
 export default DeviceDataScreen;

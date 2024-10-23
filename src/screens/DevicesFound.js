@@ -81,13 +81,15 @@ const DevicesFoundScreen = () => {
     const discoverListener = bleManagerEmitter.addListener(
       'BleManagerDiscoverPeripheral',
       peripheral => {
-        console.log('Discovered Peripheral:', peripheral);
+
 
         setBluetoothDevices(prevDevices => {
           // Check if the device's name contains "YteG"
-          // if (peripheral.name && peripheral.name.includes('YteG')) {
-          if (true) {
+
+          if (peripheral.name && peripheral.name.includes('yteG')) {
+          //if (true) {
             // Avoid adding the same device multiple times
+            console.log('Discovered Peripheral:', peripheral);
             const deviceExists = prevDevices.some(
               device => device.id === peripheral.id,
             );
@@ -149,7 +151,7 @@ const DevicesFoundScreen = () => {
           setIsScanning(false);
           scaleAnim.setValue(0); // Reset the animation
         });
-      }, 10000); // Stop scan after 30 seconds
+      }, 60000); // Stop scan after 30 seconds
     }
   };
 
