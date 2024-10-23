@@ -78,7 +78,7 @@ export function findPeaks(data, options = {}) {
   
   export function findRealTimeHR(data) {
     let peaks = findPeaks(data);
-    //console.log("peak indices: " +peaks)
+   //console.log("peak indices: " +peaks)
     let HRArray = [];
     let HRVArray = [];
     let realTimeHR = 0;
@@ -91,10 +91,11 @@ export function findPeaks(data, options = {}) {
       HRVArray.push(HRV);
     }
     realTimeHR = averageArray(HRArray);
-    realtimeHRV = getStandardDeviation(HRVArray);
+    realTimeHRV = getStandardDeviation(HRVArray);
+    //console.log(realTimeHR)
     return {
       HR: Math.round(realTimeHR),
-      HRV: Math.round(realtimeHRV),
+      HRV: Math.round(realTimeHRV),
     };
   }
   
