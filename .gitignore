@@ -5,31 +5,14 @@
 # Xcode
 build/
 DerivedData/
-*.hmap
-*.ipa
-*.xcuserstate
-*.xcworkspace
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
-!*.xcodeproj/xcshareddata/*
-xcuserdata/
-*.xccheckout
-*.moved-aside
-.xcdebugger/
-*.xcscmblueprint
-**/.xcode.env.local
+
 
 # Ignore Carthage/Checkouts
 Carthage/Checkouts
 Carthage/Build
 
 # CocoaPods
-Pods/
-*.xcworkspace
-/vendor/
-podspec.lock
-*.podspec
+
 
 # Android
 /.gradle/
