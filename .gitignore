@@ -57,14 +57,6 @@ webpack.config.js
 .metro-health-check*
 
 # Code signing
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Generated.xcconfig
-**/ios/ServiceDefinitions.json
-**/ios/Runner.xcworkspace/
-**/ios/Runner.xcproj/
-**/ios/*.xcodeproj/
-!ios/Runner/Info.plist
 
 # Temporary IDEs
 .vscode/
