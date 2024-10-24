@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
@@ -22,6 +23,7 @@ import helpIcon from '../assets/Question.png'; // Help icon path
 import trashnew from '../assets/trashnew.png'; // Help icon path
 import Header from './header';
 import InputComponent from '../components/InputComponent';
+import { sendRequest } from '../api/api';
 
 const {width} = Dimensions.get('window');
 
@@ -58,6 +60,21 @@ const AddObserver = () => {
 
   const toggleSwitch = () => setIsDarkMode(previousState => !previousState);
 
+  const handleSendRequest = async () => {
+    if (!username.trim()) {
+      Alert.alert('Error', 'Please enter a valid User ID.');
+      return;
+    }
+
+    try {
+      const response = await sendRequest({ doctor: username });
+      console.log("responsehandleSendRequest",response);
+      Alert.alert('Success', 'Request sent successfully.');
+      setUsername(''); // Clear the input after successful request
+    } catch (error) {
+      Alert.alert('Error', `Failed to send request: ${error.message}`);
+    }
+  };
   const renderDeviceItem = (device, index) => (
     <TouchableOpacity
       style={styles.deviceItemContainer}
@@ -102,9 +119,7 @@ const AddObserver = () => {
               />
             </View>
             <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('AddObserver');
-              }}
+              onPress={handleSendRequest}
               style={styles.footerView}>
               <Text style={styles.availableDevicesText}>
                 Send Request {`>`}

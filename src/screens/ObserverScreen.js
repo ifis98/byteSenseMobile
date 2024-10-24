@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,10 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
-
-import {useState} from 'react';
 import profileicon from '../assets/profileicon.png'; // Your logo image path
 import devicesIcon from '../assets/Devices.png'; // Device icon path
 import profileIcon from '../assets/UserCircle.png'; // Profile icon path
@@ -21,6 +20,7 @@ import observersIcon from '../assets/UserCheck.png'; // Observers icon path
 import helpIcon from '../assets/Question.png'; // Help icon path
 import trashnew from '../assets/trashnew.png'; // Help icon path
 import Header from './header';
+import { getObservers, withdrawRequest } from '../api/api';
 
 const {width} = Dimensions.get('window');
 
@@ -39,6 +39,9 @@ const ProfileIcon = () => {
 };
 
 const ObserverScreen = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+
   const navigation = useNavigation(); // Initialize navigation using the hook
 
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -55,6 +58,37 @@ const ObserverScreen = () => {
   ]);
 
   const toggleSwitch = () => setIsDarkMode(previousState => !previousState);
+  const handleWithdrawRequest = async (device) => {
+    // Show a confirmation alert before making the API call
+    Alert.alert(
+      'Confirm Withdrawal',
+      `Are you sure you want to withdraw observer ${device.fName} ${device.lName}?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: async () => {
+            try {
+              // Call the API to withdraw the observer
+              const response = await withdrawRequest({ doctorID: device.id });
+              console.log("response123123",response);
+              // Show success alert
+              Alert.alert('Success', `Observer ${device.fName} ${device.lName} withdrawn successfully.`);
+              fetchObservers();
+              
+              // You can also update the observers list state here, e.g., refetch the list or remove this observer from the list
+            } catch (error) {
+              // Show error alert
+              Alert.alert('Error', `Failed to withdraw observer: ${error.message}`);
+            }
+          },
+        },
+      ],
+    );
+  };
 
   const renderDeviceItem = (device, index) => (
     <TouchableOpacity
@@ -66,16 +100,32 @@ const ObserverScreen = () => {
           <Image source={profileicon} style={styles.deviceIcon} />
         </View>
         <View style={styles.deviceTextContainer}>
-          <Text style={styles.deviceName}>{device.name || 'Unknown'}</Text>
+          <Text style={styles.deviceName}>{device.fName+" "+device.lName || 'Unknown'}</Text>
           <Text style={styles.deviceID} numberOfLines={1} ellipsizeMode="tail">
             {device.email}
           </Text>
         </View>
       </View>
+      <TouchableOpacity onPress={() => handleWithdrawRequest(device)}>
       <Image source={trashnew} style={styles.arrowIcon} />
+    </TouchableOpacity>
     </TouchableOpacity>
   );
 
+  const fetchObservers = async () => {
+    try {
+      const fetchedObservers = await getObservers();
+      // console.log("fetchedObservers123",fetchedObservers)
+      setObservers(fetchedObservers); 
+    } catch (error) {
+      console.error('Error fetching observers:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchObservers();
+  }, []);
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -88,7 +138,11 @@ const ObserverScreen = () => {
               <Text style={styles.availableDevicesText}>Current Observers</Text>
             </View>
           </View>
-          {observers?.map((device, index) => renderDeviceItem(device, index))}
+          {isLoading ? (
+            <Text style={styles.loadingText}>Loading...</Text>
+          ) : (
+            observers.map((observer, index) => renderDeviceItem(observer, index))
+          )}
         </ScrollView>
 
         <TouchableOpacity
