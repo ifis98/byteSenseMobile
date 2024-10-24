@@ -71,11 +71,35 @@ const DeviceDataScreen = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [services, setServices] = useState([]);
   const [characteristics, setCharacteristics] = useState([]);
-
+  const [HR, setHR] = useState(79);
+  const [HRV, setHRV] = useState(72);
+  const [testHR, setTestHR] = useState(0);
+  const [testHRV, setTestHRV] = useState(0);
   const [graphData, setGraphData] = useState([
-    { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
-    { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
+    { data: [], color: 'rgba(0, 190, 42, 1)' },
   ]);
+  const butterbandCoeffs = {
+    b: [0.24777184,  0, -0.74331552,  0,  0.74331552, 0 , -0.24777184], 
+    a: [1, -1.98424849,  0.98953008, -0.23795914,  0.49392954, -0.20417171, -0.05060652]
+  }
+  const butterbandLen = 6
+  const butterbandX = new Array(butterbandLen + 1).fill(0)
+  const butterbandY = new Array(butterbandLen + 1).fill(0)
+  const butterbandGain = 1
+  const respFiltCoeffs = {
+    b: [1.51064223e-05, 0.0, -4.53192670e-05, 0.0, 4.53192670e-05, 0.0, -1.51064223e-05], 
+    a: [1, -5.89388965, 14.48040893, -18.98221654, 14.00311279, -5.51176305, 0.90434753]
+  }
+  const respFiltLen = 6
+  const respFiltX = new Array(respFiltLen + 1).fill(0)
+  const respFiltY = new Array(butterbandLen + 1).fill(0)
+  const respFiltGain = 1
+  const ppgPeakBuffer = []
+  const respPeakBuffer = []
+  let ppgGraphBuffer = []
+  let respGraphBuffer = []
+  let updateCounter = 0
+
   useEffect(() => {
     // Retrieve the selected device info
     const getDeviceInfo = async () => {
@@ -125,8 +149,8 @@ const DeviceDataScreen = () => {
           const characteristic = peripheralInfo.characteristics[0]; // Example: Use the first characteristic
           monitorDevice(
             deviceId,
-            characteristic.service,
-            characteristic.characteristic,
+            SERVICEUUID,
+            characteristicNUUID,
           );
         }
       })
@@ -148,10 +172,15 @@ const DeviceDataScreen = () => {
             const bufferValue = Buffer.from(value);
             const hexValue = bufferValue.toString('hex');
             const asciiValue = bufferValue.toString('ascii');
+            // const payllad = [
+            //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
+            //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
+            // ];
+          
 
-            console.log('Received hex data:', hexValue);
-            console.log('Received ASCII data:', asciiValue);
-            // decipherNotification(value); // Pass the value to the decipherNotification function
+            //console.log('Received hex data:', hexValue);
+            //console.log('Received ASCII data:', asciiValue);
+            decipherNotification(bufferValue); // Pass the value to the decipherNotification function
 
             setRealTimeData(asciiValue);
           },
@@ -166,17 +195,18 @@ const DeviceDataScreen = () => {
 
   // Function to decipher the received notification data
   const decipherNotification = async value => {
-    console.log('Processing notification data...');
+    //console.log('Processing notification data...');
 
     // Convert the base64 value to a hex string
     let hexValue = Buffer.from(value, 'base64').toString('hex');
     let stringValue = Buffer.from(value, 'base64').toString();
+    //console.log('Hex Value length '+hexValue.length)
 
     let identifier;
     let splitIdentifier = [];
 
     // Process larger data packets
-    if (hexValue.length >= 150) {
+    if (hexValue.length >= 100) {
       hexValue = hexValue.slice(4);
       let samples = hexValue.match(/.{1,8}/g); // Split into chunks
       processSamples(samples); // Process these samples (implement processSamples)
@@ -197,6 +227,109 @@ const DeviceDataScreen = () => {
   };
 
   // Placeholder function to process samples
+
+  const pushValue = (array, length, value) => {
+    if (array.length >= length) {
+      array.shift();
+    }
+    array.push(value);
+  }
+
+  const NoiseReducedRunningAvg = (oldValue, newValue) => {
+    let exclusionThresh = 0.4
+    let newWeight = 0.2
+
+    let exclusionDiff = oldValue*exclusionThresh
+    let diff = oldValue - newValue
+    let absDiff = Math.abs(diff)
+
+    if(absDiff>exclusionDiff){
+      return oldValue
+    }
+
+    let weightedOld = (1-newWeight)*oldValue
+    let weightedNew = newWeight*newValue
+
+    return Math.round(weightedNew+weightedOld)
+
+  }
+
+  const advanceHRTime = () => {
+    for (let i = 0; i < butterbandLen; i++) {
+        butterbandX[i] = butterbandX[i + 1];
+        butterbandY[i] = butterbandY[i + 1];
+    }
+  }
+
+  const advanceRespTime = () => {
+    for (let i = 0; i < respFiltLen; i++) {
+        respFiltX[i] = respFiltX[i + 1];
+        respFiltY[i] = respFiltY[i + 1];
+    }
+  }
+
+  const HRNextY = (newX) => {
+    advanceHRTime();
+  
+    // Set the current input
+    butterbandX[butterbandLen] = newX * butterbandGain;
+  
+    // Start calculating the new output
+    butterbandY[butterbandLen] = butterbandCoeffs.b[0] * butterbandX[butterbandLen];
+    //console.log(y[len])
+  
+    if (butterbandLen === 0) {
+        return  butterbandY[butterbandLen];
+    }
+  
+    // Calculate the new output based on previous inputs and outputs
+    for (let i = 1; i < butterbandLen + 1; i++) {
+      butterbandY[butterbandLen] += (butterbandCoeffs.b[i] * butterbandX[butterbandLen - i] - butterbandCoeffs.a[i] *  butterbandY[butterbandLen - i]);
+      //console.log( this.butterbandY[this.butterbandLen])
+    }
+  
+    // Adjust by initial coefficient
+    butterbandY[butterbandLen] =  butterbandY[butterbandLen] / butterbandCoeffs.a[0];
+  
+    // Return the current filtered output
+    return  butterbandY[butterbandLen];
+  }
+
+  const RespNextY = (newX) => {
+    advanceRespTime();
+  
+    // Set the current input
+    respFiltX[respFiltLen] = newX * respFiltGain;
+  
+    // Start calculating the new output
+    respFiltY[respFiltLen] = respFiltCoeffs.b[0] * respFiltX[respFiltLen];
+    //console.log(y[len])
+  
+    if (respFiltLen === 0) {
+        return  respFiltY[respFiltLen];
+    }
+  
+    // Calculate the new output based on previous inputs and outputs
+    for (let i = 1; i < respFiltLen + 1; i++) {
+      respFiltY[respFiltLen] += (respFiltCoeffs.b[i] * respFiltX[respFiltLen - i] - respFiltCoeffs.a[i] *  respFiltY[respFiltLen - i]);
+    }
+  
+    // Adjust by initial coefficient
+    respFiltY[respFiltLen] =  respFiltY[respFiltLen] / respFiltCoeffs.a[0];
+  
+    // Return the current filtered output
+    return  respFiltY[respFiltLen];
+  }
+
+  const doUpdate = () => {
+    if(updateCounter>=26){
+      updateCounter = 0
+      return true
+    }
+    updateCounter = updateCounter + 1
+    return false
+  }
+
   const processSamples = samples => {
     let sampleLength = 8;
     let data = [];
@@ -209,9 +342,9 @@ const DeviceDataScreen = () => {
     };
     let filteredArray = [];
     //console.log("Unfiltered: "+samples)
-    console.log('packet: ' + samples);
+    //console.log('packet: ' + samples);
     let samplesCopy = samples.slice();
-    this.sampleQueue = [];
+    //this.sampleQueue = [];
     //console.log("Filtered: "+samplesCopy)
     // console.log("in function sample length: "+samplesCopy.length)
 
@@ -222,15 +355,30 @@ const DeviceDataScreen = () => {
       if (sample != '00000000' && sample.length == sampleLength) {
         let nibbles = sample.match(/.{1,2}/g);
         let bigEndian = nibbles[3] + nibbles[2] + nibbles[1] + nibbles[0];
-        let PPGValue = this.HRNextY(parseInt(bigEndian, 16));
-        let respValue = this.RespNextY(parseInt(bigEndian, 16));
+        let PPGValue = HRNextY(parseInt(bigEndian, 16));
+        let respValue = RespNextY(parseInt(bigEndian, 16));
         //console.log("Translation: "+sample+" "+PPGValue)
         let invPPGValue = PPGValue * -1;
         let invRespValue = respValue * -1;
-        this.pushValue(this.ppgPeakBuffer, invPPGValue, 100);
-        this.pushValue(this.respPeakBuffer, invRespValue, 300);
-        this.props.thresholdCheck(PPGValue, respValue, 0, 0);
-        console.log('Sample number: ' + i + ' Sample: ' + sample);
+        //console.log("PPG: "+PPGValue)
+        //console.log("resp: "+respValue)
+        pushValue(ppgPeakBuffer, 100, invPPGValue);
+        pushValue(respPeakBuffer, 300, invRespValue);
+
+        pushValue(ppgGraphBuffer,100,PPGValue)
+        pushValue(respGraphBuffer,100,respValue)
+
+       //console.log("Buffer Length:" + ppgGraphBuffer.length)
+
+        let graphPayload = [
+        { data: ppgGraphBuffer, color: 'rgba(0, 190, 42, 1)' },
+        //{ data: respGraphBuffer, color: 'rgba(255, 139, 2, 1)' },
+      ]
+        if(doUpdate()){
+          setGraphData(graphPayload)
+        }
+        //this.props.thresholdCheck(PPGValue, respValue, 0, 0);
+       //console.log('Sample number: ' + i + ' Sample: ' + sample);
         /*
           setTimeout( () => {
             this.props.thresholdCheck(PPGValue, 0, 0, 0);
@@ -242,14 +390,22 @@ const DeviceDataScreen = () => {
           */
       }
     }
-    let realTimeHR = findRealTimeHR(this.ppgPeakBuffer).HR;
-    let realTimeHRV = findRealTimeHR(this.ppgPeakBuffer).HRV;
-    let realTimeResp = findRealTimeResp(this.respPeakBuffer);
+   //console.log(ppgPeakBuffer)
+    let realTimeHR = findRealTimeHR(ppgPeakBuffer).HR;
+    let realTimeHRV = findRealTimeHR(ppgPeakBuffer).HRV;
+    let realTimeResp = findRealTimeResp(respPeakBuffer);
 
-    let smoothedHR = this.NoiseReducedRunningAvg(this.state.HR, realTimeHR);
-    let smoothedHRV = this.NoiseReducedRunningAvg(this.state.HRV, realTimeHRV);
+    let smoothedHR = NoiseReducedRunningAvg(HR, realTimeHR);
+    let smoothedHRV = NoiseReducedRunningAvg(HRV, realTimeHRV);
+    console.log(realTimeHR)
+
+    setHR(smoothedHR)
+    setHRV(smoothedHRV)
+    setTestHR(realTimeHR)
+    setTestHRV(realTimeHRV)
 
     //console.log("HR: "+realTimeHR)
+    /*
     this.setState({
       HR: smoothedHR,
       HRV: smoothedHRV,
@@ -257,6 +413,7 @@ const DeviceDataScreen = () => {
       testHRV: realTimeHRV,
       resp: realTimeResp,
     });
+    */
   };
 
   // Placeholder function to handle identify logic
@@ -329,10 +486,10 @@ const DeviceDataScreen = () => {
             <View style={styles.metricBox}>
               <Text style={styles.metricTitle}>Heart Rate</Text>
               <View style={styles.metricInnerBox}>
-                <Text style={styles.metricValue}>79</Text>
+                <Text style={styles.metricValue}>{HR}</Text>
 
                 {MySvgComponent()}
-                <Text style={styles.metricValue}>355</Text>
+                <Text style={styles.metricValue}>{testHR}</Text>
               </View>
             </View>
             <View style={styles.vrNew} />
@@ -340,10 +497,10 @@ const DeviceDataScreen = () => {
             <View style={styles.metricBox}>
               <Text style={styles.metricTitle}>HRV</Text>
               <View style={styles.metricInnerBox}>
-                <Text style={styles.metricValue}>79</Text>
+                <Text style={styles.metricValue}>{HRV}</Text>
 
                 {MySvgComponent()}
-                <Text style={styles.metricValue}>477</Text>
+                <Text style={styles.metricValue}>{testHRV}</Text>
               </View>
             </View>
             <View style={styles.vrNew} />
@@ -606,5 +763,9 @@ const styles = StyleSheet.create({
     // marginLeft:-10
   },
 });
+
+const SERVICEUUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
+const characteristicWUUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
+const characteristicNUUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
 
 export default DeviceDataScreen;
