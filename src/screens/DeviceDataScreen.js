@@ -10,8 +10,8 @@ import {
   DeviceEventEmitter,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Svg, Path, G, ClipPath, Rect, Defs } from 'react-native-svg';
-
+import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 
 import {Buffer} from 'buffer';
 import Header from './header'; // Assuming you have a header component
@@ -36,29 +36,37 @@ const MySvgComponent = () => (
     />
   </Svg>
 );
-const disccountComponent = () =>(
+const disccountComponent = () => (
   <Svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="17"
-  height="16"
-  viewBox="0 0 17 16"
-  fill="none"
-  >
-  <Path
-  d="M12.6644 3.58562C12.29 3.21129 11.7824 3.00069 11.253 2.99999C10.7235 2.99928 10.2154 3.20854 9.84 3.58188L9.11187 4.345C9.01875 4.43204 8.8959 4.48022 8.76844 4.47971C8.64097 4.47919 8.51852 4.43002 8.4261 4.34223C8.33368 4.25444 8.27828 4.13467 8.27123 4.0074C8.26417 3.88013 8.30598 3.75497 8.38813 3.6575L9.12062 2.88937C9.12317 2.88651 9.12589 2.8838 9.12875 2.88125C9.69291 2.32621 10.4535 2.01658 11.2449 2.0198C12.0364 2.02302 12.7944 2.33884 13.354 2.89845C13.9137 3.45807 14.2295 4.21615 14.2327 5.00756C14.2359 5.79897 13.9263 6.5596 13.3713 7.12375C13.3687 7.12661 13.366 7.12933 13.3631 7.13188L12.595 7.86438C12.4975 7.94652 12.3724 7.98833 12.2451 7.98127C12.1178 7.97422 11.9981 7.91882 11.9103 7.8264C11.8225 7.73398 11.7733 7.61153 11.7728 7.48406C11.7723 7.3566 11.8205 7.23375 11.9075 7.14062L12.6706 6.4125C13.0444 6.03666 13.2537 5.52782 13.2525 4.99777C13.2513 4.46772 13.0398 3.95981 12.6644 3.58562ZM7.38812 11.655L6.66 12.4181C6.28312 12.7841 5.77735 12.9872 5.25199 12.9833C4.72664 12.9795 4.22389 12.7691 3.85239 12.3976C3.4809 12.0261 3.2705 11.5234 3.26666 10.998C3.26282 10.4727 3.46585 9.96688 3.83188 9.59L4.595 8.86187C4.68204 8.76875 4.73022 8.6459 4.72971 8.51844C4.72919 8.39097 4.68002 8.26852 4.59223 8.1761C4.50444 8.08368 4.38467 8.02828 4.2574 8.02123C4.13013 8.01417 4.00497 8.05598 3.9075 8.13813L3.13687 8.87062C3.13401 8.87317 3.1313 8.87589 3.12875 8.87875C2.57371 9.44291 2.26408 10.2035 2.2673 10.9949C2.27052 11.7864 2.58634 12.5444 3.14596 13.104C3.70557 13.6637 4.46365 13.9795 5.25506 13.9827C6.04647 13.9859 6.80709 13.6763 7.37125 13.1213C7.37411 13.1187 7.37683 13.116 7.37937 13.1131L8.11188 12.345C8.16167 12.2985 8.20143 12.2422 8.2287 12.1798C8.25597 12.1173 8.27018 12.0499 8.27045 11.9817C8.27073 11.9136 8.25707 11.8461 8.2303 11.7834C8.20354 11.7207 8.16424 11.6641 8.11482 11.6172C8.0654 11.5703 8.0069 11.5339 7.94292 11.5104C7.87894 11.4869 7.81083 11.4767 7.74277 11.4805C7.67471 11.4843 7.60814 11.5019 7.54716 11.5323C7.48617 11.5628 7.43205 11.6054 7.38812 11.6575V11.655ZM13.75 9.5H12.25C12.1174 9.5 11.9902 9.55268 11.8964 9.64645C11.8027 9.74021 11.75 9.86739 11.75 10C11.75 10.1326 11.8027 10.2598 11.8964 10.3536C11.9902 10.4473 12.1174 10.5 12.25 10.5H13.75C13.8826 10.5 14.0098 10.4473 14.1036 10.3536C14.1973 10.2598 14.25 10.1326 14.25 10C14.25 9.86739 14.1973 9.74021 14.1036 9.64645C14.0098 9.55268 13.8826 9.5 13.75 9.5ZM2.75 6.5H4.25C4.38261 6.5 4.50979 6.44732 4.60355 6.35355C4.69732 6.25979 4.75 6.13261 4.75 6C4.75 5.86739 4.69732 5.74021 4.60355 5.64645C4.50979 5.55268 4.38261 5.5 4.25 5.5H2.75C2.61739 5.5 2.49021 5.55268 2.39645 5.64645C2.30268 5.74021 2.25 5.86739 2.25 6C2.25 6.13261 2.30268 6.25979 2.39645 6.35355C2.49021 6.44732 2.61739 6.5 2.75 6.5ZM10.25 11.5C10.1174 11.5 9.99021 11.5527 9.89645 11.6464C9.80268 11.7402 9.75 11.8674 9.75 12V13.5C9.75 13.6326 9.80268 13.7598 9.89645 13.8536C9.99021 13.9473 10.1174 14 10.25 14C10.3826 14 10.5098 13.9473 10.6036 13.8536C10.6973 13.7598 10.75 13.6326 10.75 13.5V12C10.75 11.8674 10.6973 11.7402 10.6036 11.6464C10.5098 11.5527 10.3826 11.5 10.25 11.5ZM6.25 4.5C6.38261 4.5 6.50979 4.44732 6.60355 4.35355C6.69732 4.25979 6.75 4.13261 6.75 4V2.5C6.75 2.36739 6.69732 2.24021 6.60355 2.14645C6.50979 2.05268 6.38261 2 6.25 2C6.11739 2 5.99021 2.05268 5.89645 2.14645C5.80268 2.24021 5.75 2.36739 5.75 2.5V4C5.75 4.13261 5.80268 4.25979 5.89645 4.35355C5.99021 4.44732 6.11739 4.5 6.25 4.5Z" fill="#27FFE9"
-  />
-</Svg>
+    xmlns="http://www.w3.org/2000/svg"
+    width="17"
+    height="16"
+    viewBox="0 0 17 16"
+    fill="none">
+    <Path
+      d="M12.6644 3.58562C12.29 3.21129 11.7824 3.00069 11.253 2.99999C10.7235 2.99928 10.2154 3.20854 9.84 3.58188L9.11187 4.345C9.01875 4.43204 8.8959 4.48022 8.76844 4.47971C8.64097 4.47919 8.51852 4.43002 8.4261 4.34223C8.33368 4.25444 8.27828 4.13467 8.27123 4.0074C8.26417 3.88013 8.30598 3.75497 8.38813 3.6575L9.12062 2.88937C9.12317 2.88651 9.12589 2.8838 9.12875 2.88125C9.69291 2.32621 10.4535 2.01658 11.2449 2.0198C12.0364 2.02302 12.7944 2.33884 13.354 2.89845C13.9137 3.45807 14.2295 4.21615 14.2327 5.00756C14.2359 5.79897 13.9263 6.5596 13.3713 7.12375C13.3687 7.12661 13.366 7.12933 13.3631 7.13188L12.595 7.86438C12.4975 7.94652 12.3724 7.98833 12.2451 7.98127C12.1178 7.97422 11.9981 7.91882 11.9103 7.8264C11.8225 7.73398 11.7733 7.61153 11.7728 7.48406C11.7723 7.3566 11.8205 7.23375 11.9075 7.14062L12.6706 6.4125C13.0444 6.03666 13.2537 5.52782 13.2525 4.99777C13.2513 4.46772 13.0398 3.95981 12.6644 3.58562ZM7.38812 11.655L6.66 12.4181C6.28312 12.7841 5.77735 12.9872 5.25199 12.9833C4.72664 12.9795 4.22389 12.7691 3.85239 12.3976C3.4809 12.0261 3.2705 11.5234 3.26666 10.998C3.26282 10.4727 3.46585 9.96688 3.83188 9.59L4.595 8.86187C4.68204 8.76875 4.73022 8.6459 4.72971 8.51844C4.72919 8.39097 4.68002 8.26852 4.59223 8.1761C4.50444 8.08368 4.38467 8.02828 4.2574 8.02123C4.13013 8.01417 4.00497 8.05598 3.9075 8.13813L3.13687 8.87062C3.13401 8.87317 3.1313 8.87589 3.12875 8.87875C2.57371 9.44291 2.26408 10.2035 2.2673 10.9949C2.27052 11.7864 2.58634 12.5444 3.14596 13.104C3.70557 13.6637 4.46365 13.9795 5.25506 13.9827C6.04647 13.9859 6.80709 13.6763 7.37125 13.1213C7.37411 13.1187 7.37683 13.116 7.37937 13.1131L8.11188 12.345C8.16167 12.2985 8.20143 12.2422 8.2287 12.1798C8.25597 12.1173 8.27018 12.0499 8.27045 11.9817C8.27073 11.9136 8.25707 11.8461 8.2303 11.7834C8.20354 11.7207 8.16424 11.6641 8.11482 11.6172C8.0654 11.5703 8.0069 11.5339 7.94292 11.5104C7.87894 11.4869 7.81083 11.4767 7.74277 11.4805C7.67471 11.4843 7.60814 11.5019 7.54716 11.5323C7.48617 11.5628 7.43205 11.6054 7.38812 11.6575V11.655ZM13.75 9.5H12.25C12.1174 9.5 11.9902 9.55268 11.8964 9.64645C11.8027 9.74021 11.75 9.86739 11.75 10C11.75 10.1326 11.8027 10.2598 11.8964 10.3536C11.9902 10.4473 12.1174 10.5 12.25 10.5H13.75C13.8826 10.5 14.0098 10.4473 14.1036 10.3536C14.1973 10.2598 14.25 10.1326 14.25 10C14.25 9.86739 14.1973 9.74021 14.1036 9.64645C14.0098 9.55268 13.8826 9.5 13.75 9.5ZM2.75 6.5H4.25C4.38261 6.5 4.50979 6.44732 4.60355 6.35355C4.69732 6.25979 4.75 6.13261 4.75 6C4.75 5.86739 4.69732 5.74021 4.60355 5.64645C4.50979 5.55268 4.38261 5.5 4.25 5.5H2.75C2.61739 5.5 2.49021 5.55268 2.39645 5.64645C2.30268 5.74021 2.25 5.86739 2.25 6C2.25 6.13261 2.30268 6.25979 2.39645 6.35355C2.49021 6.44732 2.61739 6.5 2.75 6.5ZM10.25 11.5C10.1174 11.5 9.99021 11.5527 9.89645 11.6464C9.80268 11.7402 9.75 11.8674 9.75 12V13.5C9.75 13.6326 9.80268 13.7598 9.89645 13.8536C9.99021 13.9473 10.1174 14 10.25 14C10.3826 14 10.5098 13.9473 10.6036 13.8536C10.6973 13.7598 10.75 13.6326 10.75 13.5V12C10.75 11.8674 10.6973 11.7402 10.6036 11.6464C10.5098 11.5527 10.3826 11.5 10.25 11.5ZM6.25 4.5C6.38261 4.5 6.50979 4.44732 6.60355 4.35355C6.69732 4.25979 6.75 4.13261 6.75 4V2.5C6.75 2.36739 6.69732 2.24021 6.60355 2.14645C6.50979 2.05268 6.38261 2 6.25 2C6.11739 2 5.99021 2.05268 5.89645 2.14645C5.80268 2.24021 5.75 2.36739 5.75 2.5V4C5.75 4.13261 5.80268 4.25979 5.89645 4.35355C5.99021 4.44732 6.11739 4.5 6.25 4.5Z"
+      fill="#27FFE9"
+    />
+  </Svg>
 );
 
-const calibrate = () =>(
-  <Svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+const calibrate = () => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="17"
+    height="16"
+    viewBox="0 0 17 16"
+    fill="none">
     <Defs>
       <ClipPath id="clip0_147_1129">
         <Rect width="16" height="16" fill="white" transform="translate(0.25)" />
       </ClipPath>
     </Defs>
     <G clipPath="url(#clip0_147_1129)">
-      <Path d="M8.25016 5.50025C7.7557 5.50025 7.27235 5.64687 6.86123 5.92158C6.45011 6.19628 6.12968 6.58673 5.94046 7.04354C5.75124 7.50036 5.70173 8.00303 5.79819 8.48798C5.89466 8.97293 6.13276 9.41839 6.48239 9.76802C6.83202 10.1176 7.27748 10.3558 7.76243 10.4522C8.24738 10.5487 8.75005 10.4992 9.20686 10.31C9.66368 10.1207 10.0541 9.8003 10.3288 9.38918C10.6035 8.97805 10.7502 8.4947 10.7502 8.00025C10.7502 7.33721 10.4868 6.70133 10.0179 6.23248C9.54908 5.76364 8.9132 5.50025 8.25016 5.50025ZM8.25016 9.50025C7.95348 9.50025 7.66347 9.41228 7.4168 9.24746C7.17013 9.08263 6.97787 8.84837 6.86434 8.57428C6.7508 8.30019 6.7211 7.99859 6.77898 7.70762C6.83686 7.41664 6.97972 7.14937 7.1895 6.93959C7.39927 6.72981 7.66655 6.58695 7.95752 6.52907C8.24849 6.4712 8.55009 6.5009 8.82418 6.61443C9.09827 6.72796 9.33254 6.92022 9.49736 7.1669C9.66218 7.41357 9.75016 7.70358 9.75016 8.00025C9.75016 8.39808 9.59212 8.77961 9.31082 9.06091C9.02951 9.34222 8.64798 9.50025 8.25016 9.50025ZM12.857 9.9465C12.6422 10.4544 12.3449 10.9232 11.977 11.334C11.888 11.4304 11.7646 11.4879 11.6335 11.4941C11.5024 11.5003 11.3741 11.4547 11.2764 11.3672C11.1786 11.2797 11.1191 11.1572 11.1108 11.0262C11.1025 10.8953 11.1461 10.7663 11.232 10.6671C11.8886 9.93409 12.2516 8.98462 12.2516 8.00056C12.2516 7.01651 11.8886 6.06704 11.232 5.334C11.187 5.28529 11.1521 5.22811 11.1294 5.16578C11.1067 5.10346 11.0967 5.03724 11.0998 4.97099C11.1029 4.90473 11.1192 4.83976 11.1477 4.77986C11.1762 4.71996 11.2163 4.66633 11.2657 4.62209C11.3152 4.57786 11.3729 4.54389 11.4356 4.52218C11.4983 4.50047 11.5646 4.49145 11.6308 4.49564C11.697 4.49983 11.7617 4.51715 11.8212 4.54659C11.8806 4.57603 11.9336 4.61701 11.977 4.66713C12.6084 5.37359 13.0262 6.24474 13.182 7.1793C13.3378 8.11387 13.2251 9.07345 12.857 9.9465ZM4.56266 6.44338C4.26764 7.14173 4.17716 7.90955 4.30176 8.65735C4.42636 9.40515 4.7609 10.1022 5.26641 10.6671C5.35237 10.7663 5.3959 10.8953 5.3876 11.0262C5.37931 11.1572 5.31986 11.2797 5.22208 11.3672C5.1243 11.4547 4.99603 11.5003 4.86495 11.4941C4.73386 11.4879 4.61047 11.4304 4.52141 11.334C3.70052 10.4177 3.2466 9.23077 3.2466 8.00056C3.2466 6.77036 3.70052 5.5834 4.52141 4.66713C4.60984 4.56808 4.73399 4.50823 4.86656 4.50073C4.99912 4.49323 5.12924 4.53869 5.22828 4.62713C5.32732 4.71556 5.38718 4.83972 5.39468 4.97228C5.40218 5.10484 5.35671 5.23496 5.26828 5.334C4.97328 5.66218 4.73483 6.03707 4.56266 6.44338ZM15.7502 8.00025C15.7532 9.96383 14.9833 11.8497 13.607 13.2503C13.5615 13.2989 13.5067 13.338 13.4458 13.3652C13.385 13.3924 13.3193 13.4072 13.2526 13.4086C13.186 13.41 13.1197 13.3981 13.0578 13.3736C12.9958 13.349 12.9394 13.3124 12.8918 13.2657C12.8442 13.219 12.8064 13.1633 12.7807 13.1018C12.7549 13.0403 12.7417 12.9743 12.7419 12.9076C12.742 12.841 12.7555 12.775 12.7815 12.7137C12.8075 12.6523 12.8455 12.5967 12.8933 12.5503C14.085 11.3361 14.7526 9.70277 14.7526 8.0015C14.7526 6.30023 14.085 4.6669 12.8933 3.45275C12.8001 3.3581 12.7484 3.23032 12.7494 3.09752C12.7505 2.96472 12.8043 2.83778 12.8989 2.74463C12.9936 2.65147 13.1213 2.59973 13.2541 2.60078C13.3869 2.60184 13.5139 2.6556 13.607 2.75025C14.9833 4.15077 15.7532 6.03667 15.7502 8.00025ZM3.60703 12.549C3.65308 12.5959 3.68944 12.6513 3.71404 12.7123C3.73865 12.7732 3.75101 12.8383 3.75043 12.904C3.74985 12.9697 3.73634 13.0347 3.71066 13.0952C3.68498 13.1556 3.64765 13.2105 3.60078 13.2565C3.55392 13.3025 3.49844 13.3389 3.43752 13.3635C3.3766 13.3881 3.31143 13.4005 3.24574 13.3999C3.18004 13.3993 3.1151 13.3858 3.05462 13.3601C2.99415 13.3345 2.93933 13.2971 2.89328 13.2503C1.51715 11.8493 0.746094 9.96403 0.746094 8.00025C0.746094 6.03647 1.51715 4.15121 2.89328 2.75025C2.93881 2.70157 2.99362 2.66248 3.05448 2.63529C3.11534 2.6081 3.18102 2.59335 3.24766 2.59191C3.31431 2.59048 3.38056 2.60238 3.44254 2.62692C3.50451 2.65146 3.56096 2.68815 3.60855 2.73482C3.65614 2.7815 3.69391 2.83721 3.71966 2.8987C3.7454 2.96019 3.75859 3.0262 3.75845 3.09286C3.75831 3.15951 3.74484 3.22547 3.71883 3.28685C3.69283 3.34822 3.65482 3.40378 3.60703 3.45025C2.41532 4.6644 1.74768 6.29773 1.74768 7.999C1.74768 9.70027 2.41532 11.3336 3.60703 12.5478V12.549Z" fill="white" />
+      <Path
+        d="M8.25016 5.50025C7.7557 5.50025 7.27235 5.64687 6.86123 5.92158C6.45011 6.19628 6.12968 6.58673 5.94046 7.04354C5.75124 7.50036 5.70173 8.00303 5.79819 8.48798C5.89466 8.97293 6.13276 9.41839 6.48239 9.76802C6.83202 10.1176 7.27748 10.3558 7.76243 10.4522C8.24738 10.5487 8.75005 10.4992 9.20686 10.31C9.66368 10.1207 10.0541 9.8003 10.3288 9.38918C10.6035 8.97805 10.7502 8.4947 10.7502 8.00025C10.7502 7.33721 10.4868 6.70133 10.0179 6.23248C9.54908 5.76364 8.9132 5.50025 8.25016 5.50025ZM8.25016 9.50025C7.95348 9.50025 7.66347 9.41228 7.4168 9.24746C7.17013 9.08263 6.97787 8.84837 6.86434 8.57428C6.7508 8.30019 6.7211 7.99859 6.77898 7.70762C6.83686 7.41664 6.97972 7.14937 7.1895 6.93959C7.39927 6.72981 7.66655 6.58695 7.95752 6.52907C8.24849 6.4712 8.55009 6.5009 8.82418 6.61443C9.09827 6.72796 9.33254 6.92022 9.49736 7.1669C9.66218 7.41357 9.75016 7.70358 9.75016 8.00025C9.75016 8.39808 9.59212 8.77961 9.31082 9.06091C9.02951 9.34222 8.64798 9.50025 8.25016 9.50025ZM12.857 9.9465C12.6422 10.4544 12.3449 10.9232 11.977 11.334C11.888 11.4304 11.7646 11.4879 11.6335 11.4941C11.5024 11.5003 11.3741 11.4547 11.2764 11.3672C11.1786 11.2797 11.1191 11.1572 11.1108 11.0262C11.1025 10.8953 11.1461 10.7663 11.232 10.6671C11.8886 9.93409 12.2516 8.98462 12.2516 8.00056C12.2516 7.01651 11.8886 6.06704 11.232 5.334C11.187 5.28529 11.1521 5.22811 11.1294 5.16578C11.1067 5.10346 11.0967 5.03724 11.0998 4.97099C11.1029 4.90473 11.1192 4.83976 11.1477 4.77986C11.1762 4.71996 11.2163 4.66633 11.2657 4.62209C11.3152 4.57786 11.3729 4.54389 11.4356 4.52218C11.4983 4.50047 11.5646 4.49145 11.6308 4.49564C11.697 4.49983 11.7617 4.51715 11.8212 4.54659C11.8806 4.57603 11.9336 4.61701 11.977 4.66713C12.6084 5.37359 13.0262 6.24474 13.182 7.1793C13.3378 8.11387 13.2251 9.07345 12.857 9.9465ZM4.56266 6.44338C4.26764 7.14173 4.17716 7.90955 4.30176 8.65735C4.42636 9.40515 4.7609 10.1022 5.26641 10.6671C5.35237 10.7663 5.3959 10.8953 5.3876 11.0262C5.37931 11.1572 5.31986 11.2797 5.22208 11.3672C5.1243 11.4547 4.99603 11.5003 4.86495 11.4941C4.73386 11.4879 4.61047 11.4304 4.52141 11.334C3.70052 10.4177 3.2466 9.23077 3.2466 8.00056C3.2466 6.77036 3.70052 5.5834 4.52141 4.66713C4.60984 4.56808 4.73399 4.50823 4.86656 4.50073C4.99912 4.49323 5.12924 4.53869 5.22828 4.62713C5.32732 4.71556 5.38718 4.83972 5.39468 4.97228C5.40218 5.10484 5.35671 5.23496 5.26828 5.334C4.97328 5.66218 4.73483 6.03707 4.56266 6.44338ZM15.7502 8.00025C15.7532 9.96383 14.9833 11.8497 13.607 13.2503C13.5615 13.2989 13.5067 13.338 13.4458 13.3652C13.385 13.3924 13.3193 13.4072 13.2526 13.4086C13.186 13.41 13.1197 13.3981 13.0578 13.3736C12.9958 13.349 12.9394 13.3124 12.8918 13.2657C12.8442 13.219 12.8064 13.1633 12.7807 13.1018C12.7549 13.0403 12.7417 12.9743 12.7419 12.9076C12.742 12.841 12.7555 12.775 12.7815 12.7137C12.8075 12.6523 12.8455 12.5967 12.8933 12.5503C14.085 11.3361 14.7526 9.70277 14.7526 8.0015C14.7526 6.30023 14.085 4.6669 12.8933 3.45275C12.8001 3.3581 12.7484 3.23032 12.7494 3.09752C12.7505 2.96472 12.8043 2.83778 12.8989 2.74463C12.9936 2.65147 13.1213 2.59973 13.2541 2.60078C13.3869 2.60184 13.5139 2.6556 13.607 2.75025C14.9833 4.15077 15.7532 6.03667 15.7502 8.00025ZM3.60703 12.549C3.65308 12.5959 3.68944 12.6513 3.71404 12.7123C3.73865 12.7732 3.75101 12.8383 3.75043 12.904C3.74985 12.9697 3.73634 13.0347 3.71066 13.0952C3.68498 13.1556 3.64765 13.2105 3.60078 13.2565C3.55392 13.3025 3.49844 13.3389 3.43752 13.3635C3.3766 13.3881 3.31143 13.4005 3.24574 13.3999C3.18004 13.3993 3.1151 13.3858 3.05462 13.3601C2.99415 13.3345 2.93933 13.2971 2.89328 13.2503C1.51715 11.8493 0.746094 9.96403 0.746094 8.00025C0.746094 6.03647 1.51715 4.15121 2.89328 2.75025C2.93881 2.70157 2.99362 2.66248 3.05448 2.63529C3.11534 2.6081 3.18102 2.59335 3.24766 2.59191C3.31431 2.59048 3.38056 2.60238 3.44254 2.62692C3.50451 2.65146 3.56096 2.68815 3.60855 2.73482C3.65614 2.7815 3.69391 2.83721 3.71966 2.8987C3.7454 2.96019 3.75859 3.0262 3.75845 3.09286C3.75831 3.15951 3.74484 3.22547 3.71883 3.28685C3.69283 3.34822 3.65482 3.40378 3.60703 3.45025C2.41532 4.6644 1.74768 6.29773 1.74768 7.999C1.74768 9.70027 2.41532 11.3336 3.60703 12.5478V12.549Z"
+        fill="white"
+      />
     </G>
   </Svg>
 );
@@ -66,6 +74,8 @@ const calibrate = () =>(
 // const colabriate = () => ()
 const DeviceDataScreen = () => {
   const [device, setDevice] = useState(null);
+  const navigation = useNavigation();
+  const [batteryPercentage, setBatteryPercentage] = useState(null);
   const [realTimeData, setRealTimeData] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [services, setServices] = useState([]);
@@ -76,19 +86,27 @@ const DeviceDataScreen = () => {
   const [testHR, setTestHR] = useState(0);
   const [testHRV, setTestHRV] = useState(0);
   const [graphData, setGraphData] = useState([
-    { data: [], color: 'rgba(0, 190, 42, 1)' },
+    {data: [], color: 'rgba(0, 190, 42, 1)'},
   ]);
   const butterbandCoeffs = {
-    b: [0.24777184,  0, -0.74331552,  0,  0.74331552, 0 , -0.24777184],
-    a: [1, -1.98424849,  0.98953008, -0.23795914,  0.49392954, -0.20417171, -0.05060652],
+    b: [0.24777184, 0, -0.74331552, 0, 0.74331552, 0, -0.24777184],
+    a: [
+      1, -1.98424849, 0.98953008, -0.23795914, 0.49392954, -0.20417171,
+      -0.05060652,
+    ],
   };
   const butterbandLen = 6;
   const butterbandX = new Array(butterbandLen + 1).fill(0);
   const butterbandY = new Array(butterbandLen + 1).fill(0);
   const butterbandGain = 1;
   const respFiltCoeffs = {
-    b: [1.51064223e-05, 0.0, -4.53192670e-05, 0.0, 4.53192670e-05, 0.0, -1.51064223e-05],
-    a: [1, -5.89388965, 14.48040893, -18.98221654, 14.00311279, -5.51176305, 0.90434753],
+    b: [
+      1.51064223e-5, 0.0, -4.5319267e-5, 0.0, 4.5319267e-5, 0.0, -1.51064223e-5,
+    ],
+    a: [
+      1, -5.89388965, 14.48040893, -18.98221654, 14.00311279, -5.51176305,
+      0.90434753,
+    ],
   };
   const respFiltLen = 6;
   const respFiltX = new Array(respFiltLen + 1).fill(0);
@@ -147,11 +165,7 @@ const DeviceDataScreen = () => {
         // After discovering, start monitoring a specific characteristic
         if (peripheralInfo.characteristics.length > 0) {
           const characteristic = peripheralInfo.characteristics[0]; // Example: Use the first characteristic
-          monitorDevice(
-            deviceId,
-            SERVICEUUID,
-            characteristicNUUID,
-          );
+          monitorDevice(deviceId, SERVICEUUID, characteristicNUUID);
         }
       })
       .catch(error => {
@@ -176,7 +190,6 @@ const DeviceDataScreen = () => {
             //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
             //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
             // ];
-
 
             //console.log('Received hex data:', hexValue);
             //console.log('Received ASCII data:', asciiValue);
@@ -243,7 +256,7 @@ const DeviceDataScreen = () => {
     let diff = oldValue - newValue;
     let absDiff = Math.abs(diff);
 
-    if(absDiff > exclusionDiff){
+    if (absDiff > exclusionDiff) {
       return oldValue;
     }
 
@@ -251,51 +264,54 @@ const DeviceDataScreen = () => {
     let weightedNew = newWeight * newValue;
 
     return Math.round(weightedNew + weightedOld);
-
   };
 
   const advanceHRTime = () => {
     for (let i = 0; i < butterbandLen; i++) {
-        butterbandX[i] = butterbandX[i + 1];
-        butterbandY[i] = butterbandY[i + 1];
+      butterbandX[i] = butterbandX[i + 1];
+      butterbandY[i] = butterbandY[i + 1];
     }
   };
 
   const advanceRespTime = () => {
     for (let i = 0; i < respFiltLen; i++) {
-        respFiltX[i] = respFiltX[i + 1];
-        respFiltY[i] = respFiltY[i + 1];
+      respFiltX[i] = respFiltX[i + 1];
+      respFiltY[i] = respFiltY[i + 1];
     }
   };
 
-  const HRNextY = (newX) => {
+  const HRNextY = newX => {
     advanceHRTime();
 
     // Set the current input
     butterbandX[butterbandLen] = newX * butterbandGain;
 
     // Start calculating the new output
-    butterbandY[butterbandLen] = butterbandCoeffs.b[0] * butterbandX[butterbandLen];
+    butterbandY[butterbandLen] =
+      butterbandCoeffs.b[0] * butterbandX[butterbandLen];
     //console.log(y[len])
 
     if (butterbandLen === 0) {
-        return  butterbandY[butterbandLen];
+      return butterbandY[butterbandLen];
     }
 
     // Calculate the new output based on previous inputs and outputs
     for (let i = 1; i < butterbandLen + 1; i++) {
-      butterbandY[butterbandLen] += (butterbandCoeffs.b[i] * butterbandX[butterbandLen - i] - butterbandCoeffs.a[i] *  butterbandY[butterbandLen - i]);
+      butterbandY[butterbandLen] +=
+        butterbandCoeffs.b[i] * butterbandX[butterbandLen - i] -
+        butterbandCoeffs.a[i] * butterbandY[butterbandLen - i];
       //console.log( this.butterbandY[this.butterbandLen])
     }
 
     // Adjust by initial coefficient
-    butterbandY[butterbandLen] =  butterbandY[butterbandLen] / butterbandCoeffs.a[0];
+    butterbandY[butterbandLen] =
+      butterbandY[butterbandLen] / butterbandCoeffs.a[0];
 
     // Return the current filtered output
-    return  butterbandY[butterbandLen];
+    return butterbandY[butterbandLen];
   };
 
-  const RespNextY = (newX) => {
+  const RespNextY = newX => {
     advanceRespTime();
 
     // Set the current input
@@ -306,23 +322,25 @@ const DeviceDataScreen = () => {
     //console.log(y[len])
 
     if (respFiltLen === 0) {
-        return  respFiltY[respFiltLen];
+      return respFiltY[respFiltLen];
     }
 
     // Calculate the new output based on previous inputs and outputs
     for (let i = 1; i < respFiltLen + 1; i++) {
-      respFiltY[respFiltLen] += (respFiltCoeffs.b[i] * respFiltX[respFiltLen - i] - respFiltCoeffs.a[i] *  respFiltY[respFiltLen - i]);
+      respFiltY[respFiltLen] +=
+        respFiltCoeffs.b[i] * respFiltX[respFiltLen - i] -
+        respFiltCoeffs.a[i] * respFiltY[respFiltLen - i];
     }
 
     // Adjust by initial coefficient
-    respFiltY[respFiltLen] =  respFiltY[respFiltLen] / respFiltCoeffs.a[0];
+    respFiltY[respFiltLen] = respFiltY[respFiltLen] / respFiltCoeffs.a[0];
 
     // Return the current filtered output
-    return  respFiltY[respFiltLen];
+    return respFiltY[respFiltLen];
   };
 
   const doUpdate = () => {
-    if(updateCounter >= 26){
+    if (updateCounter >= 26) {
       updateCounter = 0;
       return true;
     }
@@ -365,20 +383,20 @@ const DeviceDataScreen = () => {
         pushValue(ppgPeakBuffer, 100, invPPGValue);
         pushValue(respPeakBuffer, 300, invRespValue);
 
-        pushValue(ppgGraphBuffer,100,PPGValue);
-        pushValue(respGraphBuffer,100,respValue);
+        pushValue(ppgGraphBuffer, 100, PPGValue);
+        pushValue(respGraphBuffer, 100, respValue);
 
-       //console.log("Buffer Length:" + ppgGraphBuffer.length)
+        //console.log("Buffer Length:" + ppgGraphBuffer.length)
 
         let graphPayload = [
-        { data: ppgGraphBuffer, color: 'rgba(0, 190, 42, 1)' },
-        //{ data: respGraphBuffer, color: 'rgba(255, 139, 2, 1)' },
-      ];
-        if(doUpdate()){
+          {data: ppgGraphBuffer, color: 'rgba(0, 190, 42, 1)'},
+          //{ data: respGraphBuffer, color: 'rgba(255, 139, 2, 1)' },
+        ];
+        if (doUpdate()) {
           setGraphData(graphPayload);
         }
         //this.props.thresholdCheck(PPGValue, respValue, 0, 0);
-       //console.log('Sample number: ' + i + ' Sample: ' + sample);
+        //console.log('Sample number: ' + i + ' Sample: ' + sample);
         /*
           setTimeout( () => {
             this.props.thresholdCheck(PPGValue, 0, 0, 0);
@@ -390,7 +408,7 @@ const DeviceDataScreen = () => {
           */
       }
     }
-   //console.log(ppgPeakBuffer)
+    //console.log(ppgPeakBuffer)
     let realTimeHR = findRealTimeHR(ppgPeakBuffer).HR;
     let realTimeHRV = findRealTimeHR(ppgPeakBuffer).HRV;
     let realTimeResp = findRealTimeResp(respPeakBuffer);
@@ -419,10 +437,15 @@ const DeviceDataScreen = () => {
   // Placeholder function to handle identify logic
   const handleIdentify = splitIdentifier => {
     console.log('Handling identify:', splitIdentifier);
+    let identifier = splitIdentifier[0];
+    if (identifier == 0) {
+      let batteryValue = (splitIdentifier[1] / 4095.0) * 3.6 * 2;
+      setBatteryPercentage(batteryValue);
+    }
     // Add logic here to handle the identified data
   };
 
-  const sendMessage = (message) => {
+  const sendMessage = message => {
     if (device) {
       let processedMessage = new Buffer(message + '\n').toString('base64');
       BleManager.writeCharacteristicWithoutResponseForDevice(
@@ -431,12 +454,12 @@ const DeviceDataScreen = () => {
         characteristicWUUID,
         processedMessage,
       )
-      .then(() => {
-        console.log(`Message sent: ${message}`);
-      })
-      .catch(error => {
-        console.error(`Error sending message: ${error}`);
-      });
+        .then(() => {
+          console.log(`Message sent: ${message}`);
+        })
+        .catch(error => {
+          console.error(`Error sending message: ${error}`);
+        });
     } else {
       console.error('Device not connected');
     }
@@ -452,15 +475,13 @@ const DeviceDataScreen = () => {
     sendMessage('battery');
   };
 
-  // useEffect(() => {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      batteryPoll();
+    }, 2000); // Poll battery every 2 seconds
 
-  //   const interval = setInterval(() => {
-  //     batteryPoll();
-  //   }, 60000); // Poll battery every 60 seconds
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -515,7 +536,7 @@ const DeviceDataScreen = () => {
           <Text style={styles.liveDataText}>Live Data</Text>
           {/* Simulated graph */}
           <View style={styles.graphContainer}>
-            <GraphComponentMultiple datasets={graphData}/>
+            <GraphComponentMultiple datasets={graphData} />
           </View>
 
           {/* Heart Rate, HRV, RR */}
@@ -550,20 +571,33 @@ const DeviceDataScreen = () => {
               <Text style={styles.metricValue}>0</Text>
             </View>
           </LinearGradient>
-            <View style={styles.buttonContainer}>
+          <View style={styles.buttonContainer}>
             <LinearGradient
-            colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
-            style={styles.button}>
-              {disccountComponent()}
+              colors={[
+                'rgba(255, 255, 255, 0.04)',
+                'rgba(255, 255, 255, 0.02)',
+              ]}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              style={styles.button}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('ProfileScreen');
+                }}>
+                {disccountComponent()}
+                </TouchableOpacity>
+                <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('ProfileScreen');
+                }}>
                 <Text style={styles.buttonText}>Disconnect</Text>
-              </LinearGradient>
-              <TouchableOpacity style={styles.button}>
-              {calibrate()}
-                <Text style={styles.buttonTextCalibrate}>Calibrate</Text>
               </TouchableOpacity>
-            </View>
+            </LinearGradient>
+            <TouchableOpacity style={styles.button}>
+              {calibrate()}
+              <Text style={styles.buttonTextCalibrate}>Calibrate</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Buttons */}
@@ -770,14 +804,14 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   button: {
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '45%',
     height: 48,
     backgroundColor: '#2B2D2E',
     borderRadius: 10,
-    gap:8,
+    gap: 8,
   },
   buttonText: {
     color: '#27FFE9',

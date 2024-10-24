@@ -141,6 +141,11 @@ const AppNavigator = () => {
           component={AddObserver}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

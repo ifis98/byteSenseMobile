@@ -115,7 +115,7 @@ const ObserverScreen = () => {
   const fetchObservers = async () => {
     try {
       const fetchedObservers = await getObservers();
-      // console.log("fetchedObservers123",fetchedObservers)
+      console.log("fetchedObservers123",fetchedObservers)
       setObservers(fetchedObservers); 
     } catch (error) {
       console.error('Error fetching observers:', error);

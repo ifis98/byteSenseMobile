@@ -27,7 +27,9 @@ const GraphComponent = (props) => {
             backgroundGradientFrom: "#232323", // Set to transparent
             backgroundGradientTo: "#232323", // Set to transparent
             decimalPlaces: 2, // Adjust as necessary
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // Line color
+            // color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // Line color
+            color: (opacity = 1) => `rgba(39, 255, 233, ${opacity})`,
+
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // Axis label color
             style: {
               borderRadius: 16, // Rounded corners
