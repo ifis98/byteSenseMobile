@@ -88,6 +88,7 @@ const DeviceDataScreen = () => {
   const [graphData, setGraphData] = useState([
     {data: [], color: 'rgba(0, 190, 42, 1)'},
   ]);
+  const [xAxisData, setXAxisData] = useState(['0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0']);
   // const [graphData, setGraphData] = useState([
   //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
   //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
@@ -541,7 +542,7 @@ const DeviceDataScreen = () => {
           <Text style={styles.liveDataText}>Live Data</Text>
           {/* Simulated graph */}
           <View style={styles.graphContainer}>
-            <GraphComponentMultiple datasets={graphData} />
+            <GraphComponentMultiple datasets={graphData} xAxisData={xAxisData} />
           </View>
 
           {/* Heart Rate, HRV, RR */}

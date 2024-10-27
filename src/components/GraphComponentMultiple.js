@@ -2,13 +2,13 @@ import React from 'react';
 import { View, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-const GraphComponentMultiple = ({ datasets }) => {
+const GraphComponentMultiple = ({ datasets ,xAxisData}) => {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <LineChart
           data={{
-            labels: ['0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0'], // Time in seconds
+            labels: xAxisData,
             datasets: datasets.map((dataset, index) => ({
               data: dataset.data, // Pass data for each line
               color: (opacity = 1) => dataset.color || `rgba(0, 190, 42, ${opacity})`, // Dynamic color

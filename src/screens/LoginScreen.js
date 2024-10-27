@@ -24,10 +24,10 @@ const {width, height} = Dimensions.get('window');
 
 const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('joerogan');
-  const [password, setPassword] = useState('joerogan');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  // const [username, setUsername] = useState('joerogan');
+  // const [password, setPassword] = useState('joerogan');
 
   const handleLogin = async () => {
     const token = await login(username, password);
