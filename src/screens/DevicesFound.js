@@ -11,10 +11,9 @@ import {
   Platform,
   PermissionsAndroid,
   Animated,
-  Button,
   Easing,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native'; // Import useNavigation
+import {useNavigation} from '@react-navigation/native';
 import BleManager from 'react-native-ble-manager';
 import {NativeEventEmitter, NativeModules} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,22 +21,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 import Header from './header';
-import teethLogo from '../assets/teechnew.png'; // Tooth logo image path
-import rightArrow from '../assets/CaretRight.png'; // Right arrow icon
-import MagnifyingGlass from '../assets/MagnifyingGlass.png'; // Magnifying Glass image path
+import teethLogo from '../assets/teechnew.png';
+import rightArrow from '../assets/CaretRight.png';
+import MagnifyingGlass from '../assets/MagnifyingGlass.png';
 
 const {width} = Dimensions.get('window');
 
 const DevicesFoundScreen = () => {
   const navigation = useNavigation();
-  const scaleAnim = useRef(new Animated.Value(0)).current; // Scale animation
+  const scaleAnim = useRef(new Animated.Value(0)).current;
 
   const [bluetoothDevices, setBluetoothDevices] = useState([]);
   const [isScanning, setIsScanning] = useState(false);
-  const [bleInitialized, setBleInitialized] = useState(false); // New state to track BleManager initialization
-  const [permissionsGranted, setPermissionsGranted] = useState(false); // New state to track permissions
+  const [bleInitialized, setBleInitialized] = useState(false);
+  const [permissionsGranted, setPermissionsGranted] = useState(false);
 
-  // Request permissions for Android devices
   const requestPermissions = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -55,7 +53,7 @@ const DevicesFoundScreen = () => {
             PermissionsAndroid.RESULTS.GRANTED
         ) {
           console.log('Permissions granted');
-          setPermissionsGranted(true); // Set permissions granted
+          setPermissionsGranted(true);
         } else {
           console.log('Permissions denied');
         }
@@ -63,32 +61,23 @@ const DevicesFoundScreen = () => {
         console.warn(err);
       }
     } else {
-      setPermissionsGranted(true); // On iOS, assume permissions are granted
+      setPermissionsGranted(true);
     }
   };
 
   useEffect(() => {
-    // Request permissions on mount
     requestPermissions();
 
-    // Start BleManager after permissions are requested
     BleManager.start({showAlert: false}).then(() => {
       console.log('Bluetooth module initialized');
-      setBleInitialized(true); // Mark BleManager as initialized
+      setBleInitialized(true);
     });
 
-    // Add listener for discovered peripherals
     const discoverListener = bleManagerEmitter.addListener(
       'BleManagerDiscoverPeripheral',
       peripheral => {
-
-
         setBluetoothDevices(prevDevices => {
-          // Check if the device's name contains "YteG"
-
           if (peripheral.name && peripheral.name.includes('yteG')) {
-          //if (true) {
-            // Avoid adding the same device multiple times
             console.log('Discovered Peripheral:', peripheral);
             const deviceExists = prevDevices.some(
               device => device.id === peripheral.id,
@@ -103,26 +92,23 @@ const DevicesFoundScreen = () => {
     );
 
     return () => {
-      discoverListener.remove(); // Clean up listeners
+      discoverListener.remove();
     };
   }, []);
 
-  // Start scanning for Bluetooth devices when conditions are met
   useEffect(() => {
-    // Only start scanning after permissions are granted and BleManager is initialized
     if (permissionsGranted && bleInitialized) {
-      startScanning();
+      repeatedScan(); // Start continuous scan
     }
   }, [permissionsGranted, bleInitialized]);
 
+  // Function to initiate scanning
   const startScanning = () => {
     if (!isScanning) {
-      BleManager.scan([], 30, true) // Scan for 30 seconds
+      BleManager.scan([], 30, true)
         .then(() => {
           console.log('Scan started...');
           setIsScanning(true);
-
-          // Start animation when scanning starts
           Animated.loop(
             Animated.sequence([
               Animated.timing(scaleAnim, {
@@ -143,34 +129,44 @@ const DevicesFoundScreen = () => {
         .catch(error => {
           console.error('Scan error:', error);
         });
-
-      // Stop scanning after 30 seconds
-      setTimeout(() => {
-        BleManager.stopScan().then(() => {
-          console.log('Scan stopped');
-          setIsScanning(false);
-          scaleAnim.setValue(0); // Reset the animation
-        });
-      }, 20000); // Stop scan after 30 seconds
     }
+  };
+
+  // Function to stop scanning
+  const stopScanning = () => {
+    BleManager.stopScan().then(() => {
+      console.log('Scan stopped');
+      setIsScanning(false);
+      scaleAnim.setValue(0);
+    });
+  };
+
+  // Function to continuously scan
+  const repeatedScan = () => {
+    startScanning();
+    const scanInterval = setInterval(() => {
+      if (!isScanning) {
+        startScanning();
+      }
+    }, 10000); // Adjust interval to restart scan as needed
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(scanInterval);
   };
 
   const renderDeviceItem = (device, index) => (
     <TouchableOpacity
       onPress={async () => {
-        // Save device info to AsyncStorage
         try {
           await AsyncStorage.setItem('selectedDevice', JSON.stringify(device));
           console.log('Device saved:', device);
-
-          // Navigate to the next screen
           navigation.navigate('DeviceDataScreen');
         } catch (error) {
           console.error('Error saving device:', error);
         }
       }}
       style={styles.deviceItemContainer}
-      key={`${device.id}-${index}`} // Use combination of id and index as the key
+      key={`${device.id}-${index}`}
     >
       <View style={styles.deviceInfo}>
         <View style={styles.deviceIconContainer}>
@@ -189,13 +185,12 @@ const DevicesFoundScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {isScanning ? (
+      {bluetoothDevices?.length === 0 ? (
         <>
           <View style={styles.header}>
             <Header title="Devices" />
           </View>
           <View style={styles.waveContainer}>
-            {/* Animated white circles */}
             <Animated.View
               style={[
                 styles.wave,
@@ -224,7 +219,12 @@ const DevicesFoundScreen = () => {
 
           <View style={styles.textContainer}>
             <Image source={MagnifyingGlass} style={styles.MagnifyingGlass} />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('DeviceDataScreen');
+              }}>
             <Text style={styles.scanningText}>Scanning for devices...</Text>
+            </TouchableOpacity>
           </View>
 
           <Text style={styles.instructionsText}>
@@ -246,7 +246,6 @@ const DevicesFoundScreen = () => {
                   source={MagnifyingGlass}
                   style={styles.MagnifyingGlass}
                 />
-                {/* <Text style={styles.selectDeviceText}>Scan Again </Text> */}
               </TouchableOpacity>
             </View>
 
@@ -260,11 +259,11 @@ const DevicesFoundScreen = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Device List */}
           {bluetoothDevices &&
             bluetoothDevices.map((device, index) =>
               renderDeviceItem(device, index),
             )}
+            {/* {renderDeviceItem('anuj',0)} */}
 
           <TouchableOpacity style={styles.helpContainer}>
             <Text style={styles.helpText}>
@@ -346,8 +345,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   deviceIcon: {
-    width: 30,
-    height: 30,
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
   },
   deviceTextContainer: {
     maxWidth: '80%', // Limit width to prevent overflow
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
   },
   header: {
     position: 'absolute',
-    top: 50,
+    top: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },

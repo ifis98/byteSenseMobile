@@ -749,9 +749,9 @@
 		46EB2E000141B0 /* RNRotationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002CF0 /* RNRotationHandler.m */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
 		46EB2E000141C0 /* RNTapHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002D10 /* RNTapHandler.m */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
 		46EB2E000141D0 /* RNGestureHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002D30 /* RNGestureHandler.mm */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
-		46EB2E000141E0 /* RNGestureHandlerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002D60 /* RNGestureHandlerButton.m */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
+		46EB2E000141E0 /* RNGestureHandlerButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002D60 /* RNGestureHandlerButton.mm */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
 		46EB2E000141F0 /* RNGestureHandlerButtonComponentView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002D80 /* RNGestureHandlerButtonComponentView.mm */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
-		46EB2E00014200 /* RNGestureHandlerButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002DA0 /* RNGestureHandlerButtonManager.m */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
+		46EB2E00014200 /* RNGestureHandlerButtonManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002DA0 /* RNGestureHandlerButtonManager.mm */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
 		46EB2E00014210 /* RNGestureHandlerEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002DD0 /* RNGestureHandlerEvents.m */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
 		46EB2E00014220 /* RNGestureHandlerManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002DF0 /* RNGestureHandlerManager.mm */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
 		46EB2E00014230 /* RNGestureHandlerModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46EB2E00002E10 /* RNGestureHandlerModule.mm */; settings = {COMPILER_FLAGS = "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_HAVE_CLOCK_GETTIME=1 -Wno-comma -Wno-shorten-64-to-32"; }; };
@@ -8662,11 +8662,11 @@
 		46EB2E00002D30 /* RNGestureHandler.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = RNGestureHandler.mm; path = apple/RNGestureHandler.mm; sourceTree = "<group>"; };
 		46EB2E00002D40 /* RNGestureHandlerActionType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RNGestureHandlerActionType.h; path = apple/RNGestureHandlerActionType.h; sourceTree = "<group>"; };
 		46EB2E00002D50 /* RNGestureHandlerButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RNGestureHandlerButton.h; path = apple/RNGestureHandlerButton.h; sourceTree = "<group>"; };
-		46EB2E00002D60 /* RNGestureHandlerButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RNGestureHandlerButton.m; path = apple/RNGestureHandlerButton.m; sourceTree = "<group>"; };
+		46EB2E00002D60 /* RNGestureHandlerButton.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = RNGestureHandlerButton.mm; path = apple/RNGestureHandlerButton.mm; sourceTree = "<group>"; };
 		46EB2E00002D70 /* RNGestureHandlerButtonComponentView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RNGestureHandlerButtonComponentView.h; path = apple/RNGestureHandlerButtonComponentView.h; sourceTree = "<group>"; };
 		46EB2E00002D80 /* RNGestureHandlerButtonComponentView.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = RNGestureHandlerButtonComponentView.mm; path = apple/RNGestureHandlerButtonComponentView.mm; sourceTree = "<group>"; };
 		46EB2E00002D90 /* RNGestureHandlerButtonManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RNGestureHandlerButtonManager.h; path = apple/RNGestureHandlerButtonManager.h; sourceTree = "<group>"; };
-		46EB2E00002DA0 /* RNGestureHandlerButtonManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RNGestureHandlerButtonManager.m; path = apple/RNGestureHandlerButtonManager.m; sourceTree = "<group>"; };
+		46EB2E00002DA0 /* RNGestureHandlerButtonManager.mm */ = {isa = PBXFileReference; includeInIndex = 1; name = RNGestureHandlerButtonManager.mm; path = apple/RNGestureHandlerButtonManager.mm; sourceTree = "<group>"; };
 		46EB2E00002DB0 /* RNGestureHandlerDirection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RNGestureHandlerDirection.h; path = apple/RNGestureHandlerDirection.h; sourceTree = "<group>"; };
 		46EB2E00002DC0 /* RNGestureHandlerEvents.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RNGestureHandlerEvents.h; path = apple/RNGestureHandlerEvents.h; sourceTree = "<group>"; };
 		46EB2E00002DD0 /* RNGestureHandlerEvents.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RNGestureHandlerEvents.m; path = apple/RNGestureHandlerEvents.m; sourceTree = "<group>"; };
@@ -13886,11 +13886,11 @@
 				46EB2E00002D30 /* RNGestureHandler.mm */,
 				46EB2E00002D40 /* RNGestureHandlerActionType.h */,
 				46EB2E00002D50 /* RNGestureHandlerButton.h */,
-				46EB2E00002D60 /* RNGestureHandlerButton.m */,
+				46EB2E00002D60 /* RNGestureHandlerButton.mm */,
 				46EB2E00002D70 /* RNGestureHandlerButtonComponentView.h */,
 				46EB2E00002D80 /* RNGestureHandlerButtonComponentView.mm */,
 				46EB2E00002D90 /* RNGestureHandlerButtonManager.h */,
-				46EB2E00002DA0 /* RNGestureHandlerButtonManager.m */,
+				46EB2E00002DA0 /* RNGestureHandlerButtonManager.mm */,
 				46EB2E00002DB0 /* RNGestureHandlerDirection.h */,
 				46EB2E00002DC0 /* RNGestureHandlerEvents.h */,
 				46EB2E00002DD0 /* RNGestureHandlerEvents.m */,
@@ -25097,7 +25097,6 @@
 				en,
 			);
 			mainGroup = 46EB2E00000010;
-			minimizedProjectReferenceProxies = 0;
 			productRefGroup = 46EB2E00000020 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -25700,9 +25699,9 @@
 				46EB2E00014140 /* RNForceTouchHandler.m in Sources */,
 				46EB2E000141D0 /* RNGestureHandler.mm in Sources */,
 				46EB2E000144E0 /* RNGestureHandler-dummy.m in Sources */,
-				46EB2E000141E0 /* RNGestureHandlerButton.m in Sources */,
+				46EB2E000141E0 /* RNGestureHandlerButton.mm in Sources */,
 				46EB2E000141F0 /* RNGestureHandlerButtonComponentView.mm in Sources */,
-				46EB2E00014200 /* RNGestureHandlerButtonManager.m in Sources */,
+				46EB2E00014200 /* RNGestureHandlerButtonManager.mm in Sources */,
 				46EB2E00014210 /* RNGestureHandlerEvents.m in Sources */,
 				46EB2E00014220 /* RNGestureHandlerManager.mm in Sources */,
 				46EB2E00014230 /* RNGestureHandlerModule.mm in Sources */,

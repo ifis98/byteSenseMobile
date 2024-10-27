@@ -33,9 +33,23 @@ import upAroorw from '../assets/upAroorw.png';
 import downArrow from '../assets/downArrow.png';
 import GraphComponent from '../components/GraphComponent';
 import CustomGraph from '../components/CustomGraph';
+import SleepReadiness from '../components/SleepReadiness';
 
 const {width} = Dimensions.get('window');
 
+const MySvgComponent = () => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="4"
+    viewBox="0 0 16 4"
+    fill="none">
+    <Path
+      d="M0.500163 2C0.500163 2.73638 1.09712 3.33333 1.8335 3.33333C2.56988 3.33333 3.16683 2.73638 3.16683 2C3.16683 1.26362 2.56988 0.666667 1.8335 0.666667C1.09712 0.666667 0.500163 1.26362 0.500163 2ZM12.5002 2C12.5002 2.73638 13.0971 3.33333 13.8335 3.33333C14.5699 3.33333 15.1668 2.73638 15.1668 2C15.1668 1.26362 14.5699 0.666667 13.8335 0.666667C13.0971 0.666667 12.5002 1.26362 12.5002 2ZM1.8335 2.25L13.8335 2.25V1.75L1.8335 1.75V2.25Z"
+      fill="#27FFE9"
+    />
+  </Svg>
+);
 const downIcon = () => {
   return (
     <Svg
@@ -55,7 +69,7 @@ const SplashScreen = () => {
   const navigation = useNavigation();
   const dailyByteScoreData = [30, 80, 50, 70, 40, 90, 100];
   const bruxismData = [10, 50, 20, 60, 30, 80, 45];
-  
+
   return (
     <LinearGradient
       colors={['#232323', '#232323', '#232323']}
@@ -69,7 +83,9 @@ const SplashScreen = () => {
             start={{x: 0, y: 0}}
             end={{x: 0.8, y: 1}}>
             <Header showBackArrow={false} title="Sleep Report" />
-            <DateSlider />
+            <View style={styles.dataSliderView}>
+              <DateSlider />
+            </View>
             <View style={styles.statsSection}>
               <View style={styles.heartImageView}>
                 <Image source={heartRate} style={styles.heartImage} />
@@ -185,29 +201,24 @@ const SplashScreen = () => {
           </View>
 
           <Text style={styles.sectionTitle}>Daily Byte Score</Text>
-
-          {/* <View style={{backgroundColor:'red'}}> */}
-          {/* <GraphComponent /> */}
-          <GraphComponent 
-            data={dailyByteScoreData} 
-            color="#27FFE9" 
-          />
+          <GraphComponent data={dailyByteScoreData} color="#00BE2A" />
 
           <Text style={styles.sectionTitle}>Bruxism</Text>
 
           {/* <View style={{backgroundColor:'red'}}> */}
-          <GraphComponent 
-            data={bruxismData} 
-            color="#FF8B02" 
-          />
+          <GraphComponent data={bruxismData} color="#FF8B02" />
 
-          <Text style={styles.sectionTitle}>Activities</Text>
+          <Text style={styles.sectionTitle}>Sleep Readiness</Text>
+          <View style={styles.sleedRadinessView}>
+            <Text style={styles.sleepRed}>93</Text>
+            <Text style={styles.sleepRedText}>Sleep Readiness Score</Text>
+          </View>
+          <SleepReadiness />
 
-          {/* <CustomGraph/> */}
-
-          {/* </View> */}
-
-          {/* Your Trends Section */}
+          <Text style={styles.graphText}>
+         
+      You mostly had a <Text style={styles.lowText}>High</Text> Sleep Readiness Score this week. Your highest Sleep Readiness Score was <Text style={styles.lowText}>67</Text> on <Text style={styles.lowText}>Friday</Text>
+      </Text>
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
@@ -224,7 +235,7 @@ const renderActivity = (activity, time, duration, icon) => (
       <Text style={styles.activityText}>{activity}</Text>
       <View style={styles.activityTimeView}>
         <Text style={styles.activityTextTime}>{time}</Text>
-        <Image source={LineActivity} style={styles.LineActivityImage} />
+        {MySvgComponent()}
 
         <Text style={styles.activityTextTime}>{time}</Text>
       </View>
@@ -329,6 +340,10 @@ const styles = StyleSheet.create({
   textMonthRed: {
     color: '#FF0405',
   },
+  sleepRedText: {
+    color: 'rgba(255, 255, 255, 0.30)',
+    fontSize: 14,
+  },
   monthView: {
     flex: 1,
     justifyContent: 'center',
@@ -413,6 +428,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
   },
+  sleedRadinessView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 18,
+    marginBottom: 5,
+    marginLeft:5,
+  },
+  sleepRed: {
+    color: '#FD3637',
+    fontSize: 24,
+    fontWeight: '500',
+  },
   heartImageView: {
     alignItems: 'flex-start',
     // width: '40%',
@@ -478,7 +508,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     borderRadius: 10,
-    marginVertical: 16,
+    // marginVertical: 24,
+    marginTop: 24,
     marginHorizontal: 16,
     height: 66,
   },
@@ -644,6 +675,24 @@ const styles = StyleSheet.create({
   },
   inactiveTab: {
     backgroundColor: '#555',
+  },
+  dataSliderView: {
+    marginTop: -20,
+  },
+  graphText: {
+    color: 'rgba(255, 255, 255, 0.50)',
+    fontSize: 12,
+    fontWeight: '400',
+    marginHorizontal: 30,
+    marginTop: 14,
+    lineHeight: 18,
+    marginBottom:50,
+  },
+  lowText: {
+    color: 'rgba(255, 255, 255, 0.50)',
+    fontSize: 12,
+    fontWeight: '700',
+    lineHight: 18,
   },
 });
 

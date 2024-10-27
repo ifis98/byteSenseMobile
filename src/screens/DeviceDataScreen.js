@@ -614,7 +614,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#232323',
-    paddingHorizontal: 16,
+    // paddingHorizontal: 16,
   },
   scrollContent: {
     flexGrow: 1,
@@ -773,7 +773,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 5,
     paddingVertical: 20,
     paddingHorizontal: 20,
     gap: 10,

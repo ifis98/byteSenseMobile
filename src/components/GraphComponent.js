@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import {View, Dimensions, StyleSheet, SafeAreaView, Text} from 'react-native';
+import {LineChart} from 'react-native-chart-kit';
 
-const GraphComponent = (props) => {
-  const { data, color } = props;
+const GraphComponent = props => {
+  const {data, color} = props;
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -13,47 +13,56 @@ const GraphComponent = (props) => {
             labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             datasets: [
               {
-                data: data, // Dynamic data passed via props
-                color: (opacity = 1) => color || `rgba(39, 255, 233, ${opacity})`, // Dynamic color via props
-                strokeWidth: 1, // Line thickness
+                data: data, // Single continuous dataset
+                color: (opacity = 1) =>
+                  color || `rgba(39, 255, 233, ${opacity})`, // Overall color function with adjustable opacity
+                strokeWidth: 0.4, // Line thickness
               },
             ],
           }}
-          width={Dimensions.get('window').width - 32} // Adjust width to consider margins
+          width={Dimensions.get('window').width - 32}
           height={250}
           yAxisLabel=""
           chartConfig={{
-            backgroundColor: "#232323", // Set to transparent
-            backgroundGradientFrom: "#232323", // Set to transparent
-            backgroundGradientTo: "#232323", // Set to transparent
-            decimalPlaces: 2, // Adjust as necessary
-            // color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // Line color
+            backgroundColor: '#232323',
+            backgroundGradientFrom: '#232323',
+            backgroundGradientTo: '#232323',
+            decimalPlaces: 2,
             color: (opacity = 1) => `rgba(39, 255, 233, ${opacity})`,
-
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // Axis label color
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {
-              borderRadius: 16, // Rounded corners
+              borderRadius: 16,
             },
             propsForDots: {
               r: '0', // No dots on the line
             },
             propsForBackgroundLines: {
-              strokeDasharray: '5', // Dotted X-axis lines
-              strokeWidth: 1, // X-axis lines
-              stroke: '#333', // Grid line color
+              strokeDasharray: '5',
+              strokeWidth: 1,
+              stroke: '#333',
             },
           }}
-          withDots={false} // No dots on the line
-          withInnerLines={true} // Enable inner grid lines
-          withOuterLines={false} // Disable outer grid lines
-          withShadow={false} // Disable shadow
-          withVerticalLines={false} // Disable Y-axis inner lines
-          withHorizontalLines={true} // Enable X-axis inner lines
+          withDots={false}
+          withInnerLines={true}
+          withOuterLines={false}
+          withShadow={false}
+          withVerticalLines={false}
+          withHorizontalLines={true}
           style={{
-            backgroundColor: 'transparent', // Ensure the chart itself has no background
+            backgroundColor: 'transparent',
           }}
-          bezier={true} // Smooth curve
+          bezier={true}
         />
+         {color === "#00BE2A" && (<Text style={styles.graphText}>
+         
+         You mostly had a <Text style={styles.lowText}>low</Text> Byte Score
+         this week. Your highest Byte Score was <Text style={styles.lowText}>65</Text>  on  <Text style={styles.lowText}>Friday.</Text>
+       </Text>)}
+         {color === "#FF8B02" && (<Text style={styles.graphText}>
+         
+          You had a <Text style={styles.lowText}>High</Text> number of bruxism episodes this week. Your highest number of episodes was <Text style={styles.lowText}>7</Text> on <Text style={styles.lowText}>Friday</Text>
+       </Text>)}
+        
       </View>
     </SafeAreaView>
   );
@@ -62,11 +71,25 @@ const GraphComponent = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: 'transparent', // Ensure the screen background is transparent
+    backgroundColor: 'transparent',
   },
   container: {
-    marginHorizontal: 16, // Margins for the entire container (left and right)
-    backgroundColor: 'transparent', // Ensure the container is also transparent
+    marginHorizontal: 16,
+    backgroundColor: 'transparent',
+  },
+  graphText: {
+    color: 'rgba(255, 255, 255, 0.50)',
+    fontSize: 12,
+    fontWeight: '400',
+    marginHorizontal: 18,
+    marginTop: 14,
+    lineHeight: 18,
+  },
+  lowText: {
+    color: 'rgba(255, 255, 255, 0.50)',
+    fontSize: 12,
+    fontWeight: '700',
+    lineHight: 18,
   },
 });
 

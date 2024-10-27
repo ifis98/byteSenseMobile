@@ -10,8 +10,8 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
-import { useState } from 'react';
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation
+import {useState} from 'react';
 import logo from '../assets/logo.png'; // Your logo image path
 import devicesIcon from '../assets/Devices.png'; // Device icon path
 import profileIcon from '../assets/UserCircle.png'; // Profile icon path
@@ -20,15 +20,14 @@ import helpIcon from '../assets/Question.png'; // Help icon path
 import teethlogo from '../assets/teethlogo.png'; // Help icon path
 import Header from './header';
 
-
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const ProfileScreen = () => {
-    const navigation = useNavigation(); // Initialize navigation using the hook
+  const navigation = useNavigation(); // Initialize navigation using the hook
 
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const toggleSwitch = () => setIsDarkMode((previousState) => !previousState);
+  const toggleSwitch = () => setIsDarkMode(previousState => !previousState);
 
   const renderOption = (icon, title, subtitle, onPress, isSwitch) => (
     <TouchableOpacity onPress={onPress} style={styles.optionContainer}>
@@ -36,12 +35,14 @@ const ProfileScreen = () => {
         <Image source={icon} style={styles.optionIcon} />
         <View>
           <Text style={styles.optionTitle}>{title}</Text>
-          {subtitle ? <Text style={styles.optionSubtitle}>{subtitle}</Text> : null}
+          {subtitle ? (
+            <Text style={styles.optionSubtitle}>{subtitle}</Text>
+          ) : null}
         </View>
       </View>
       {isSwitch ? (
         <Switch
-          trackColor={{ false: '#767577', true: '#FD0405' }}
+          trackColor={{false: '#767577', true: '#FD0405'}}
           thumbColor={isDarkMode ? '#f4f3f4' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
@@ -55,8 +56,10 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-      <Header title="Home" />
+      <ScrollView
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}>
+        <Header title="Home" />
         <View style={styles.logoContainer}>
           <Image source={teethlogo} style={styles.teethlogo} />
         </View>
@@ -64,9 +67,31 @@ const ProfileScreen = () => {
           <Image source={logo} style={styles.logo} />
         </View>
 
-        {renderOption(devicesIcon, 'Devices', '0 Device Connected', () => {navigation.navigate('ScanningForDeviceScreen');}, false)}
-        {renderOption(profileIcon, 'Profile', 'Check your profile details', () => {}, false)}
-        {renderOption(observersIcon, 'Observers', '0 No Observer Yet!', () => {navigation.navigate('ObserverScreen');}, false)}
+        {renderOption(
+          devicesIcon,
+          'Devices',
+          '0 Device Connected',
+          () => {
+            navigation.navigate('ScanningForDeviceScreen');
+          },
+          false,
+        )}
+        {renderOption(
+          profileIcon,
+          'Profile',
+          'Check your profile details',
+          () => {},
+          false,
+        )}
+        {renderOption(
+          observersIcon,
+          'Observers',
+          '0 No Observer Yet!',
+          () => {
+            navigation.navigate('ObserverScreen');
+          },
+          false,
+        )}
         {renderOption(helpIcon, 'Help', 'Need Help?', () => {}, false)}
       </ScrollView>
     </SafeAreaView>
@@ -78,8 +103,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#232323',
   },
-  teethlogo:{
-    marginBottom:-350
+  teethlogo: {
+    marginBottom: -350,
   },
   container: {
     paddingHorizontal: 16,
