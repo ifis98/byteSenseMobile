@@ -88,6 +88,11 @@ const DeviceDataScreen = () => {
   const [graphData, setGraphData] = useState([
     {data: [], color: 'rgba(0, 190, 42, 1)'},
   ]);
+  // const [graphData, setGraphData] = useState([
+  //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
+  //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
+  // ]);
+
   const butterbandCoeffs = {
     b: [0.24777184, 0, -0.74331552, 0, 0.74331552, 0, -0.24777184],
     a: [
