@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,15 +9,17 @@ import {
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
-import {useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // For clearing user token
 import logo from '../assets/logo.png'; // Your logo image path
 import devicesIcon from '../assets/Devices.png'; // Device icon path
 import profileIcon from '../assets/UserCircle.png'; // Profile icon path
 import observersIcon from '../assets/UserCheck.png'; // Observers icon path
 import helpIcon from '../assets/Question.png'; // Help icon path
-import teethlogo from '../assets/teethlogo.png'; // Help icon path
+import logoutIcon from '../assets/UserCircle.png'; // Logout icon path
+import teethlogo from '../assets/teethlogo.png'; // Logo path
 import Header from './header';
 
 const {width} = Dimensions.get('window');
@@ -28,6 +30,24 @@ const ProfileScreen = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleSwitch = () => setIsDarkMode(previousState => !previousState);
+
+  const handleLogout = async () => {
+    // Show confirmation alert before logging out
+    Alert.alert('Logout', 'Are you sure you want to log out?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Logout',
+        style: 'destructive',
+        onPress: async () => {
+          await AsyncStorage.removeItem('userToken'); // Clear user token
+          navigation.replace('Login'); // Navigate back to the login screen
+        },
+      },
+    ]);
+  };
 
   const renderOption = (icon, title, subtitle, onPress, isSwitch) => (
     <TouchableOpacity onPress={onPress} style={styles.optionContainer}>
@@ -93,6 +113,9 @@ const ProfileScreen = () => {
           false,
         )}
         {renderOption(helpIcon, 'Help', 'Need Help?', () => {}, false)}
+
+        {/* Logout Option */}
+        {renderOption(logoutIcon, 'Logout', null, handleLogout, false)}
       </ScrollView>
     </SafeAreaView>
   );

@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1, // Take up all the available space
-    height: 40,
+    height: 50,
     padding: 12,
     color: '#FFFFFF', // Text color inside TextInput
     fontFamily: 'Ubuntu',

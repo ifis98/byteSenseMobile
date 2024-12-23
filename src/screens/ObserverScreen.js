@@ -10,6 +10,7 @@ import {
   Dimensions,
   SafeAreaView,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
@@ -139,7 +140,7 @@ const ObserverScreen = () => {
             </View>
           </View>
           {isLoading ? (
-            <Text style={styles.loadingText}>Loading...</Text>
+             <ActivityIndicator size="large" color="#FD0405" />
           ) : (
             observers.map((observer, index) => renderDeviceItem(observer, index))
           )}

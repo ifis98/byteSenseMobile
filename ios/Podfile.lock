@@ -1264,7 +1264,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-safe-area-context (4.12.0):
+  - react-native-safe-area-context (4.14.1):
     - React-Core
   - React-nativeconfig (0.75.3)
   - React-NativeModulesApple (0.75.3):
@@ -1526,11 +1526,13 @@ PODS:
     - React-logger (= 0.75.3)
     - React-perflogger (= 0.75.3)
     - React-utils (= 0.75.3)
+  - RNAppleHealthKit (1.7.0):
+    - React
   - RNCAsyncStorage (2.0.0):
     - React-Core
   - RNCMaskedView (0.3.1):
     - React-Core
-  - RNGestureHandler (2.20.2):
+  - RNGestureHandler (2.20.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1551,9 +1553,9 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNPermissions (5.0.2):
+  - RNPermissions (5.0.0):
     - React-Core
-  - RNReanimated (3.16.1):
+  - RNReanimated (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1573,32 +1575,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 3.16.1)
-    - RNReanimated/worklets (= 3.16.1)
+    - RNReanimated/reanimated (= 3.15.3)
+    - RNReanimated/worklets (= 3.15.3)
     - Yoga
-  - RNReanimated/reanimated (3.16.1):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated/apple (= 3.16.1)
-    - Yoga
-  - RNReanimated/reanimated/apple (3.16.1):
+  - RNReanimated/reanimated (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1619,7 +1599,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated/worklets (3.16.1):
+  - RNReanimated/worklets (3.15.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1640,7 +1620,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.35.0):
+  - RNScreens (3.34.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1756,6 +1736,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNAppleHealthKit (from `../node_modules/react-native-health`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -1903,6 +1884,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNAppleHealthKit:
+    :path: "../node_modules/react-native-health"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
@@ -1962,7 +1945,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 4943ad8f99be8ccf5a63329fa7d269816609df9e
   react-native-ble-manager: 3a9e5edf9dbf7fe076807edcd45e46d62a37ca72
   react-native-ble-plx: 0a3f7bd84bd819bf1c32e003d083eaa3f2082ecb
-  react-native-safe-area-context: 142fade490cbebbe428640b8cbdb09daf17e8191
+  react-native-safe-area-context: 141eca0fd4e4191288dfc8b96a7c7e1c2983447a
   React-nativeconfig: 4a9543185905fe41014c06776bf126083795aed9
   React-NativeModulesApple: 0506da59fc40d2e1e6e12a233db5e81c46face27
   React-perflogger: 3bbb82f18e9ac29a1a6931568e99d6305ef4403b
@@ -1989,12 +1972,13 @@ SPEC CHECKSUMS:
   React-utils: f2afa6acd905ca2ce7bb8ffb4a22f7f8a12534e8
   ReactCodegen: ff95a93d5ab5d9b2551571886271478eaa168565
   ReactCommon: 289214026502e6a93484f4a46bcc0efa4f3f2864
+  RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
   RNCAsyncStorage: d35c79ffba52c1013013e16b1fc295aec2feabb6
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
-  RNGestureHandler: 511250b190a284388f9dd0d2e56c1df76f14cfb8
-  RNPermissions: 5c05d8106720987a2171efdcd47d79ceeb6b7d74
-  RNReanimated: f42a5044d121d68e91680caacb0293f4274228eb
-  RNScreens: c7ceced6a8384cb9be5e7a5e88e9e714401fd958
+  RNGestureHandler: 6dfe7692a191ee224748964127114edf057a1475
+  RNPermissions: d6b630aeb20d688a5973c66ff64d2a38d800c12a
+  RNReanimated: c543567b3482ea54dec3216811d2360e581d35d0
+  RNScreens: 19719a9c326e925498ac3b2d35c4e50fe87afc06
   RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
   RNVectorIcons: 6382277afab3c54658e9d555ee0faa7a37827136
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d

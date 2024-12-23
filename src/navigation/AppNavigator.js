@@ -23,6 +23,7 @@ import AddDeviceScreen from '../screens/AddDeviceScreen';
 import DevicesFoundScreen from '../screens/DevicesFound';
 import DeviceFoundScreen from '../screens/DeviceFoundScreen';
 import DeviceDataScreen from '../screens/DeviceDataScreen';
+import AppleHealth from '../screens/AppleHealth'; // Import the AppleHealth screen
 
 
 const Stack = createStackNavigator();
@@ -35,7 +36,7 @@ const HomeTabs = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: '#2B2D2E',
-          height: 50,
+          height: 70,
           borderTopWidth: 0,
         },
         headerShown:false
@@ -60,6 +61,18 @@ const HomeTabs = () => {
             <Image
               source={focused ? squrefourredsqurefourred  : SquaresFourgray}
               style={{width:24,height:24,resizeMode: 'contain'}}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="AppleHealth"
+        component={AppleHealth}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? chartred : ChartBarGrey}
+              style={{ width: 24, height: 24, resizeMode: 'contain' }}
             />
           ),
         }}

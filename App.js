@@ -6,6 +6,8 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {ActivityIndicator} from 'react-native';
 import {ThemeProvider} from './src/context/ThemeContext';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();
 
 const App = () => {
   return (

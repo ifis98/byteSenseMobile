@@ -48,14 +48,7 @@ const AddObserver = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isRequestPageOpen, setIsRequestPageOpen] = useState(false);
   const [observers, setObservers] = useState([
-    {
-      name: 'Jim Tyree',
-      email: 'John@bruxaway.com',
-    },
-    {
-      name: 'Michel',
-      email: 'michel@bruxaway.com',
-    },
+   
   ]);
 
   const toggleSwitch = () => setIsDarkMode(previousState => !previousState);

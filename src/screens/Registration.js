@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useState} from 'react';
 import {
   View,
   Image,
@@ -13,18 +11,19 @@ import {
   Platform,
   ScrollView,
   Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ActivityIndicator,
 } from 'react-native';
-import { setUser } from '../redux/userSlice';
 import ButtonComponent from '../components/Button';
 import logo from '../assets/logo.png';
 import eclipse from '../assets/eclipse.png';
 import InputComponent from '../components/InputComponent';
-import { register } from '../api/api';  // Import the register API
+import {register} from '../api/api'; // Import the register API
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-const Registration = ({ navigation }) => {
-  const dispatch = useDispatch();
+const Registration = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
@@ -35,12 +34,29 @@ const Registration = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const handleCreateAccount = async () => {
+    if (
+      !firstName ||
+      !lastName ||
+      !username ||
+      !email ||
+      !password ||
+      !confirmPassword
+    ) {
+      Alert.alert('Error', 'Please fill in all fields.');
+      return;
+    }
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Alert.alert('Error', 'Please enter a valid email address.');
+      return;
+    }
     if (password !== confirmPassword) {
       Alert.alert('Error', 'Passwords do not match');
       return;
     }
 
-    setLoading(true);
+    setLoading(true); // Show loading indicator
     try {
       const response = await register(
         firstName,
@@ -49,16 +65,18 @@ const Registration = ({ navigation }) => {
         email,
         password,
         confirmPassword,
-        isDoctor
+        isDoctor,
       );
-      Alert.alert('Success', 'Account created successfully!');
-
-
-      navigation.navigate('Login');
+      setLoading(false); // Hide loading indicator
+      Alert.alert('Success', 'Account created successfully!', [
+        {text: 'OK', onPress: () => navigation.navigate('Login')},
+      ]);
     } catch (error) {
-      Alert.alert('Registration Error', error.message); // Show any errors
-    } finally {
-      setLoading(false);
+      setLoading(false); // Hide loading indicator
+      Alert.alert(
+        'Registration Error',
+        error.message || 'Something went wrong. Please try again.',
+      );
     }
   };
 
@@ -67,100 +85,114 @@ const Registration = ({ navigation }) => {
   };
 
   return (
-    <ScrollView 
-      contentContainerStyle={styles.scrollContainer}
-      showsVerticalScrollIndicator={false}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.safeArea}
-      >
-        <SafeAreaView style={styles.safeArea}>
-          <View style={styles.logoWithDotContainer}>
-            <Image style={styles.tinyLogoMain} source={eclipse} />
-            <View style={styles.dot} />
-          </View>
-          <View style={styles.logoContainerImg}>
-            <Image style={styles.tinyLogo} source={logo} />
-          </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+       <KeyboardAvoidingView
+        style={{flex: 1, backgroundColor: '#232323'}}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}>
+        <View
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={80} // Adjust this offset for better alignment
 
-          <View style={styles.inputWrapperRow}>
-            <View style={styles.inputWrapperHalf}>
+          style={styles.safeArea}>
+          <SafeAreaView style={styles.safeArea}>
+            {/* <View style={styles.logoWithDotContainer}>
+              <Image style={styles.tinyLogoMain} source={eclipse} />
+              <View style={styles.dot} />
+            </View> */}
+            <View style={styles.logoContainerImg}>
+              <Image style={styles.tinyLogo} source={logo} />
+            </View>
+
+            <View style={styles.inputWrapperRow}>
+              <View style={styles.inputWrapperHalf}>
+                <InputComponent
+                  label="First name"
+                  placeholder="Enter first name"
+                  value={firstName}
+                  onChangeText={text => setFirstName(text)}
+                />
+              </View>
+              <View style={styles.inputWrapperHalf}>
+                <InputComponent
+                  label="Last name"
+                  placeholder="Enter last name"
+                  value={lastName}
+                  onChangeText={text => setLastName(text)}
+                />
+              </View>
+            </View>
+
+            <View style={styles.inputWrapper}>
               <InputComponent
-                label="First name"
-                placeholder="Enter first name"
-                value={firstName}
-                onChangeText={text => setFirstName(text)}
+                label="Username"
+                placeholder="Enter username"
+                value={username}
+                onChangeText={text => setUsername(text)}
               />
             </View>
-            <View style={styles.inputWrapperHalf}>
+
+            <View style={styles.inputWrapper}>
               <InputComponent
-                label="Last name"
-                placeholder="Enter last name"
-                value={lastName}
-                onChangeText={text => setLastName(text)}
+                label="Email"
+                placeholder="Enter email"
+                value={email}
+                onChangeText={text => setEmail(text)}
               />
             </View>
-          </View>
 
-          <View style={styles.inputWrapper}>
-            <InputComponent
-              label="Username"
-              placeholder="Enter username"
-              value={username}
-              onChangeText={text => setUsername(text)}
-            />
-          </View>
+            <View style={styles.inputWrapper}>
+              <InputComponent
+                label="Password"
+                placeholder="Enter your password"
+                value={password}
+                onChangeText={text => setPassword(text)}
+                isPassword
+              />
+            </View>
 
-          <View style={styles.inputWrapper}>
-            <InputComponent
-              label="Email"
-              placeholder="Enter email"
-              value={email}
-              onChangeText={text => setEmail(text)}
-            />
-          </View>
+            <View style={styles.inputWrapper}>
+              <InputComponent
+                label="Confirm password"
+                placeholder="Enter your password"
+                value={confirmPassword}
+                onChangeText={text => setConfirmPassword(text)}
+                isPassword
+              />
+            </View>
 
-          <View style={styles.inputWrapper}>
-            <InputComponent
-              label="Password"
-              placeholder="Enter your password"
-              value={password}
-              onChangeText={text => setPassword(text)}
-              isPassword
-            />
-          </View>
+          
+            <View style={styles.loginButton}>
+              {loading ? (
+                <ActivityIndicator size="large" color="#FD0405" />
+              ) : (
+                <ButtonComponent
+                  onPress={handleCreateAccount}
+                  title="Sign up"
+                  buttonStyle={styles.signUpButton}
+                />
+              )}
+            </View>
 
-          <View style={styles.inputWrapper}>
-            <InputComponent
-              label="Confirm password"
-              placeholder="Enter your password"
-              value={confirmPassword}
-              onChangeText={text => setConfirmPassword(text)}
-              isPassword
-            />
-          </View>
-
-
-          <View style={styles.loginButton}>
-            <ButtonComponent onPress={handleCreateAccount} title={loading ? 'Creating...' : 'Sign up'} buttonStyle={styles.signUpButton} />
-          </View>
-
-          <TouchableOpacity onPress={handleLogin} style={styles.loginButtonContainer}>
+            <TouchableOpacity onPress={()=>{handleLogin();}} style={styles.loginButtonContainer}>
             <Text style={styles.text}>Already have an account?</Text>
             <Text style={styles.textLogin}>Login</Text>
           </TouchableOpacity>
-        </SafeAreaView>
+          </SafeAreaView>
+        </View>
+      </ScrollView>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'center', // Centers content when there's extra space
-    alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   inputWrapper: {
     width: '100%',
@@ -171,20 +203,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: 10,
-    marginTop:-50,
+    marginTop: -50,
   },
   inputWrapperHalf: {
     width: '48%',
   },
   tinyLogoMain: {
     marginLeft: -200,
-    marginTop:-150,
+    marginTop: -150,
   },
   logoWithDotContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height:170,
+    height: 170,
   },
   dot: {
     width: 6,
@@ -192,14 +224,14 @@ const styles = StyleSheet.create({
     borderRadius: 89,
     backgroundColor: '#858688', // var(--Grey-grey-600, #858688)
     marginLeft: -170, // Adds spacing between the image and the dot
-    marginTop:50,
+    marginTop: 50,
   },
   logoContainerImg: {
     height: height * 0.2, // Adjust height dynamically based on screen size
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 30,
-    marginTop:-56,
+    marginTop: -56,
   },
   buttonContainer: {
     width: '100%',
@@ -214,7 +246,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     width: '100%',
     backgroundColor: '#232323',
     paddingHorizontal: 16,
@@ -250,6 +282,5 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
 });
-
 
 export default Registration;
