@@ -80,7 +80,7 @@ const DeviceDataScreen = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [services, setServices] = useState([]);
   const [characteristics, setCharacteristics] = useState([]);
-  const [syncInProgress, setSyncInProgress] = useState(false);
+  const [syncInProgress, setSyncInPr fogress] = useState(false);
   const [HR, setHR] = useState(79);
   const [HRV, setHRV] = useState(72);
   const [testHR, setTestHR] = useState(0);
@@ -211,6 +211,43 @@ const DeviceDataScreen = () => {
         console.error('Error starting notification:', error);
       });
   };
+  
+  const handleStream = (streamValues) => {
+    let value1 = 0;
+    let value2 = 0;
+    let value3 = 0;
+    let value4 = 0;
+    if(streamValues[0]){
+      value1 = streamValues[0]
+    }
+    
+    if(global.offset1 == null){
+      global.offset1 = value1
+    }
+ 
+    let adjusted1 = Math.abs(value1-global.offset1)
+  
+    
+    if(adjusted1<0){
+      adjusted1 = 0
+    }
+
+    
+    pushValue(ppgGraphBuffer, 100, adjusted1);
+
+    //console.log("Buffer Length:" + ppgGraphBuffer.length)
+
+    let graphPayload = [
+      {data: ppgGraphBuffer, color: 'rgba(0, 190, 42, 1)'},
+      //{ data: respGraphBuffer, color: 'rgba(255, 139, 2, 1)' },
+    ];
+    if (doUpdate()) {
+      setGraphData(graphPayload);
+    }
+
+
+  }
+
 
   // Function to decipher the received notification data
   const decipherNotification = async value => {
@@ -447,6 +484,10 @@ const DeviceDataScreen = () => {
     if (identifier == 0) {
       let batteryValue = (splitIdentifier[1] / 4095.0) * 3.6 * 2;
       setBatteryPercentage(batteryValue);
+    }
+    else if(identifier == 1){
+      let streamValues = splitIdentifier.slice(1,splitIdentifier.length)
+      handleStream(streamValues)
     }
     // Add logic here to handle the identified data
   };
