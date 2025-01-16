@@ -166,8 +166,7 @@ const DevicesFoundScreen = () => {
         }
       }}
       style={styles.deviceItemContainer}
-      key={`${device.id}-${index}`}
-    >
+      key={`${device.id}-${index}`}>
       <View style={styles.deviceInfo}>
         <View style={styles.deviceIconContainer}>
           <Image source={teethLogo} style={styles.deviceIcon} />
@@ -220,10 +219,11 @@ const DevicesFoundScreen = () => {
           <View style={styles.textContainer}>
             <Image source={MagnifyingGlass} style={styles.MagnifyingGlass} />
             <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('DeviceDataScreen');
-              }}>
-            <Text style={styles.scanningText}>Scanning for devices...</Text>
+            // onPress={() => {
+            //   navigation.navigate('DeviceDataScreen');
+            // }}
+            >
+              <Text style={styles.scanningText}>Scanning for devices...</Text>
             </TouchableOpacity>
           </View>
 
@@ -263,7 +263,7 @@ const DevicesFoundScreen = () => {
             bluetoothDevices.map((device, index) =>
               renderDeviceItem(device, index),
             )}
-            {/* {renderDeviceItem('anuj',0)} */}
+          {/* {renderDeviceItem('anuj',0)} */}
 
           <TouchableOpacity style={styles.helpContainer}>
             <Text style={styles.helpText}>

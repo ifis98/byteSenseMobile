@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -9,17 +9,17 @@ import {
   Easing,
   Dimensions,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 
 import MagnifyingGlass from '../assets/MagnifyingGlass.png'; // Magnifying Glass image path
 import Header from './header';
 import teethLogo from '../assets/teechnew.png'; // Teeth logo image path
 import BluetoothScanner from './BluetoothScanner';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const ScanningForDeviceScreen = () => {
-    const navigation = useNavigation(); // Initialize navigation using the hook
+  const navigation = useNavigation(); // Initialize navigation using the hook
 
   const scaleAnim = useRef(new Animated.Value(0)).current; // Scale animation
 
@@ -39,7 +39,7 @@ const ScanningForDeviceScreen = () => {
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
-      ])
+      ]),
     ).start();
   }, [scaleAnim]);
 
@@ -49,14 +49,13 @@ const ScanningForDeviceScreen = () => {
         <Header title="Devices" />
       </View>
 
-
-      <View style={styles.waveContainer} >
+      <View style={styles.waveContainer}>
         {/* Animated white circles */}
         <Animated.View
           style={[
             styles.wave,
             {
-              transform: [{ scale: scaleAnim }],
+              transform: [{scale: scaleAnim}],
             },
           ]}
         />
@@ -64,7 +63,14 @@ const ScanningForDeviceScreen = () => {
           style={[
             styles.wave,
             {
-              transform: [{ scale: scaleAnim.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1.2] }) }],
+              transform: [
+                {
+                  scale: scaleAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.7, 1.2],
+                  }),
+                },
+              ],
             },
           ]}
         />
@@ -73,7 +79,12 @@ const ScanningForDeviceScreen = () => {
 
       <View style={styles.textContainer}>
         <Image source={MagnifyingGlass} style={styles.MagnifyingGlass} />
-        <Text style={styles.scanningText} onPress={()=>{navigation.navigate('AddDeviceScreen');}}>Scanning for device...</Text>
+        <Text
+          style={styles.scanningText}
+          // onPress={()=>{navigation.navigate('AddDeviceScreen');}}
+        >
+          Scanning for device...
+        </Text>
       </View>
 
       <Text style={styles.instructionsText}>

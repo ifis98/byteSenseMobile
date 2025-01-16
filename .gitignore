@@ -15,8 +15,6 @@ local.properties
 .idea/
 /*.iml
 /.cxx/
-/*.keystore
-/app/key.properties
 
 # Node.js
 node_modules/
