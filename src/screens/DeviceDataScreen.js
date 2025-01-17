@@ -250,7 +250,7 @@ const DeviceDataScreen = () => {
       console.log(hexHR)
       let nibbles = hexHR.match(/.{1,2}/g);
       let bigEndian =  nibbles[1] + nibbles[0];
-      let HRvalue = bigEndian/256
+      let HRvalue = (parseInt(bigEndian, 16))/256
       console.log("HR stream: "+HRvalue)
       setHR(HRvalue)
       setTestHR(HRvalue)
