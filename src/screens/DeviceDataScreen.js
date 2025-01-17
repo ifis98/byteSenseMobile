@@ -162,7 +162,7 @@ const DeviceDataScreen = () => {
   const discoverServicesAndCharacteristics = deviceId => {
     BleManager.retrieveServices(deviceId)
       .then(peripheralInfo => {
-        console.log('Peripheral info:', peripheralInfo);
+        //console.log('Peripheral info:', peripheralInfo);
 
         // Store services and characteristics
         setServices(peripheralInfo.services || []);
@@ -214,7 +214,7 @@ const DeviceDataScreen = () => {
 
   // Function to decipher the received notification data
   const decipherNotification = async value => {
-    //console.log('Processing notification data...');
+    console.log('Processing notification data...');
 
     // Convert the base64 value to a hex string
     let hexValue = Buffer.from(value, 'base64').toString('hex');
@@ -225,17 +225,41 @@ const DeviceDataScreen = () => {
     let splitIdentifier = [];
 
     // Process larger data packets
+    // if (hexValue.length < 100) {
+    //   let hexHR = hexvalue.slice(-8)// Split into chunks
+    //   let nibbles = hexHR.match(/.{1,2}/g);
+    //   let bigEndian = nibbles[3] + nibbles[2] + nibbles[1] + nibbles[0];
+    //   let HRvalue = bigEndian/256// Process these samples (implement processSamples)
+    //   setHR(HRvalue)
+    //   setTestHR(HRvalue)
+
+    //   console.log('Small Hex value:' + hexValue + ' '+ hexValue.length);
+    // } 
     if (hexValue.length >= 100) {
       hexValue = hexValue.slice(4);
+      // let hexHR = hexvalue.slice(-8)// Split into chunks
+      // let nibbles = hexHR.match(/.{1,2}/g);
+      // let bigEndian = nibbles[3] + nibbles[2] + nibbles[1] + nibbles[0];
+      // let HRvalue = bigEndian/256// Process these samples (implement processSamples)
+      // setHR(HRvalue)
+      // setTestHR(HRvalue)
       let samples = hexValue.match(/.{1,8}/g); // Split into chunks
       processSamples(samples); // Process these samples (implement processSamples)
-
-      console.log('Hex value:', hexValue);
+      console.log('Long Hex value:' + hexValue + ' '+ hexValue.length);
+      let hexHR = hexValue.slice(-4)
+      console.log(hexHR)
+      let nibbles = hexHR.match(/.{1,2}/g);
+      let bigEndian =  nibbles[1] + nibbles[0];
+      let HRvalue = bigEndian/256
+      console.log("HR stream: "+HRvalue)
+      setHR(HRvalue)
+      setTestHR(HRvalue)
+      //console.log('Hex value:', hexValue);
     } else if (stringValue.includes(',')) {
       // Handle data with commas (e.g., CSV-like data)
       splitIdentifier = stringValue.split(',');
       handleIdentify(splitIdentifier); // Implement handleIdentify function to manage the parsed data
-
+      
       console.log('String value:', stringValue);
     } else if (stringValue.includes(':')) {
       // Handle data with a time-based format
@@ -421,11 +445,11 @@ const DeviceDataScreen = () => {
 
     let smoothedHR = NoiseReducedRunningAvg(HR, realTimeHR);
     let smoothedHRV = NoiseReducedRunningAvg(HRV, realTimeHRV);
-    console.log(realTimeHR);
+    //console.log(realTimeHR);
 
-    setHR(smoothedHR);
+    //setHR(smoothedHR);
     setHRV(smoothedHRV);
-    setTestHR(realTimeHR);
+    //setTestHR(realTimeHR);
     setTestHRV(realTimeHRV);
 
     //console.log("HR: "+realTimeHR)
@@ -477,8 +501,8 @@ const DeviceDataScreen = () => {
     //   return;
     // }
 
-    console.log('Polling battery status...');
-    sendMessage('battery');
+    //console.log('Polling battery status...');
+    //sendMessage('battery');
   };
 
   useEffect(() => {
