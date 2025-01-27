@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Image,
@@ -34,6 +34,7 @@ import downArrow from '../assets/downArrow.png';
 import GraphComponent from '../components/GraphComponent';
 import CustomGraph from '../components/CustomGraph';
 import SleepReadiness from '../components/SleepReadiness';
+import healthData from '../hard_data/DashboardData.json'; // Import your health data JSON
 
 const {width} = Dimensions.get('window');
 
@@ -67,8 +68,83 @@ const downIcon = () => {
 };
 const SplashScreen = () => {
   const navigation = useNavigation();
-  const dailyByteScoreData = [30, 80, 50, 70, 40, 90, 100];
-  const bruxismData = [10, 50, 20, 60, 30, 80, 45];
+  // const dailyByteScoreData = [30, 80, 50, 70, 40, 90, 100];
+  // const bruxismData = [10, 50, 20, 60, 30, 80, 45];
+  // const dailyByteScoreData = [30, 80, 50, 70, 40, 90, 100];
+  // const bruxismData = [10, 50, 20, 60, 30, 80, 45];
+  const dailyByteScoreData = [0, 0, 0, 0, 0, 0, 0];
+  const bruxismData = [0, 0, 0, 0, 0, 0, 0];
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split('T')[0],
+  ); // Default to today's date
+  const [hr, setHr] = useState('--');
+  const [hrv, setHrv] = useState('--');
+  const [score, setScore] = useState('--');
+  const [selectedDateIndex, setSelectedDateIndex] = useState(0); // Default to first date
+
+  const calculateAverages = data => {
+    if (!data || data.length <= 1) return {avgHR: 0, avgHRV: 0};
+
+    // Exclude the latest date (last element in the array)
+    const filteredData = data.slice(0, data.length - 1);
+
+    const total = filteredData.reduce(
+      (acc, curr) => {
+        acc.totalHR += curr.HR;
+        acc.totalHRV += curr.HRV;
+        return acc;
+      },
+      {totalHR: 0, totalHRV: 0},
+    );
+
+    const count = filteredData.length;
+    return {
+      avgHR: parseInt(total.totalHR / count, 10),
+      avgHRV: parseInt(total.totalHRV / count, 10),
+    };
+  };
+
+  const {avgHR, avgHRV} = calculateAverages(healthData);
+
+  // Function to handle date changes
+  const handleDateChange = index => {
+    setSelectedDateIndex(index);
+    const selectedDateData = healthData[index]; // Direct access by index
+    if (selectedDateData) {
+      setHr(selectedDateData.HR || '--');
+      setHrv(selectedDateData.HRV || '--');
+      const hr = selectedDateData.HR;
+      const hrv = selectedDateData.HRV;
+      let calculatedScore = (70 - hr) * 2 + (hrv - 20);
+      if (calculatedScore % 2 !== 0) {
+        calculatedScore += 1; // Make the score even if it's odd
+      }
+      setScore(calculatedScore);
+    } else {
+      setHr('--');
+      setHrv('--');
+      setScore(0);
+    }
+  };
+
+  // Effect to calculate score whenever HR or HRV changes
+  // useEffect(() => {
+  //   if (hr !== '--' && hrv !== '--') {
+  //     const calculatedScore = (70 - hr) * 2 + (hrv - 20);
+  //     setScore(calculatedScore);
+  //   } else {
+  //     setScore(0);
+  //   }
+  // }, [hr, hrv]);
+  useEffect(() => {
+    // Optionally initialize the data if needed
+    handleDateChange(selectedDateIndex);
+  }, []);
+
+  const getColorForScore = score => {
+    const threshold = 60; // 60% of 100 in this case
+    return score > threshold ? ['#0f3d3e', '#232323'] : ['#0f3d3e', '#232323'];
+  };
 
   return (
     <LinearGradient
@@ -79,19 +155,24 @@ const SplashScreen = () => {
       <SafeAreaView style={styles.safeArea}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <LinearGradient
-            colors={['#0f3d3e', '#232323']}
+            colors={getColorForScore(score)}
             start={{x: 0, y: 0}}
             end={{x: 0.8, y: 1}}>
             <Header showBackArrow={false} title="Sleep Report" />
             <View style={styles.dataSliderView}>
-              <DateSlider />
+              <DateSlider
+                healthData={healthData}
+                handleDateChange={handleDateChange}
+                selectedDateIndex={selectedDateIndex}
+                setSelectedDateIndex={handleDateChange}
+              />
             </View>
             <View style={styles.statsSection}>
               <View style={styles.heartImageView}>
                 <Image source={heartRate} style={styles.heartImage} />
                 <Text style={styles.rhrStyle}>RHR</Text>
                 <View style={styles.rhrView}>
-                  <Text style={styles.rhrValueStyle}>83</Text>
+                  <Text style={styles.rhrValueStyle}>{hr}</Text>
                   <Text style={styles.rhrBpmStyle}>bpm</Text>
                 </View>
               </View>
@@ -102,13 +183,13 @@ const SplashScreen = () => {
                 <Image source={cardiogram} style={styles.heartImage} />
                 <Text style={styles.rhrStyle}>HRV</Text>
                 <View style={styles.rhrView}>
-                  <Text style={styles.rhrValueStyle}>33</Text>
+                  <Text style={styles.rhrValueStyle}>{hrv}</Text>
                   <Text style={styles.rhrBpmStyle}>ms</Text>
                 </View>
               </View>
             </View>
             <View style={styles.container2}>
-              <HalfCircleSVGs selectedIndex={80} />
+              <HalfCircleSVGs selectedIndex={score} />
             </View>
           </LinearGradient>
 
@@ -124,7 +205,7 @@ const SplashScreen = () => {
                 <View style={styles.bruxismViewContent}>
                   <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
                   <Text style={styles.bruxismValue}>
-                    6 <Text style={styles.rhrBpmStyle}>min</Text>
+                    -- <Text style={styles.rhrBpmStyle}>min</Text>
                   </Text>
                 </View>
               </View>
@@ -135,7 +216,7 @@ const SplashScreen = () => {
                 <Image source={episode} style={styles.timerImage} />
                 <View style={styles.bruxismViewContent}>
                   <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
-                  <Text style={styles.bruxismValue}>14</Text>
+                  <Text style={styles.bruxismValue}>--</Text>
                 </View>
               </View>
             </View>
@@ -155,20 +236,20 @@ const SplashScreen = () => {
             <Text style={styles.sectionTitlePrev}>vs. Previous 30 days</Text>
           </View>
           <View style={styles.keyStatistics}>
-            {renderKeyStatistic('HRV', '33', '46', false, cardiogram2)}
-            {renderKeyStatistic('RHR', '83', '85', true, hearblack)}
-            {renderKeyStatistic('Respiratory rate', '13.2', '46', true, lungs)}
+            {renderKeyStatistic('HRV', hrv, avgHRV, false, cardiogram2)}
+            {renderKeyStatistic('RHR', hr, avgHR, true, hearblack)}
+            {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
             {renderKeyStatistic(
               'Bruxism Episodes',
-              '14',
-              '17',
+              '--',
+              '--',
               false,
               dentalTooth,
             )}
             {renderKeyStatistic(
               'Bruxism Duration',
-              '62',
-              '52',
+              '--',
+              '--',
               false,
               dentalCare,
             )}
@@ -210,15 +291,17 @@ const SplashScreen = () => {
 
           <Text style={styles.sectionTitle}>Sleep Readiness</Text>
           <View style={styles.sleedRadinessView}>
-            <Text style={styles.sleepRed}>93</Text>
+            <Text style={styles.sleepRed}>0</Text>
             <Text style={styles.sleepRedText}>Sleep Readiness Score</Text>
           </View>
-          <SleepReadiness />
+          {/* <SleepReadiness /> */}
 
           <Text style={styles.graphText}>
-         
-      You mostly had a <Text style={styles.lowText}>High</Text> Sleep Readiness Score this week. Your highest Sleep Readiness Score was <Text style={styles.lowText}>67</Text> on <Text style={styles.lowText}>Friday</Text>
-      </Text>
+            You mostly had a <Text style={styles.lowText}>High</Text> Sleep
+            Readiness Score this week. Your highest Sleep Readiness Score was{' '}
+            <Text style={styles.lowText}>67</Text> on{' '}
+            <Text style={styles.lowText}>Friday</Text>
+          </Text>
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
@@ -436,7 +519,7 @@ const styles = StyleSheet.create({
     gap: 6,
     paddingHorizontal: 18,
     marginBottom: 5,
-    marginLeft:5,
+    marginLeft: 5,
   },
   sleepRed: {
     color: '#FD3637',
@@ -686,7 +769,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginTop: 14,
     lineHeight: 18,
-    marginBottom:50,
+    marginBottom: 50,
   },
   lowText: {
     color: 'rgba(255, 255, 255, 0.50)',

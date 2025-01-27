@@ -30,6 +30,7 @@ const LoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
   // const [username, setUsername] = useState('joerogan');
   // const [password, setPassword] = useState('joerogan');
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);

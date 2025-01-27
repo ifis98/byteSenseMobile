@@ -8,13 +8,13 @@ import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import SplashScreen from '../screens/SplashScreen';
 import Registration from '../screens/Registration';
-import ChartBar from '../assets/ChartBar.png';  // Replace with your actual icon paths
-import ChartBarGrey from '../assets/Vectorgrey.png';  // Replace with your actual icon paths
-import SquaresFourgray from '../assets/squrefourgrey.png';  // Replace with your actual icon paths
-import squrefourredsqurefourred from '../assets/squrefourred.png';  // Replace with your actual icon paths
-import SquaresFour from '../assets/SquaresFour.png';  // Replace with your actual icon paths
-import squrefourred from '../assets/squrefourred.png';  // Replace with your actual icon paths
-import chartred from '../assets/chartred.png';  // Replace with your actual icon paths
+import ChartBar from '../assets/ChartBar.png'; // Replace with your actual icon paths
+import ChartBarGrey from '../assets/Vectorgrey.png'; // Replace with your actual icon paths
+import SquaresFourgray from '../assets/squrefourgrey.png'; // Replace with your actual icon paths
+import squrefourredsqurefourred from '../assets/squrefourred.png'; // Replace with your actual icon paths
+import SquaresFour from '../assets/SquaresFour.png'; // Replace with your actual icon paths
+import squrefourred from '../assets/squrefourred.png'; // Replace with your actual icon paths
+import chartred from '../assets/chartred.png'; // Replace with your actual icon paths
 import ProfileScreen from '../screens/ProfileScreen';
 import ObserverScreen from '../screens/ObserverScreen';
 import AddObserver from '../screens/AddObserver';
@@ -24,7 +24,6 @@ import DevicesFoundScreen from '../screens/DevicesFound';
 import DeviceFoundScreen from '../screens/DeviceFoundScreen';
 import DeviceDataScreen from '../screens/DeviceDataScreen';
 import AppleHealth from '../screens/AppleHealth'; // Import the AppleHealth screen
-
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,7 +38,7 @@ const HomeTabs = () => {
           height: 70,
           borderTopWidth: 0,
         },
-        headerShown:false
+        headerShown: false,
       }}>
       <Tab.Screen
         name="Tab1"
@@ -47,8 +46,8 @@ const HomeTabs = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={focused ? chartred  : ChartBarGrey}
-              style={{width:24,height:24,resizeMode: 'contain'}}
+              source={focused ? chartred : ChartBarGrey}
+              style={{width: 24, height: 24, resizeMode: 'contain'}}
             />
           ),
         }}
@@ -59,8 +58,8 @@ const HomeTabs = () => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={focused ? squrefourredsqurefourred  : SquaresFourgray}
-              style={{width:24,height:24,resizeMode: 'contain'}}
+              source={focused ? squrefourredsqurefourred : SquaresFourgray}
+              style={{width: 24, height: 24, resizeMode: 'contain'}}
             />
           ),
         }}
@@ -69,14 +68,14 @@ const HomeTabs = () => {
         name="AppleHealth"
         component={AppleHealth}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({focused}) => (
             <Image
               source={focused ? chartred : ChartBarGrey}
-              style={{ width: 24, height: 24, resizeMode: 'contain' }}
+              style={{width: 24, height: 24, resizeMode: 'contain'}}
             />
           ),
         }}
-      /> 
+      />
     </Tab.Navigator>
   );
 };
@@ -103,7 +102,8 @@ const AppNavigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isLoggedIn ? 'HomeTabs' : 'SplashScreen'}>
+      <Stack.Navigator
+        initialRouteName={isLoggedIn ? 'HomeTabs' : 'SplashScreen'}>
         <Stack.Screen
           name="Login"
           component={LoginScreen}

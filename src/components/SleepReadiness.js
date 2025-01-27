@@ -1,8 +1,18 @@
 import React from 'react';
-import { View, Dimensions, StyleSheet,Text } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import {View, Dimensions, StyleSheet, Text} from 'react-native';
+import {LineChart} from 'react-native-chart-kit';
 
 const SleepReadiness = () => {
+  // const data = {
+  //   labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  //   datasets: [
+  //     {
+  //       data: [20, 45, 28, 60, 65, 43, 50], // Example data
+  //       color: () => `rgba(255, 255, 255, 0.1)`, // Line color with low opacity
+  //       strokeWidth: 2, // Line thickness
+  //     },
+  //   ],
+  // };
   const data = {
     labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     datasets: [
@@ -15,9 +25,9 @@ const SleepReadiness = () => {
   };
 
   const chartConfig = {
-    backgroundColor: "#232323",
-    backgroundGradientFrom: "#232323",
-    backgroundGradientTo: "#232323",
+    backgroundColor: '#232323',
+    backgroundGradientFrom: '#232323',
+    backgroundGradientTo: '#232323',
     decimalPlaces: 0,
     color: () => `rgba(255, 255, 255, 0.1)`, // Color for grid lines and line
     labelColor: () => `rgba(255, 255, 255, 1)`, // X-axis label color in white
@@ -80,13 +90,13 @@ const SleepReadiness = () => {
                   position: 'absolute',
                   height: '100%',
                   width: 1,
-                  left: (Dimensions.get('window').width) * (3 / 6), // Position at Wednesday (3rd index)
+                  left: Dimensions.get('window').width * (3 / 6), // Position at Wednesday (3rd index)
                   borderLeftWidth: 1,
                   borderColor: 'rgba(255, 255, 255, 0.3)',
                   borderStyle: 'dashed',
                 }}
               />
-              
+
               {/* Red dot at Wednesday */}
               <View
                 style={{
@@ -105,7 +115,6 @@ const SleepReadiness = () => {
           );
         }}
       />
-    
     </View>
   );
 };
@@ -116,8 +125,8 @@ const styles = StyleSheet.create({
   },
   chart: {
     // marginVertical: 8,
-    marginHorizontal:16,
-    
+    marginHorizontal: 16,
+
     // borderRadius: 16,
   },
   graphText: {

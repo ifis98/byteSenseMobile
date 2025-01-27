@@ -1,24 +1,33 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import moment from 'moment';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.3; // Width for each item
 
-const DateSlider = () => {
+const DateSlider = props => {
   const currentDate = moment();
   const flatListRef = useRef(null);
-  const [selectedDateIndex, setSelectedDateIndex] = useState(null); // No default selected date
+  // const [selectedDateIndex, setSelectedDateIndex] = useState(null); // No default selected date
 
   // Generate a large array of dates to simulate infinite scrolling
-  const dates = Array.from({ length: 100 }, (_, i) =>
-    currentDate.clone().add(i - 10, 'days')
-  ); // 50 past and 50 future dates
+  // const dates = Array.from({length: 100}, (_, i) =>
+  //   currentDate.clone().add(i - 10, 'days'),
+  // ); // 50 past and 50 future dates
+
+  const dates = props?.healthData.map(data => moment(data.Date));
 
   // Ensure the selected date is always in the center
-  const handleScroll = (event) => {
+  const handleScroll = event => {
     const index = Math.round(event.nativeEvent.contentOffset.x / ITEM_WIDTH);
-    setSelectedDateIndex(index);
+    props.setSelectedDateIndex(index);
   };
 
   // Provide the item layout so FlatList can efficiently scroll to index
@@ -29,8 +38,8 @@ const DateSlider = () => {
   });
 
   // Handle failures when scrolling to index
-  const onScrollToIndexFailed = (info) => {
-    const wait = new Promise((resolve) => setTimeout(resolve, 500)); // Wait for 500ms
+  const onScrollToIndexFailed = info => {
+    const wait = new Promise(resolve => setTimeout(resolve, 500)); // Wait for 500ms
     wait.then(() => {
       flatListRef.current?.scrollToIndex({
         index: info.index,
@@ -39,12 +48,20 @@ const DateSlider = () => {
     });
   };
 
-  const renderItem = ({ item, index }) => {
-    const isSelected = index === selectedDateIndex;
+  const renderItem = ({item, index}) => {
+    const isSelected = index === props.selectedDateIndex;
     return (
-      <TouchableOpacity onPress={() => setSelectedDateIndex(index)}>
-        <View style={[styles.dateContainer, isSelected && styles.selectedDateContainer]}>
-          <Text style={[styles.dateText, isSelected ? styles.selectedDateText : styles.unselectedDateText]}>
+      <TouchableOpacity onPress={() => props.setSelectedDateIndex(index)}>
+        <View
+          style={[
+            styles.dateContainer,
+            isSelected && styles.selectedDateContainer,
+          ]}>
+          <Text
+            style={[
+              styles.dateText,
+              isSelected ? styles.selectedDateText : styles.unselectedDateText,
+            ]}>
             {item.format('ddd, MMM DD')}
           </Text>
         </View>
@@ -91,7 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 31,
     backgroundColor: 'rgba(255, 255, 255, 0.06)',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.04,
     shadowRadius: 4,
   },
