@@ -64,7 +64,7 @@ const HomeTabs = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="AppleHealth"
         component={AppleHealth}
         options={{
@@ -75,7 +75,7 @@ const HomeTabs = () => {
             />
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

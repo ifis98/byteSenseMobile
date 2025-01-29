@@ -62,7 +62,11 @@ const DateSlider = props => {
               styles.dateText,
               isSelected ? styles.selectedDateText : styles.unselectedDateText,
             ]}>
-            {item.format('ddd, MMM DD')}
+            {index === 0
+              ? 'Today'
+              : index === 1
+              ? 'Yesterday'
+              : item.format('ddd, MMM DD')}
           </Text>
         </View>
       </TouchableOpacity>
@@ -84,6 +88,8 @@ const DateSlider = props => {
         snapToInterval={ITEM_WIDTH}
         getItemLayout={getItemLayout} // Use getItemLayout to define item dimensions
         onScrollToIndexFailed={onScrollToIndexFailed} // Handle index scroll failures
+        ListFooterComponent={<View style={{paddingHorizontal: 20}} />}
+        inverted
       />
     </View>
   );
