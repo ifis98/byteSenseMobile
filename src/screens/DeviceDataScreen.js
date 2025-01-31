@@ -98,6 +98,7 @@ const DeviceDataScreen = () => {
   //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
   //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
   // ]);
+  const dataStartTime = useRef(0);
 
   const butterbandCoeffs = {
     b: [0.24777184, 0, -0.74331552, 0, 0.74331552, 0, -0.24777184],
@@ -128,7 +129,7 @@ const DeviceDataScreen = () => {
   let ppgGraphBuffer = [];
   let respGraphBuffer = [];
   let updateCounter = 0;
-  let dataStartTime = 0;
+  //let dataStartTime = 0;
   let deviceSolid = null
 
   useEffect(() => {
@@ -280,23 +281,27 @@ const DeviceDataScreen = () => {
   // Function to decipher the received notification data
   const parseReading = (value) => {
     let sensorLittleEndian = value.match(/.{1,4}/g)
-    let sensorValues = []
 
-    for (let item of sensorLittleEndian){
-      let nibbles = item.match(/.{1,2}/g)
-      let sensorValueHex = nibbles[1]+nibbles[0]
-      //console.log(sensorValueHex+'\n')
-      let sensorValue = parseInt(sensorValueHex,16)
-      if ((sensorValue & 0x8000) > 0) {
-        sensorValue = sensorValue - 0x10000;
-      }
-      if(sensorValue < 0){
-        sensorValue = 0
-      }
-      //console.log(sensorValue+'\n\n')
-      sensorValues.push(sensorValue)
-    }
-    return sensorValues
+    let HRhex = sensorLittleEndian[0]
+    let bytes = HRhex.match(/.{1,2}/g);
+    let bigEndian =  bytes[1] + bytes[0];
+    let HRvalue = (parseInt(bigEndian, 16))/256
+
+    return HRvalue
+  }
+
+  parseTime = (time) => {
+    let timeValues = time.match(/.{1,2}/g)
+    let hours = parseInt(timeValues[3],16)
+    let minutes = parseInt(timeValues[2],16)
+    let seconds = parseInt(timeValues[1],16)
+    let milliseconds = parseInt(timeValues[0],16)*100
+    console.log('Data Start Time: '+dataStartTime.current)
+    let startms = dataStartTime.current.getTime()
+    console.log('start ms: '+startms)
+    let addms = (hours*60*60*1000)+(minutes*60*1000)+(seconds*1000)+milliseconds
+    console.log('add ms: '+addms)
+    return new Date(startms+addms)
   }
   
   const processSync = (syncSamples) => {
@@ -307,13 +312,24 @@ const DeviceDataScreen = () => {
       //console.log(sample)
       if(sample != "0000000000000000" && sample.length == sampleLength){
         let split = sample.match(/.{1,8}/g)
-        let sensorValues = parseReading(split[1])
+        console.log('sample split: '+split)
+        let sensorValue = parseReading(split[1])
+        console.log("HR: "+sensorValue)
         let time = parseTime(split[0])
+        console.log("Time: "+time)
+
+        dataPoint = {
+          HR: sensorValue,
+          ts: time
+        }
+
+        console.log('Data Point: '+ dataPoint)
 
         //console.log(dataPoint)
         data.push(dataPoint)
       }
     }
+    console.log(JSON.stringify(data, null, 2))
 
   }
 
@@ -360,7 +376,12 @@ const DeviceDataScreen = () => {
 
     //   console.log('Small Hex value:' + hexValue + ' '+ hexValue.length);
     // } 
-    if (hexValue.length >= 100) {
+    if(hexValue.length >= 120){
+      console.log('Sync Hex: ' + hexValue + ' '+ hexValue.length)
+      let syncSamples = hexValue.match(/.{1,16}/g)
+      processSync(syncSamples)
+    }
+    else if (hexValue.length >= 100) {
       hexValue = hexValue.slice(4);
       // let hexHR = hexvalue.slice(-8)// Split into chunks
       // let nibbles = hexHR.match(/.{1,2}/g);
@@ -382,10 +403,6 @@ const DeviceDataScreen = () => {
       setTestHR(HRvalue)
       //console.log('Hex value:', hexValue);
     } 
-    else if(hexValue.length >= 128){
-      let syncSamples = hexValue.match(/.{1,16}/g)
-      processSync(syncSamples)
-    }
     else if (stringValue.includes(',')) {
       // Handle data with commas (e.g., CSV-like data)
       splitIdentifier = stringValue.split(',');
@@ -614,7 +631,7 @@ const DeviceDataScreen = () => {
       let framIdentifier = splitIdentifier[1]
       if(framIdentifier == 8){
         console.log("Time Received: "+splitIdentifier[2])
-        dataStartTime = new Date(splitIdentifier[2]*1000)
+        dataStartTime.current = new Date(splitIdentifier[2]*1000)
         let currentTime = Math.floor(new Date().getTime()/1000)
         console.log("Time Sent: "+currentTime)
         sendMessage("data_sync,"+currentTime)
