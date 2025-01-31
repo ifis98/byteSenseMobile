@@ -22,6 +22,11 @@ import BleManager from 'react-native-ble-manager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {findRealTimeHR, findRealTimeResp} from './HRCalc';
 import GraphComponentMultiple from '../components/GraphComponentMultiple';
+import key from '../plucky-spirit-449505-n7-1fc621d70923.json'
+import RNFS from 'react-native-fs';
+import Mailer from 'react-native-mail';
+
+
 
 const MySvgComponent = () => (
   <Svg
@@ -145,6 +150,62 @@ const DeviceDataScreen = () => {
     getDeviceInfo();
   }, []);
 
+  const writeJsonToFile = async (jsonData) => {
+    const fileName = 'data.json';
+    const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
+    const jsonString = JSON.stringify(jsonData, null, 2);
+
+    try {
+      await RNFS.writeFile(filePath, jsonString, 'utf8');
+      console.log('File written successfully:', filePath);
+      return filePath;
+    } catch (error) {
+      console.error('Error writing file:', error);
+      throw error;
+    }
+  };
+
+  const sendEmail = async (filePath) => {
+    Mailer.mail(
+      {
+        subject: 'JSON File Attachment', // Email subject
+        recipients: ['jjarrenjacob@gmail.com'], // Replace with your email
+        body: 'Please find the JSON file attached.', // Email body
+        isHTML: false,
+        attachments: [
+          {
+            path: filePath, // Path to the file
+            type: 'json', // MIME type for JSON
+            name: 'data.json', // Name of the attachment
+          },
+        ],
+      },
+      (error, event) => {
+        if (error) {
+          console.error('Error sending email:', error);
+          Alert.alert('Error', 'Failed to send email.');
+        } else {
+          console.log('Email sent successfully:', event);
+          Alert.alert('Success', 'Email sent with JSON file!');
+        }
+      }
+    );
+  };
+
+  const handleSendEmail = async () => {
+    try {
+      const filePath = await writeJsonToFile({
+        name: 'Test Data',
+        timestamp: new Date().toISOString(),
+        value: 'This is a test JSON object.',
+      });
+      
+      await sendEmail(filePath);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const connectToDevice = deviceId => {
     BleManager.connect(deviceId)
       .then(() => {
@@ -251,6 +312,7 @@ const DeviceDataScreen = () => {
       let nibbles = hexHR.match(/.{1,2}/g);
       let bigEndian =  nibbles[1] + nibbles[0];
       let HRvalue = (parseInt(bigEndian, 16))/256
+      HRValue = Math.round(HRValue)
       console.log("HR stream: "+HRvalue)
       setHR(HRvalue)
       setTestHR(HRvalue)
