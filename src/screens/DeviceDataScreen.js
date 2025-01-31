@@ -597,12 +597,12 @@ const DeviceDataScreen = () => {
 
   const sendMessage = message => {
     if (device) {
-      let processedMessage = new Buffer(message + '\n').toString('base64');
-      BleManager.writeCharacteristicWithoutResponseForDevice(
+      let processedMessage = Buffer.from(message);
+      BleManager.writeWithoutResponse(
         device.id,
         SERVICEUUID,
         characteristicWUUID,
-        processedMessage,
+        processedMessage.toJSON.data,
       )
         .then(() => {
           console.log(`Message sent: ${message}`);
