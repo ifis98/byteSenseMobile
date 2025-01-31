@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   DeviceEventEmitter,
+  Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
@@ -77,6 +78,10 @@ const calibrate = () => (
 
 // const colabriate = () => ()
 const DeviceDataScreen = () => {
+  const [syncInProgress, setSyncInProgress] = useState(false);
+  const syncTimeoutRef = useRef(null);
+  const syncData = useRef([])
+
   const [device, setDevice] = useState(null);
   const deviceRef = useRef(null);
   const fileName = useRef('');
@@ -86,7 +91,6 @@ const DeviceDataScreen = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [services, setServices] = useState([]);
   const [characteristics, setCharacteristics] = useState([]);
-  const [syncInProgress, setSyncInProgress] = useState(false);
   const [HR, setHR] = useState(79);
   const [HRV, setHRV] = useState(72);
   const [testHR, setTestHR] = useState(0);
@@ -175,7 +179,8 @@ const DeviceDataScreen = () => {
     Mailer.mail(
       {
         subject: 'JSON File Attachment', // Email subject
-        recipients: ['jjarrenjacob@gmail.com'], // Replace with your email
+        recipients: ['sarnab@bytesense.ai'], // Replace with your email
+        ccRecipients: ['jjarrenjacob@gmail.com'],
         body: 'Please find the JSON file attached.', // Email body
         isHTML: false,
         attachments: [
@@ -193,6 +198,7 @@ const DeviceDataScreen = () => {
         } else {
           console.log('Email sent successfully:', event);
           Alert.alert('Success', 'Email sent with JSON file!');
+          syncData.current = []
         }
       }
     );
@@ -327,7 +333,7 @@ const DeviceDataScreen = () => {
       }
     }
     console.log(JSON.stringify(data, null, 2))
-    handleSendEmail(data)
+    syncData.current.push(...data);
 
   }
 
@@ -363,30 +369,30 @@ const DeviceDataScreen = () => {
     let identifier;
     let splitIdentifier = [];
 
-    // Process larger data packets
-    // if (hexValue.length < 100) {
-    //   let hexHR = hexvalue.slice(-8)// Split into chunks
-    //   let nibbles = hexHR.match(/.{1,2}/g);
-    //   let bigEndian = nibbles[3] + nibbles[2] + nibbles[1] + nibbles[0];
-    //   let HRvalue = bigEndian/256// Process these samples (implement processSamples)
-    //   setHR(HRvalue)
-    //   setTestHR(HRvalue)
-
-    //   console.log('Small Hex value:' + hexValue + ' '+ hexValue.length);
-    // } 
     if(hexValue.length >= 120){
       console.log('Sync Hex: ' + hexValue + ' '+ hexValue.length)
       let syncSamples = hexValue.match(/.{1,16}/g)
       processSync(syncSamples)
+
+      if (!syncInProgress) {
+        setSyncInProgress(true);
+        // If you need to clear any old data, do so here:
+        // setSyncData([]);
+      }
+
+      if (syncTimeoutRef.current) {
+        clearTimeout(syncTimeoutRef.current);
+      }
+      syncTimeoutRef.current = setTimeout(() => {
+        // If we get here, no new large packet arrived for 5s
+        setSyncInProgress(false);
+
+        // Now that sync ended, email your data
+        handleSendEmail(syncData.current);
+      }, 5000);
     }
     else if (hexValue.length >= 100) {
       hexValue = hexValue.slice(4);
-      // let hexHR = hexvalue.slice(-8)// Split into chunks
-      // let nibbles = hexHR.match(/.{1,2}/g);
-      // let bigEndian = nibbles[3] + nibbles[2] + nibbles[1] + nibbles[0];
-      // let HRvalue = bigEndian/256// Process these samples (implement processSamples)
-      // setHR(HRvalue)
-      // setTestHR(HRvalue)
       let samples = hexValue.match(/.{1,8}/g); // Split into chunks
       processSamples(samples); // Process these samples (implement processSamples)
       console.log('Long Hex value:' + hexValue + ' '+ hexValue.length);
