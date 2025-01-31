@@ -315,7 +315,7 @@ const DeviceDataScreen = () => {
 
 
   const decipherNotification = async value => {
-    console.log('Processing notification data...');
+    //console.log('Processing notification data...');
 
     // Convert the base64 value to a hex string
     let hexValue = Buffer.from(value, 'base64').toString('hex');
@@ -348,12 +348,12 @@ const DeviceDataScreen = () => {
       processSamples(samples); // Process these samples (implement processSamples)
       console.log('Long Hex value:' + hexValue + ' '+ hexValue.length);
       let hexHR = hexValue.slice(-4)
-      console.log(hexHR)
+      //console.log(hexHR)
       let nibbles = hexHR.match(/.{1,2}/g);
       let bigEndian =  nibbles[1] + nibbles[0];
       let HRvalue = (parseInt(bigEndian, 16))/256
       HRValue = Math.round(HRValue)
-      console.log("HR stream: "+HRvalue)
+      //console.log("HR stream: "+HRvalue)
       setHR(HRvalue)
       setTestHR(HRvalue)
       //console.log('Hex value:', hexValue);
@@ -371,6 +371,9 @@ const DeviceDataScreen = () => {
     } else if (stringValue.includes(':')) {
       // Handle data with a time-based format
       console.log('Clock:', stringValue);
+      let currentTime = Math.floor(new Date().getTime()/1000)
+      console.log("Time Sent: "+currentTime)
+      sendMessage('data_sync,'+currentTime)
     } else {
       console.log('Unknown format:', stringValue);
     }
@@ -597,12 +600,14 @@ const DeviceDataScreen = () => {
 
   const sendMessage = message => {
     if (device) {
-      let processedMessage = Buffer.from(message);
-      BleManager.writeWithoutResponse(
+      console.log(device.id)
+      let processedMessage = Buffer.from(message+'\n');
+      console.log(processedMessage.toJSON().data)
+      BleManager.write(
         device.id,
         SERVICEUUID,
         characteristicWUUID,
-        processedMessage.toJSON.data,
+        processedMessage.toJSON().data,
       )
         .then(() => {
           console.log(`Message sent: ${message}`);
@@ -659,7 +664,7 @@ const DeviceDataScreen = () => {
               <View>
                 <Text style={styles.deviceName}>byteGuard</Text>
                 <View style={styles.syncTextView}>
-                  <Text style={styles.syncText} onPress={startSync()}>Sync</Text>
+                  <Text style={styles.syncText} onPress={startSync}>Sync</Text>
                 </View>
               </View>
             </View>
