@@ -22,7 +22,6 @@ import BleManager from 'react-native-ble-manager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {findRealTimeHR, findRealTimeResp} from './HRCalc';
 import GraphComponentMultiple from '../components/GraphComponentMultiple';
-import key from '../plucky-spirit-449505-n7-1fc621d70923.json'
 import RNFS from 'react-native-fs';
 import Mailer from 'react-native-mail';
 
@@ -128,6 +127,7 @@ const DeviceDataScreen = () => {
   let ppgGraphBuffer = [];
   let respGraphBuffer = [];
   let updateCounter = 0;
+  let dataStartTime = 0;
 
   useEffect(() => {
     // Retrieve the selected device info
@@ -274,6 +274,46 @@ const DeviceDataScreen = () => {
   };
 
   // Function to decipher the received notification data
+  const parseReading = (value) => {
+    let sensorLittleEndian = value.match(/.{1,4}/g)
+    let sensorValues = []
+
+    for (let item of sensorLittleEndian){
+      let nibbles = item.match(/.{1,2}/g)
+      let sensorValueHex = nibbles[1]+nibbles[0]
+      //console.log(sensorValueHex+'\n')
+      let sensorValue = parseInt(sensorValueHex,16)
+      if ((sensorValue & 0x8000) > 0) {
+        sensorValue = sensorValue - 0x10000;
+      }
+      if(sensorValue < 0){
+        sensorValue = 0
+      }
+      //console.log(sensorValue+'\n\n')
+      sensorValues.push(sensorValue)
+    }
+    return sensorValues
+  }
+  
+  const processSync = (syncSamples) => {
+
+    let sampleLength = 16
+    let data = []
+    for(let sample of syncSamples){
+      //console.log(sample)
+      if(sample != "0000000000000000" && sample.length == sampleLength){
+        let split = sample.match(/.{1,8}/g)
+        let sensorValues = parseReading(split[1])
+        let time = parseTime(split[0])
+
+        //console.log(dataPoint)
+        data.push(dataPoint)
+      }
+    }
+
+  }
+
+
   const decipherNotification = async value => {
     console.log('Processing notification data...');
 
@@ -317,7 +357,12 @@ const DeviceDataScreen = () => {
       setHR(HRvalue)
       setTestHR(HRvalue)
       //console.log('Hex value:', hexValue);
-    } else if (stringValue.includes(',')) {
+    } 
+    else if(hexValue.length >= 128){
+      let syncSamples = hexValue.match(/.{1,16}/g)
+      processSync(syncSamples)
+    }
+    else if (stringValue.includes(',')) {
       // Handle data with commas (e.g., CSV-like data)
       splitIdentifier = stringValue.split(',');
       handleIdentify(splitIdentifier); // Implement handleIdentify function to manage the parsed data
@@ -527,6 +572,9 @@ const DeviceDataScreen = () => {
   };
 
   // Placeholder function to handle identify logic
+
+  
+
   const handleIdentify = splitIdentifier => {
     console.log('Handling identify:', splitIdentifier);
     let identifier = splitIdentifier[0];
@@ -534,6 +582,16 @@ const DeviceDataScreen = () => {
       let batteryValue = (splitIdentifier[1] / 4095.0) * 3.6 * 2;
       setBatteryPercentage(batteryValue);
     }
+    if (identifier == 2) {
+      let framIdentifier = splitIdentifier[1]
+      if(framIdentifier == 8){
+        console.log("Time Received: "+splitIdentifier[2])
+        dataStartTime = new Date(splitIdentifier[2]*1000)
+        let currentTime = Math.floor(new Date().getTime()/1000)
+        console.log("Time Sent: "+currentTime)
+        this.sendMessage('data_sync,'+currentTime)
+    }
+  }
     // Add logic here to handle the identified data
   };
 
@@ -556,6 +614,11 @@ const DeviceDataScreen = () => {
       console.error('Device not connected');
     }
   };
+
+  const startSync = () => {
+    sendMessage('get_time')
+    console.log('Sync Pressed')
+  }
 
   const batteryPoll = () => {
     // if (syncInProgress) {
@@ -596,7 +659,7 @@ const DeviceDataScreen = () => {
               <View>
                 <Text style={styles.deviceName}>byteGuard</Text>
                 <View style={styles.syncTextView}>
-                  <Text style={styles.syncText}>Sync</Text>
+                  <Text style={styles.syncText} onPress={startSync()}>Sync</Text>
                 </View>
               </View>
             </View>
