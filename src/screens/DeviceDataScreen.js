@@ -79,6 +79,7 @@ const calibrate = () => (
 const DeviceDataScreen = () => {
   const [device, setDevice] = useState(null);
   const deviceRef = useRef(null);
+  const fileName = useRef('');
   const navigation = useNavigation();
   const [batteryPercentage, setBatteryPercentage] = useState(null);
   const [realTimeData, setRealTimeData] = useState(null);
@@ -156,7 +157,7 @@ const DeviceDataScreen = () => {
   }, []);
 
   const writeJsonToFile = async (jsonData) => {
-    const fileName = 'data.json';
+    fileName.current = 'Sample_'+new Date().getTime()+'.json';
     const filePath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
     const jsonString = JSON.stringify(jsonData, null, 2);
 
@@ -181,7 +182,7 @@ const DeviceDataScreen = () => {
           {
             path: filePath, // Path to the file
             type: 'json', // MIME type for JSON
-            name: 'data.json', // Name of the attachment
+            name: fileName.current, // Name of the attachment
           },
         ],
       },
@@ -197,13 +198,9 @@ const DeviceDataScreen = () => {
     );
   };
 
-  const handleSendEmail = async () => {
+  const handleSendEmail = async (data) => {
     try {
-      const filePath = await writeJsonToFile({
-        name: 'Test Data',
-        timestamp: new Date().toISOString(),
-        value: 'This is a test JSON object.',
-      });
+      const filePath = await writeJsonToFile(data);
       
       await sendEmail(filePath);
     } catch (error) {
@@ -330,6 +327,7 @@ const DeviceDataScreen = () => {
       }
     }
     console.log(JSON.stringify(data, null, 2))
+    handleSendEmail(data)
 
   }
 
