@@ -1,103 +1,1974 @@
 [
-  {"Date": "2025-01-27", "HR": 58, "HRV": 42},
-  {"Date": "2025-01-27", "HR": 53, "HRV": 47},
-  {"Date": "2025-01-26", "HR": 56, "HRV": 45},
-  {"Date": "2025-01-25", "HR": 48, "HRV": 52},
-  {"Date": "2025-01-24", "HR": 54, "HRV": 41},
-  {"Date": "2025-01-23", "HR": 60, "HRV": 43},
-  {"Date": "2025-01-22", "HR": 50, "HRV": 57},
-  {"Date": "2025-01-21", "HR": 45, "HRV": 38},
-  {"Date": "2025-01-20", "HR": 43, "HRV": 55},
-  {"Date": "2025-01-19", "HR": 58, "HRV": 48},
-  {"Date": "2025-01-18", "HR": 51, "HRV": 39},
-  {"Date": "2025-01-17", "HR": 55, "HRV": 44},
-  {"Date": "2025-01-16", "HR": 47, "HRV": 46},
-  {"Date": "2025-01-15", "HR": 52, "HRV": 40},
-  {"Date": "2025-01-14", "HR": 49, "HRV": 35},
-  {"Date": "2025-01-13", "HR": 46, "HRV": 59},
-  {"Date": "2025-01-12", "HR": 59, "HRV": 50},
-  {"Date": "2025-01-11", "HR": 57, "HRV": 42},
-  {"Date": "2025-01-10", "HR": 40, "HRV": 36},
-  {"Date": "2025-01-09", "HR": 54, "HRV": 54},
-  {"Date": "2025-01-08", "HR": 48, "HRV": 46},
-  {"Date": "2025-01-07", "HR": 44, "HRV": 58},
-  {"Date": "2025-01-06", "HR": 59, "HRV": 49},
-  {"Date": "2025-01-05", "HR": 56, "HRV": 37},
-  {"Date": "2025-01-04", "HR": 53, "HRV": 60},
-  {"Date": "2025-01-03", "HR": 46, "HRV": 42},
-  {"Date": "2025-01-02", "HR": 58, "HRV": 55},
-  {"Date": "2025-01-01", "HR": 52, "HRV": 39},
-  {"Date": "2024-12-31", "HR": 49, "HRV": 57},
-  {"Date": "2024-12-30", "HR": 60, "HRV": 50},
-  {"Date": "2024-12-29", "HR": 45, "HRV": 46},
-  {"Date": "2024-12-28", "HR": 55, "HRV": 40},
-  {"Date": "2024-12-27", "HR": 50, "HRV": 36},
-  {"Date": "2024-12-26", "HR": 57, "HRV": 51},
-  {"Date": "2024-12-25", "HR": 44, "HRV": 44},
-  {"Date": "2024-12-24", "HR": 41, "HRV": 38},
-  {"Date": "2024-12-23", "HR": 59, "HRV": 45},
-  {"Date": "2024-12-22", "HR": 56, "HRV": 55},
-  {"Date": "2024-12-21", "HR": 48, "HRV": 42},
-  {"Date": "2024-12-20", "HR": 52, "HRV": 47},
-  {"Date": "2024-12-19", "HR": 60, "HRV": 52},
-  {"Date": "2024-12-18", "HR": 58, "HRV": 41},
-  {"Date": "2024-12-17", "HR": 46, "HRV": 57},
-  {"Date": "2024-12-16", "HR": 49, "HRV": 50},
-  {"Date": "2024-12-15", "HR": 54, "HRV": 39},
-  {"Date": "2024-12-14", "HR": 43, "HRV": 58},
-  {"Date": "2024-12-13", "HR": 60, "HRV": 46},
-  {"Date": "2024-12-12", "HR": 51, "HRV": 37},
-  {"Date": "2024-12-11", "HR": 42, "HRV": 55},
-  {"Date": "2024-12-10", "HR": 59, "HRV": 48},
-  {"Date": "2024-12-09", "HR": 47, "HRV": 40},
-  {"Date": "2024-12-08", "HR": 45, "HRV": 59},
-  {"Date": "2024-12-07", "HR": 56, "HRV": 53},
-  {"Date": "2024-12-06", "HR": 53, "HRV": 41},
-  {"Date": "2024-12-05", "HR": 58, "HRV": 45},
-  {"Date": "2024-12-04", "HR": 41, "HRV": 44},
-  {"Date": "2024-12-03", "HR": 46, "HRV": 51},
-  {"Date": "2024-12-02", "HR": 59, "HRV": 49},
-  {"Date": "2024-12-01", "HR": 52, "HRV": 39},
-  {"Date": "2024-11-30", "HR": 54, "HRV": 57},
-  {"Date": "2024-11-29", "HR": 40, "HRV": 43},
-  {"Date": "2024-11-28", "HR": 46, "HRV": 60},
-  {"Date": "2024-11-27", "HR": 58, "HRV": 42},
-  {"Date": "2024-11-26", "HR": 57, "HRV": 36},
-  {"Date": "2024-11-25", "HR": 48, "HRV": 47},
-  {"Date": "2024-11-24", "HR": 50, "HRV": 54},
-  {"Date": "2024-11-23", "HR": 52, "HRV": 40},
-  {"Date": "2024-11-22", "HR": 55, "HRV": 59},
-  {"Date": "2024-11-21", "HR": 60, "HRV": 48},
-  {"Date": "2024-11-20", "HR": 43, "HRV": 57},
-  {"Date": "2024-11-19", "HR": 47, "HRV": 38},
-  {"Date": "2024-11-18", "HR": 54, "HRV": 42},
-  {"Date": "2024-11-17", "HR": 59, "HRV": 50},
-  {"Date": "2024-11-16", "HR": 55, "HRV": 46},
-  {"Date": "2024-11-15", "HR": 49, "HRV": 35},
-  {"Date": "2024-11-14", "HR": 42, "HRV": 54},
-  {"Date": "2024-11-13", "HR": 58, "HRV": 48},
-  {"Date": "2024-11-12", "HR": 46, "HRV": 41},
-  {"Date": "2024-11-11", "HR": 57, "HRV": 60},
-  {"Date": "2024-11-10", "HR": 45, "HRV": 39},
-  {"Date": "2024-11-09", "HR": 50, "HRV": 43},
-  {"Date": "2024-11-08", "HR": 56, "HRV": 49},
-  {"Date": "2024-11-07", "HR": 59, "HRV": 58},
-  {"Date": "2024-11-06", "HR": 42, "HRV": 45},
-  {"Date": "2024-11-05", "HR": 49, "HRV": 54},
-  {"Date": "2024-11-04", "HR": 57, "HRV": 47},
-  {"Date": "2024-11-03", "HR": 51, "HRV": 52},
-  {"Date": "2024-11-02", "HR": 44, "HRV": 40},
-  {"Date": "2024-11-01", "HR": 52, "HRV": 56},
-  {"Date": "2024-10-31", "HR": 60, "HRV": 44},
-  {"Date": "2024-10-30", "HR": 43, "HRV": 41},
-  {"Date": "2024-10-29", "HR": 48, "HRV": 57},
-  {"Date": "2024-10-28", "HR": 55, "HRV": 38},
-  {"Date": "2024-10-27", "HR": 59, "HRV": 50},
-  {"Date": "2024-10-26", "HR": 42, "HRV": 46},
-  {"Date": "2024-10-25", "HR": 58, "HRV": 60},
-  {"Date": "2024-10-24", "HR": 53, "HRV": 37},
-  {"Date": "2024-10-23", "HR": 45, "HRV": 42},
-  {"Date": "2024-10-22", "HR": 51, "HRV": 58},
-  {"Date": "2024-10-21", "HR": 57, "HRV": 48},
-  {"Date": "2024-10-20", "HR": 60, "HRV": 46}
-]
+    {
+      "Date": "2025-05-26",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "10:18 PM",
+      "SleepTimeFinish": "4:43 AM",
+      "TotalSleepTime": "6:25"
+    },
+    {
+      "Date": "2025-05-25",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "12:40 AM",
+      "SleepTimeFinish": "7:09 AM",
+      "TotalSleepTime": "6:29"
+    },
+    {
+      "Date": "2025-05-24",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "1:15 AM",
+      "SleepTimeFinish": "7:11 AM",
+      "TotalSleepTime": "5:56"
+    },
+    {
+      "Date": "2025-05-23",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "10:54 PM",
+      "SleepTimeFinish": "6:26 AM",
+      "TotalSleepTime": "7:32"
+    },
+    {
+      "Date": "2025-05-22",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "11:22 PM",
+      "SleepTimeFinish": "6:00 AM",
+      "TotalSleepTime": "6:38"
+    },
+    {
+      "Date": "2025-05-21",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "12:01 AM",
+      "SleepTimeFinish": "7:38 AM",
+      "TotalSleepTime": "7:37"
+    },
+    {
+      "Date": "2025-05-20",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "12:35 AM",
+      "SleepTimeFinish": "6:43 AM",
+      "TotalSleepTime": "6:08"
+    },
+    {
+      "Date": "2025-05-19",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "10:03 PM",
+      "SleepTimeFinish": "5:05 AM",
+      "TotalSleepTime": "7:02"
+    },
+    {
+      "Date": "2025-05-18",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "1:47 AM",
+      "SleepTimeFinish": "7:31 AM",
+      "TotalSleepTime": "5:44"
+    },
+    {
+      "Date": "2025-05-17",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "11:40 PM",
+      "SleepTimeFinish": "6:14 AM",
+      "TotalSleepTime": "6:34"
+    },
+    {
+      "Date": "2025-05-16",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "10:32 PM",
+      "SleepTimeFinish": "4:48 AM",
+      "TotalSleepTime": "6:16"
+    },
+    {
+      "Date": "2025-05-15",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "12:55 AM",
+      "SleepTimeFinish": "7:20 AM",
+      "TotalSleepTime": "6:25"
+    },
+    {
+      "Date": "2025-05-14",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "11:10 PM",
+      "SleepTimeFinish": "5:14 AM",
+      "TotalSleepTime": "6:04"
+    },
+    {
+      "Date": "2025-05-13",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "12:28 AM",
+      "SleepTimeFinish": "7:58 AM",
+      "TotalSleepTime": "7:30"
+    },
+    {
+      "Date": "2025-05-12",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "1:02 AM",
+      "SleepTimeFinish": "6:24 AM",
+      "TotalSleepTime": "5:22"
+    },
+    {
+      "Date": "2025-05-11",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "11:33 PM",
+      "SleepTimeFinish": "5:39 AM",
+      "TotalSleepTime": "6:06"
+    },
+    {
+      "Date": "2025-05-10",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "10:08 PM",
+      "SleepTimeFinish": "5:02 AM",
+      "TotalSleepTime": "6:54"
+    },
+    {
+      "Date": "2025-05-09",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "12:24 AM",
+      "SleepTimeFinish": "7:33 AM",
+      "TotalSleepTime": "7:09"
+    },
+    {
+      "Date": "2025-05-08",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "1:39 AM",
+      "SleepTimeFinish": "5:50 AM",
+      "TotalSleepTime": "4:11"
+    },
+    {
+      "Date": "2025-05-07",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "11:50 PM",
+      "SleepTimeFinish": "6:39 AM",
+      "TotalSleepTime": "6:49"
+    },
+    {
+      "Date": "2025-05-06",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "12:02 AM",
+      "SleepTimeFinish": "7:05 AM",
+      "TotalSleepTime": "7:03"
+    },
+    {
+      "Date": "2025-05-05",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "10:23 PM",
+      "SleepTimeFinish": "6:50 AM",
+      "TotalSleepTime": "8:27"
+    },
+    {
+      "Date": "2025-05-04",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "12:14 AM",
+      "SleepTimeFinish": "6:37 AM",
+      "TotalSleepTime": "6:23"
+    },
+    {
+      "Date": "2025-05-03",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "10:09 PM",
+      "SleepTimeFinish": "5:21 AM",
+      "TotalSleepTime": "7:12"
+    },
+    {
+      "Date": "2025-05-02",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "1:15 AM",
+      "SleepTimeFinish": "5:35 AM",
+      "TotalSleepTime": "4:20"
+    },
+    {
+      "Date": "2025-05-01",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "12:48 AM",
+      "SleepTimeFinish": "6:17 AM",
+      "TotalSleepTime": "5:29"
+    },
+    {
+      "Date": "2025-04-30",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "11:08 PM",
+      "SleepTimeFinish": "5:44 AM",
+      "TotalSleepTime": "6:36"
+    },
+    {
+      "Date": "2025-04-29",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "10:53 PM",
+      "SleepTimeFinish": "3:47 AM",
+      "TotalSleepTime": "4:54"
+    },
+    {
+      "Date": "2025-04-28",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "12:37 AM",
+      "SleepTimeFinish": "7:07 AM",
+      "TotalSleepTime": "6:30"
+    },
+    {
+      "Date": "2025-04-27",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "1:18 AM",
+      "SleepTimeFinish": "9:03 AM",
+      "TotalSleepTime": "7:45"
+    },
+    {
+      "Date": "2025-04-26",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "11:28 PM",
+      "SleepTimeFinish": "6:11 AM",
+      "TotalSleepTime": "6:43"
+    },
+    {
+      "Date": "2025-04-25",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "10:05 PM",
+      "SleepTimeFinish": "5:58 AM",
+      "TotalSleepTime": "7:53"
+    },
+    {
+      "Date": "2025-04-24",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "12:50 AM",
+      "SleepTimeFinish": "6:08 AM",
+      "TotalSleepTime": "5:18"
+    },
+    {
+      "Date": "2025-04-23",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "10:33 PM",
+      "SleepTimeFinish": "3:41 AM",
+      "TotalSleepTime": "5:08"
+    },
+    {
+      "Date": "2025-04-22",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "11:58 PM",
+      "SleepTimeFinish": "5:58 AM",
+      "TotalSleepTime": "6:00"
+    },
+    {
+      "Date": "2025-04-21",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "10:07 PM",
+      "SleepTimeFinish": "4:43 AM",
+      "TotalSleepTime": "6:36"
+    },
+    {
+      "Date": "2025-04-20",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "12:10 AM",
+      "SleepTimeFinish": "7:21 AM",
+      "TotalSleepTime": "7:11"
+    },
+    {
+      "Date": "2025-04-19",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "1:22 AM",
+      "SleepTimeFinish": "7:50 AM",
+      "TotalSleepTime": "6:28"
+    },
+    {
+      "Date": "2025-04-18",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "11:46 PM",
+      "SleepTimeFinish": "6:40 AM",
+      "TotalSleepTime": "6:54"
+    },
+    {
+      "Date": "2025-04-17",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "10:58 PM",
+      "SleepTimeFinish": "4:59 AM",
+      "TotalSleepTime": "6:01"
+    },
+    {
+      "Date": "2025-04-16",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "12:34 AM",
+      "SleepTimeFinish": "5:31 AM",
+      "TotalSleepTime": "4:57"
+    },
+    {
+      "Date": "2025-04-15",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "12:01 AM",
+      "SleepTimeFinish": "6:05 AM",
+      "TotalSleepTime": "6:04"
+    },
+    {
+      "Date": "2025-04-14",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "10:44 PM",
+      "SleepTimeFinish": "5:55 AM",
+      "TotalSleepTime": "7:11"
+    },
+    {
+      "Date": "2025-04-13",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "11:59 PM",
+      "SleepTimeFinish": "6:08 AM",
+      "TotalSleepTime": "6:09"
+    },
+    {
+      "Date": "2025-04-12",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "12:36 AM",
+      "SleepTimeFinish": "5:38 AM",
+      "TotalSleepTime": "5:02"
+    },
+    {
+      "Date": "2025-04-11",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "1:02 AM",
+      "SleepTimeFinish": "7:32 AM",
+      "TotalSleepTime": "6:30"
+    },
+    {
+      "Date": "2025-04-10",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "10:46 PM",
+      "SleepTimeFinish": "3:54 AM",
+      "TotalSleepTime": "5:08"
+    },
+    {
+      "Date": "2025-04-09",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "11:21 PM",
+      "SleepTimeFinish": "4:52 AM",
+      "TotalSleepTime": "5:31"
+    },
+    {
+      "Date": "2025-04-08",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "12:18 AM",
+      "SleepTimeFinish": "6:56 AM",
+      "TotalSleepTime": "6:38"
+    },
+    {
+      "Date": "2025-04-07",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "1:11 AM",
+      "SleepTimeFinish": "7:10 AM",
+      "TotalSleepTime": "5:59"
+    },
+    {
+      "Date": "2025-04-06",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "11:55 PM",
+      "SleepTimeFinish": "7:45 AM",
+      "TotalSleepTime": "7:50"
+    },
+    {
+      "Date": "2025-04-05",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "10:21 PM",
+      "SleepTimeFinish": "4:44 AM",
+      "TotalSleepTime": "6:23"
+    },
+    {
+      "Date": "2025-04-04",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "12:07 AM",
+      "SleepTimeFinish": "5:04 AM",
+      "TotalSleepTime": "4:57"
+    },
+    {
+      "Date": "2025-04-03",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "1:00 AM",
+      "SleepTimeFinish": "7:33 AM",
+      "TotalSleepTime": "6:33"
+    },
+    {
+      "Date": "2025-04-02",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "10:09 PM",
+      "SleepTimeFinish": "4:25 AM",
+      "TotalSleepTime": "6:16"
+    },
+    {
+      "Date": "2025-04-01",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "12:42 AM",
+      "SleepTimeFinish": "5:13 AM",
+      "TotalSleepTime": "4:31"
+    },
+    {
+      "Date": "2025-03-31",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "11:58 PM",
+      "SleepTimeFinish": "6:24 AM",
+      "TotalSleepTime": "6:26"
+    },
+    {
+      "Date": "2025-03-30",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "10:36 PM",
+      "SleepTimeFinish": "5:46 AM",
+      "TotalSleepTime": "7:10"
+    },
+    {
+      "Date": "2025-03-29",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "1:24 AM",
+      "SleepTimeFinish": "7:13 AM",
+      "TotalSleepTime": "5:49"
+    },
+    {
+      "Date": "2025-03-28",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "12:16 AM",
+      "SleepTimeFinish": "7:40 AM",
+      "TotalSleepTime": "7:24"
+    },
+    {
+      "Date": "2025-03-27",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "11:34 PM",
+      "SleepTimeFinish": "6:44 AM",
+      "TotalSleepTime": "7:10"
+    },
+    {
+      "Date": "2025-03-26",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "10:55 PM",
+      "SleepTimeFinish": "5:56 AM",
+      "TotalSleepTime": "7:01"
+    },
+    {
+      "Date": "2025-03-25",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "1:41 AM",
+      "SleepTimeFinish": "6:41 AM",
+      "TotalSleepTime": "5:00"
+    },
+    {
+      "Date": "2025-03-24",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "12:59 AM",
+      "SleepTimeFinish": "6:00 AM",
+      "TotalSleepTime": "5:01"
+    },
+    {
+      "Date": "2025-03-23",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "10:25 PM",
+      "SleepTimeFinish": "5:12 AM",
+      "TotalSleepTime": "6:47"
+    },
+    {
+      "Date": "2025-03-22",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "11:49 PM",
+      "SleepTimeFinish": "6:41 AM",
+      "TotalSleepTime": "6:52"
+    },
+    {
+      "Date": "2025-03-21",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "10:50 PM",
+      "SleepTimeFinish": "5:25 AM",
+      "TotalSleepTime": "6:35"
+    },
+    {
+      "Date": "2025-03-20",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "12:13 AM",
+      "SleepTimeFinish": "6:26 AM",
+      "TotalSleepTime": "6:13"
+    },
+    {
+      "Date": "2025-03-19",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "1:38 AM",
+      "SleepTimeFinish": "5:59 AM",
+      "TotalSleepTime": "4:21"
+    },
+    {
+      "Date": "2025-03-18",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "11:56 PM",
+      "SleepTimeFinish": "5:19 AM",
+      "TotalSleepTime": "5:23"
+    },
+    {
+      "Date": "2025-03-17",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "10:47 PM",
+      "SleepTimeFinish": "4:57 AM",
+      "TotalSleepTime": "6:10"
+    },
+    {
+      "Date": "2025-03-16",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "12:22 AM",
+      "SleepTimeFinish": "5:52 AM",
+      "TotalSleepTime": "5:30"
+    },
+    {
+      "Date": "2025-03-15",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "11:39 PM",
+      "SleepTimeFinish": "6:47 AM",
+      "TotalSleepTime": "7:08"
+    },
+    {
+      "Date": "2025-03-14",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "1:05 AM",
+      "SleepTimeFinish": "7:15 AM",
+      "TotalSleepTime": "6:10"
+    },
+    {
+      "Date": "2025-03-13",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "10:11 PM",
+      "SleepTimeFinish": "4:23 AM",
+      "TotalSleepTime": "6:12"
+    },
+    {
+      "Date": "2025-03-12",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "11:30 PM",
+      "SleepTimeFinish": "6:03 AM",
+      "TotalSleepTime": "6:33"
+    },
+    {
+      "Date": "2025-03-11",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "12:51 AM",
+      "SleepTimeFinish": "7:18 AM",
+      "TotalSleepTime": "6:27"
+    },
+    {
+      "Date": "2025-03-10",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "10:00 PM",
+      "SleepTimeFinish": "4:08 AM",
+      "TotalSleepTime": "6:08"
+    },
+    {
+      "Date": "2025-03-09",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "1:29 AM",
+      "SleepTimeFinish": "7:18 AM",
+      "TotalSleepTime": "5:49"
+    },
+    {
+      "Date": "2025-03-08",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "11:14 PM",
+      "SleepTimeFinish": "4:45 AM",
+      "TotalSleepTime": "5:31"
+    },
+    {
+      "Date": "2025-03-07",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "12:06 AM",
+      "SleepTimeFinish": "6:40 AM",
+      "TotalSleepTime": "6:34"
+    },
+    {
+      "Date": "2025-03-06",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "10:29 PM",
+      "SleepTimeFinish": "3:24 AM",
+      "TotalSleepTime": "4:55"
+    },
+    {
+      "Date": "2025-03-05",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "11:52 PM",
+      "SleepTimeFinish": "6:21 AM",
+      "TotalSleepTime": "6:29"
+    },
+    {
+      "Date": "2025-03-04",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "1:14 AM",
+      "SleepTimeFinish": "6:42 AM",
+      "TotalSleepTime": "5:28"
+    },
+    {
+      "Date": "2025-03-03",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "11:10 PM",
+      "SleepTimeFinish": "5:17 AM",
+      "TotalSleepTime": "6:07"
+    },
+    {
+      "Date": "2025-03-02",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "12:39 AM",
+      "SleepTimeFinish": "7:36 AM",
+      "TotalSleepTime": "6:57"
+    },
+    {
+      "Date": "2025-03-01",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "10:27 PM",
+      "SleepTimeFinish": "4:35 AM",
+      "TotalSleepTime": "6:08"
+    },
+    {
+      "Date": "2025-02-28",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "1:35 AM",
+      "SleepTimeFinish": "7:14 AM",
+      "TotalSleepTime": "5:39"
+    },
+    {
+      "Date": "2025-02-27",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "12:16 AM",
+      "SleepTimeFinish": "4:39 AM",
+      "TotalSleepTime": "4:23"
+    },
+    {
+      "Date": "2025-02-26",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "11:30 PM",
+      "SleepTimeFinish": "6:30 AM",
+      "TotalSleepTime": "7:00"
+    },
+    {
+      "Date": "2025-02-25",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "10:21 PM",
+      "SleepTimeFinish": "4:19 AM",
+      "TotalSleepTime": "5:58"
+    },
+    {
+      "Date": "2025-02-24",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "12:58 AM",
+      "SleepTimeFinish": "5:51 AM",
+      "TotalSleepTime": "4:53"
+    },
+    {
+      "Date": "2025-02-23",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "11:08 PM",
+      "SleepTimeFinish": "6:01 AM",
+      "TotalSleepTime": "6:53"
+    },
+    {
+      "Date": "2025-02-22",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "10:39 PM",
+      "SleepTimeFinish": "4:49 AM",
+      "TotalSleepTime": "6:10"
+    },
+    {
+      "Date": "2025-02-21",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "12:51 AM",
+      "SleepTimeFinish": "7:49 AM",
+      "TotalSleepTime": "6:58"
+    },
+    {
+      "Date": "2025-02-20",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "1:08 AM",
+      "SleepTimeFinish": "5:12 AM",
+      "TotalSleepTime": "4:04"
+    },
+    {
+      "Date": "2025-02-19",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "11:29 PM",
+      "SleepTimeFinish": "5:41 AM",
+      "TotalSleepTime": "6:12"
+    },
+    {
+      "Date": "2025-02-18",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "10:58 PM",
+      "SleepTimeFinish": "5:14 AM",
+      "TotalSleepTime": "6:16"
+    },
+    {
+      "Date": "2025-02-17",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "12:27 AM",
+      "SleepTimeFinish": "7:12 AM",
+      "TotalSleepTime": "6:45"
+    },
+    {
+      "Date": "2025-02-16",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "11:10 PM",
+      "SleepTimeFinish": "5:28 AM",
+      "TotalSleepTime": "6:18"
+    },
+    {
+      "Date": "2025-02-15",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "1:00 AM",
+      "SleepTimeFinish": "7:08 AM",
+      "TotalSleepTime": "6:08"
+    },
+    {
+      "Date": "2025-02-14",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "10:43 PM",
+      "SleepTimeFinish": "5:39 AM",
+      "TotalSleepTime": "6:56"
+    },
+    {
+      "Date": "2025-02-13",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "12:36 AM",
+      "SleepTimeFinish": "5:06 AM",
+      "TotalSleepTime": "4:30"
+    },
+    {
+      "Date": "2025-02-12",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "1:19 AM",
+      "SleepTimeFinish": "7:19 AM",
+      "TotalSleepTime": "6:00"
+    },
+    {
+      "Date": "2025-02-11",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "11:32 PM",
+      "SleepTimeFinish": "7:10 AM",
+      "TotalSleepTime": "7:38"
+    },
+    {
+      "Date": "2025-02-10",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "10:05 PM",
+      "SleepTimeFinish": "4:11 AM",
+      "TotalSleepTime": "6:06"
+    },
+    {
+      "Date": "2025-02-09",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "12:13 AM",
+      "SleepTimeFinish": "5:44 AM",
+      "TotalSleepTime": "5:31"
+    },
+    {
+      "Date": "2025-02-08",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "1:39 AM",
+      "SleepTimeFinish": "8:06 AM",
+      "TotalSleepTime": "6:27"
+    },
+    {
+      "Date": "2025-02-07",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "11:50 PM",
+      "SleepTimeFinish": "5:13 AM",
+      "TotalSleepTime": "5:23"
+    },
+    {
+      "Date": "2025-02-06",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "10:27 PM",
+      "SleepTimeFinish": "4:44 AM",
+      "TotalSleepTime": "6:17"
+    },
+    {
+      "Date": "2025-02-05",
+      "HR": 50,
+      "HRV": 40,
+      "byteScore": 60,
+      "SleepTimeStart": "12:24 AM",
+      "SleepTimeFinish": "7:17 AM",
+      "TotalSleepTime": "6:53"
+    },
+    {
+      "Date": "2025-02-04",
+      "HR": 51,
+      "HRV": 41,
+      "byteScore": 59,
+      "SleepTimeStart": "11:36 PM",
+      "SleepTimeFinish": "6:22 AM",
+      "TotalSleepTime": "6:46"
+    },
+    {
+      "Date": "2025-02-03",
+      "HR": 52,
+      "HRV": 42,
+      "byteScore": 58,
+      "SleepTimeStart": "10:55 PM",
+      "SleepTimeFinish": "4:58 AM",
+      "TotalSleepTime": "6:03"
+    },
+    {
+      "Date": "2025-02-02",
+      "HR": 53,
+      "HRV": 43,
+      "byteScore": 57,
+      "SleepTimeStart": "1:33 AM",
+      "SleepTimeFinish": "7:44 AM",
+      "TotalSleepTime": "6:11"
+    },
+    {
+      "Date": "2025-02-01",
+      "HR": 54,
+      "HRV": 44,
+      "byteScore": 56,
+      "SleepTimeStart": "12:12 AM",
+      "SleepTimeFinish": "5:03 AM",
+      "TotalSleepTime": "4:51"
+    },
+    {
+      "Date": "2025-01-31",
+      "HR": 55,
+      "HRV": 45,
+      "byteScore": 55,
+      "SleepTimeStart": "1:20 AM",
+      "SleepTimeFinish": "7:43 AM",
+      "TotalSleepTime": "6:23"
+    },
+    {
+      "Date": "2025-01-30",
+      "HR": 56,
+      "HRV": 46,
+      "byteScore": 54,
+      "SleepTimeStart": "11:05 PM",
+      "SleepTimeFinish": "5:53 AM",
+      "TotalSleepTime": "6:48"
+    },
+    {
+      "Date": "2025-01-29",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "10:12 PM",
+      "SleepTimeFinish": "5:50 AM",
+      "TotalSleepTime": "7:38"
+    },
+    {
+      "Date": "2025-01-28",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "1:14 AM",
+      "SleepTimeFinish": "7:19 AM",
+      "TotalSleepTime": "6:05"
+    },
+    {
+      "Date": "2025-01-27",
+      "HR": 53,
+      "HRV": 47,
+      "byteScore": 61,
+      "SleepTimeStart": "11:16 PM",
+      "SleepTimeFinish": "5:55 AM",
+      "TotalSleepTime": "6:39"
+    },
+    {
+      "Date": "2025-01-26",
+      "HR": 56,
+      "HRV": 45,
+      "byteScore": 53,
+      "SleepTimeStart": "12:48 AM",
+      "SleepTimeFinish": "6:27 AM",
+      "TotalSleepTime": "5:39"
+    },
+    {
+      "Date": "2025-01-25",
+      "HR": 48,
+      "HRV": 52,
+      "byteScore": 76,
+      "SleepTimeStart": "10:08 PM",
+      "SleepTimeFinish": "5:19 AM",
+      "TotalSleepTime": "7:11"
+    },
+    {
+      "Date": "2025-01-24",
+      "HR": 54,
+      "HRV": 41,
+      "byteScore": 53,
+      "SleepTimeStart": "1:43 AM",
+      "SleepTimeFinish": "7:52 AM",
+      "TotalSleepTime": "6:09"
+    },
+    {
+      "Date": "2025-01-23",
+      "HR": 60,
+      "HRV": 43,
+      "byteScore": 43,
+      "SleepTimeStart": "11:11 PM",
+      "SleepTimeFinish": "5:01 AM",
+      "TotalSleepTime": "5:50"
+    },
+    {
+      "Date": "2025-01-22",
+      "HR": 50,
+      "HRV": 57,
+      "byteScore": 77,
+      "SleepTimeStart": "12:40 AM",
+      "SleepTimeFinish": "7:09 AM",
+      "TotalSleepTime": "6:29"
+    },
+    {
+      "Date": "2025-01-21",
+      "HR": 45,
+      "HRV": 38,
+      "byteScore": 68,
+      "SleepTimeStart": "10:14 PM",
+      "SleepTimeFinish": "3:52 AM",
+      "TotalSleepTime": "5:38"
+    },
+    {
+      "Date": "2025-01-20",
+      "HR": 43,
+      "HRV": 55,
+      "byteScore": 89,
+      "SleepTimeStart": "11:25 PM",
+      "SleepTimeFinish": "6:09 AM",
+      "TotalSleepTime": "6:44"
+    },
+    {
+      "Date": "2025-01-19",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "10:36 PM",
+      "SleepTimeFinish": "4:17 AM",
+      "TotalSleepTime": "5:41"
+    },
+    {
+      "Date": "2025-01-18",
+      "HR": 51,
+      "HRV": 39,
+      "byteScore": 57,
+      "SleepTimeStart": "1:14 AM",
+      "SleepTimeFinish": "7:43 AM",
+      "TotalSleepTime": "6:29"
+    },
+    {
+      "Date": "2025-01-17",
+      "HR": 55,
+      "HRV": 44,
+      "byteScore": 54,
+      "SleepTimeStart": "11:59 PM",
+      "SleepTimeFinish": "5:10 AM",
+      "TotalSleepTime": "5:11"
+    },
+    {
+      "Date": "2025-01-16",
+      "HR": 47,
+      "HRV": 46,
+      "byteScore": 72,
+      "SleepTimeStart": "10:45 PM",
+      "SleepTimeFinish": "5:08 AM",
+      "TotalSleepTime": "6:23"
+    },
+    {
+      "Date": "2025-01-15",
+      "HR": 52,
+      "HRV": 40,
+      "byteScore": 56,
+      "SleepTimeStart": "12:04 AM",
+      "SleepTimeFinish": "6:43 AM",
+      "TotalSleepTime": "6:39"
+    },
+    {
+      "Date": "2025-01-14",
+      "HR": 49,
+      "HRV": 35,
+      "byteScore": 57,
+      "SleepTimeStart": "1:29 AM",
+      "SleepTimeFinish": "6:28 AM",
+      "TotalSleepTime": "4:59"
+    },
+    {
+      "Date": "2025-01-13",
+      "HR": 46,
+      "HRV": 59,
+      "byteScore": 87,
+      "SleepTimeStart": "11:38 PM",
+      "SleepTimeFinish": "6:20 AM",
+      "TotalSleepTime": "6:42"
+    },
+    {
+      "Date": "2025-01-12",
+      "HR": 59,
+      "HRV": 50,
+      "byteScore": 52,
+      "SleepTimeStart": "10:29 PM",
+      "SleepTimeFinish": "3:43 AM",
+      "TotalSleepTime": "5:14"
+    },
+    {
+      "Date": "2025-01-11",
+      "HR": 57,
+      "HRV": 42,
+      "byteScore": 48,
+      "SleepTimeStart": "12:46 AM",
+      "SleepTimeFinish": "7:25 AM",
+      "TotalSleepTime": "6:39"
+    },
+    {
+      "Date": "2025-01-10",
+      "HR": 40,
+      "HRV": 36,
+      "byteScore": 76,
+      "SleepTimeStart": "1:18 AM",
+      "SleepTimeFinish": "5:42 AM",
+      "TotalSleepTime": "4:24"
+    },
+    {
+      "Date": "2025-01-09",
+      "HR": 54,
+      "HRV": 54,
+      "byteScore": 66,
+      "SleepTimeStart": "11:33 PM",
+      "SleepTimeFinish": "6:16 AM",
+      "TotalSleepTime": "6:43"
+    },
+    {
+      "Date": "2025-01-08",
+      "HR": 48,
+      "HRV": 46,
+      "byteScore": 70,
+      "SleepTimeStart": "10:14 PM",
+      "SleepTimeFinish": "3:55 AM",
+      "TotalSleepTime": "5:41"
+    },
+    {
+      "Date": "2025-01-07",
+      "HR": 44,
+      "HRV": 58,
+      "byteScore": 90,
+      "SleepTimeStart": "1:05 AM",
+      "SleepTimeFinish": "7:03 AM",
+      "TotalSleepTime": "5:58"
+    },
+    {
+      "Date": "2025-01-06",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "12:18 AM",
+      "SleepTimeFinish": "7:16 AM",
+      "TotalSleepTime": "6:58"
+    },
+    {
+      "Date": "2025-01-05",
+      "HR": 56,
+      "HRV": 37,
+      "byteScore": 45,
+      "SleepTimeStart": "10:21 PM",
+      "SleepTimeFinish": "5:01 AM",
+      "TotalSleepTime": "6:40"
+    },
+    {
+      "Date": "2025-01-04",
+      "HR": 53,
+      "HRV": 60,
+      "byteScore": 74,
+      "SleepTimeStart": "11:56 PM",
+      "SleepTimeFinish": "7:27 AM",
+      "TotalSleepTime": "7:31"
+    },
+    {
+      "Date": "2025-01-03",
+      "HR": 46,
+      "HRV": 42,
+      "byteScore": 70,
+      "SleepTimeStart": "10:44 PM",
+      "SleepTimeFinish": "4:55 AM",
+      "TotalSleepTime": "6:11"
+    },
+    {
+      "Date": "2025-01-02",
+      "HR": 58,
+      "HRV": 55,
+      "byteScore": 59,
+      "SleepTimeStart": "12:08 AM",
+      "SleepTimeFinish": "6:54 AM",
+      "TotalSleepTime": "6:46"
+    },
+    {
+      "Date": "2025-01-01",
+      "HR": 52,
+      "HRV": 39,
+      "byteScore": 55,
+      "SleepTimeStart": "1:16 AM",
+      "SleepTimeFinish": "6:49 AM",
+      "TotalSleepTime": "5:33"
+    },
+    {
+      "Date": "2024-12-31",
+      "HR": 49,
+      "HRV": 57,
+      "byteScore": 79,
+      "SleepTimeStart": "10:13 PM",
+      "SleepTimeFinish": "4:23 AM",
+      "TotalSleepTime": "6:10"
+    },
+    {
+      "Date": "2024-12-30",
+      "HR": 60,
+      "HRV": 50,
+      "byteScore": 50,
+      "SleepTimeStart": "12:30 AM",
+      "SleepTimeFinish": "6:27 AM",
+      "TotalSleepTime": "5:57"
+    },
+    {
+      "Date": "2024-12-29",
+      "HR": 45,
+      "HRV": 46,
+      "byteScore": 76,
+      "SleepTimeStart": "1:49 AM",
+      "SleepTimeFinish": "6:31 AM",
+      "TotalSleepTime": "4:42"
+    },
+    {
+      "Date": "2024-12-28",
+      "HR": 55,
+      "HRV": 40,
+      "byteScore": 50,
+      "SleepTimeStart": "11:09 PM",
+      "SleepTimeFinish": "5:03 AM",
+      "TotalSleepTime": "5:54"
+    },
+    {
+      "Date": "2024-12-27",
+      "HR": 50,
+      "HRV": 36,
+      "byteScore": 56,
+      "SleepTimeStart": "10:36 PM",
+      "SleepTimeFinish": "3:56 AM",
+      "TotalSleepTime": "5:20"
+    },
+    {
+      "Date": "2024-12-26",
+      "HR": 57,
+      "HRV": 51,
+      "byteScore": 57,
+      "SleepTimeStart": "12:44 AM",
+      "SleepTimeFinish": "6:20 AM",
+      "TotalSleepTime": "5:36"
+    },
+    {
+      "Date": "2024-12-25",
+      "HR": 44,
+      "HRV": 44,
+      "byteScore": 76,
+      "SleepTimeStart": "11:54 PM",
+      "SleepTimeFinish": "6:49 AM",
+      "TotalSleepTime": "6:55"
+    },
+    {
+      "Date": "2024-12-24",
+      "HR": 41,
+      "HRV": 38,
+      "byteScore": 76,
+      "SleepTimeStart": "1:10 AM",
+      "SleepTimeFinish": "7:12 AM",
+      "TotalSleepTime": "6:02"
+    },
+    {
+      "Date": "2024-12-23",
+      "HR": 59,
+      "HRV": 45,
+      "byteScore": 47,
+      "SleepTimeStart": "10:20 PM",
+      "SleepTimeFinish": "3:46 AM",
+      "TotalSleepTime": "5:26"
+    },
+    {
+      "Date": "2024-12-22",
+      "HR": 56,
+      "HRV": 55,
+      "byteScore": 63,
+      "SleepTimeStart": "1:31 AM",
+      "SleepTimeFinish": "9:00 AM",
+      "TotalSleepTime": "7:29"
+    },
+    {
+      "Date": "2024-12-21",
+      "HR": 48,
+      "HRV": 42,
+      "byteScore": 66,
+      "SleepTimeStart": "11:41 PM",
+      "SleepTimeFinish": "5:10 AM",
+      "TotalSleepTime": "5:29"
+    },
+    {
+      "Date": "2024-12-20",
+      "HR": 52,
+      "HRV": 47,
+      "byteScore": 63,
+      "SleepTimeStart": "12:16 AM",
+      "SleepTimeFinish": "7:02 AM",
+      "TotalSleepTime": "6:46"
+    },
+    {
+      "Date": "2024-12-19",
+      "HR": 60,
+      "HRV": 52,
+      "byteScore": 52,
+      "SleepTimeStart": "10:59 PM",
+      "SleepTimeFinish": "5:17 AM",
+      "TotalSleepTime": "6:18"
+    },
+    {
+      "Date": "2024-12-18",
+      "HR": 58,
+      "HRV": 41,
+      "byteScore": 45,
+      "SleepTimeStart": "1:07 AM",
+      "SleepTimeFinish": "5:34 AM",
+      "TotalSleepTime": "4:27"
+    },
+    {
+      "Date": "2024-12-17",
+      "HR": 46,
+      "HRV": 57,
+      "byteScore": 85,
+      "SleepTimeStart": "10:44 PM",
+      "SleepTimeFinish": "4:47 AM",
+      "TotalSleepTime": "6:03"
+    },
+    {
+      "Date": "2024-12-16",
+      "HR": 49,
+      "HRV": 50,
+      "byteScore": 72,
+      "SleepTimeStart": "12:58 AM",
+      "SleepTimeFinish": "7:25 AM",
+      "TotalSleepTime": "6:27"
+    },
+    {
+      "Date": "2024-12-15",
+      "HR": 54,
+      "HRV": 39,
+      "byteScore": 51,
+      "SleepTimeStart": "10:51 PM",
+      "SleepTimeFinish": "5:12 AM",
+      "TotalSleepTime": "6:21"
+    },
+    {
+      "Date": "2024-12-14",
+      "HR": 43,
+      "HRV": 58,
+      "byteScore": 92,
+      "SleepTimeStart": "1:36 AM",
+      "SleepTimeFinish": "8:24 AM",
+      "TotalSleepTime": "6:48"
+    },
+    {
+      "Date": "2024-12-13",
+      "HR": 60,
+      "HRV": 46,
+      "byteScore": 46,
+      "SleepTimeStart": "10:18 PM",
+      "SleepTimeFinish": "4:15 AM",
+      "TotalSleepTime": "5:57"
+    },
+    {
+      "Date": "2024-12-12",
+      "HR": 51,
+      "HRV": 37,
+      "byteScore": 55,
+      "SleepTimeStart": "12:42 AM",
+      "SleepTimeFinish": "5:26 AM",
+      "TotalSleepTime": "4:44"
+    },
+    {
+      "Date": "2024-12-11",
+      "HR": 42,
+      "HRV": 55,
+      "byteScore": 91,
+      "SleepTimeStart": "1:14 AM",
+      "SleepTimeFinish": "7:36 AM",
+      "TotalSleepTime": "6:22"
+    },
+    {
+      "Date": "2024-12-10",
+      "HR": 59,
+      "HRV": 48,
+      "byteScore": 50,
+      "SleepTimeStart": "11:50 PM",
+      "SleepTimeFinish": "6:08 AM",
+      "TotalSleepTime": "6:18"
+    },
+    {
+      "Date": "2024-12-09",
+      "HR": 47,
+      "HRV": 40,
+      "byteScore": 66,
+      "SleepTimeStart": "10:12 PM",
+      "SleepTimeFinish": "3:35 AM",
+      "TotalSleepTime": "5:23"
+    },
+    {
+      "Date": "2024-12-08",
+      "HR": 45,
+      "HRV": 59,
+      "byteScore": 89,
+      "SleepTimeStart": "12:16 AM",
+      "SleepTimeFinish": "7:19 AM",
+      "TotalSleepTime": "7:03"
+    },
+    {
+      "Date": "2024-12-07",
+      "HR": 56,
+      "HRV": 53,
+      "byteScore": 61,
+      "SleepTimeStart": "11:08 PM",
+      "SleepTimeFinish": "6:17 AM",
+      "TotalSleepTime": "7:09"
+    },
+    {
+      "Date": "2024-12-06",
+      "HR": 53,
+      "HRV": 41,
+      "byteScore": 55,
+      "SleepTimeStart": "12:28 AM",
+      "SleepTimeFinish": "5:39 AM",
+      "TotalSleepTime": "5:11"
+    },
+    {
+      "Date": "2024-12-05",
+      "HR": 58,
+      "HRV": 45,
+      "byteScore": 49,
+      "SleepTimeStart": "1:05 AM",
+      "SleepTimeFinish": "6:06 AM",
+      "TotalSleepTime": "5:01"
+    },
+    {
+      "Date": "2024-12-04",
+      "HR": 41,
+      "HRV": 44,
+      "byteScore": 82,
+      "SleepTimeStart": "10:15 PM",
+      "SleepTimeFinish": "4:18 AM",
+      "TotalSleepTime": "6:03"
+    },
+    {
+      "Date": "2024-12-03",
+      "HR": 46,
+      "HRV": 51,
+      "byteScore": 79,
+      "SleepTimeStart": "12:01 AM",
+      "SleepTimeFinish": "6:36 AM",
+      "TotalSleepTime": "6:35"
+    },
+    {
+      "Date": "2024-12-02",
+      "HR": 59,
+      "HRV": 49,
+      "byteScore": 51,
+      "SleepTimeStart": "1:33 AM",
+      "SleepTimeFinish": "7:06 AM",
+      "TotalSleepTime": "5:33"
+    },
+    {
+      "Date": "2024-12-01",
+      "HR": 52,
+      "HRV": 39,
+      "byteScore": 55,
+      "SleepTimeStart": "11:14 PM",
+      "SleepTimeFinish": "5:45 AM",
+      "TotalSleepTime": "6:31"
+    },
+    {
+      "Date": "2024-11-30",
+      "HR": 54,
+      "HRV": 57,
+      "byteScore": 69,
+      "SleepTimeStart": "12:49 AM",
+      "SleepTimeFinish": "7:39 AM",
+      "TotalSleepTime": "6:50"
+    },
+    {
+      "Date": "2024-11-29",
+      "HR": 40,
+      "HRV": 43,
+      "byteScore": 83,
+      "SleepTimeStart": "10:59 PM",
+      "SleepTimeFinish": "4:58 AM",
+      "TotalSleepTime": "5:59"
+    },
+    {
+      "Date": "2024-11-28",
+      "HR": 46,
+      "HRV": 60,
+      "byteScore": 88,
+      "SleepTimeStart": "1:17 AM",
+      "SleepTimeFinish": "7:20 AM",
+      "TotalSleepTime": "6:03"
+    },
+    {
+      "Date": "2024-11-27",
+      "HR": 58,
+      "HRV": 42,
+      "byteScore": 46,
+      "SleepTimeStart": "10:16 PM",
+      "SleepTimeFinish": "3:55 AM",
+      "TotalSleepTime": "5:39"
+    },
+    {
+      "Date": "2024-11-26",
+      "HR": 57,
+      "HRV": 36,
+      "byteScore": 42,
+      "SleepTimeStart": "12:32 AM",
+      "SleepTimeFinish": "6:47 AM",
+      "TotalSleepTime": "6:15"
+    },
+    {
+      "Date": "2024-11-25",
+      "HR": 48,
+      "HRV": 47,
+      "byteScore": 71,
+      "SleepTimeStart": "11:49 PM",
+      "SleepTimeFinish": "5:52 AM",
+      "TotalSleepTime": "6:03"
+    },
+    {
+      "Date": "2024-11-24",
+      "HR": 50,
+      "HRV": 54,
+      "byteScore": 74,
+      "SleepTimeStart": "10:52 PM",
+      "SleepTimeFinish": "5:46 AM",
+      "TotalSleepTime": "6:54"
+    },
+    {
+      "Date": "2024-11-23",
+      "HR": 52,
+      "HRV": 40,
+      "byteScore": 56,
+      "SleepTimeStart": "12:31 AM",
+      "SleepTimeFinish": "6:10 AM",
+      "TotalSleepTime": "5:39"
+    },
+    {
+      "Date": "2024-11-22",
+      "HR": 55,
+      "HRV": 59,
+      "byteScore": 69,
+      "SleepTimeStart": "1:01 AM",
+      "SleepTimeFinish": "8:05 AM",
+      "TotalSleepTime": "7:04"
+    },
+    {
+      "Date": "2024-11-21",
+      "HR": 60,
+      "HRV": 48,
+      "byteScore": 48,
+      "SleepTimeStart": "11:27 PM",
+      "SleepTimeFinish": "5:57 AM",
+      "TotalSleepTime": "6:30"
+    },
+    {
+      "Date": "2024-11-20",
+      "HR": 43,
+      "HRV": 57,
+      "byteScore": 91,
+      "SleepTimeStart": "1:12 AM",
+      "SleepTimeFinish": "6:21 AM",
+      "TotalSleepTime": "5:09"
+    },
+    {
+      "Date": "2024-11-19",
+      "HR": 47,
+      "HRV": 38,
+      "byteScore": 64,
+      "SleepTimeStart": "10:51 PM",
+      "SleepTimeFinish": "4:58 AM",
+      "TotalSleepTime": "6:07"
+    },
+    {
+      "Date": "2024-11-18",
+      "HR": 54,
+      "HRV": 42,
+      "byteScore": 54,
+      "SleepTimeStart": "12:36 AM",
+      "SleepTimeFinish": "7:03 AM",
+      "TotalSleepTime": "6:27"
+    },
+    {
+      "Date": "2024-11-17",
+      "HR": 59,
+      "HRV": 50,
+      "byteScore": 52,
+      "SleepTimeStart": "10:44 PM",
+      "SleepTimeFinish": "5:28 AM",
+      "TotalSleepTime": "6:44"
+    },
+    {
+      "Date": "2024-11-16",
+      "HR": 55,
+      "HRV": 46,
+      "byteScore": 56,
+      "SleepTimeStart": "11:14 PM",
+      "SleepTimeFinish": "5:45 AM",
+      "TotalSleepTime": "6:31"
+    },
+    {
+      "Date": "2024-11-15",
+      "HR": 49,
+      "HRV": 35,
+      "byteScore": 57,
+      "SleepTimeStart": "12:52 AM",
+      "SleepTimeFinish": "5:43 AM",
+      "TotalSleepTime": "4:51"
+    },
+    {
+      "Date": "2024-11-14",
+      "HR": 42,
+      "HRV": 54,
+      "byteScore": 90,
+      "SleepTimeStart": "1:18 AM",
+      "SleepTimeFinish": "7:12 AM",
+      "TotalSleepTime": "5:54"
+    },
+    {
+      "Date": "2024-11-13",
+      "HR": 58,
+      "HRV": 48,
+      "byteScore": 52,
+      "SleepTimeStart": "10:04 PM",
+      "SleepTimeFinish": "5:41 AM",
+      "TotalSleepTime": "7:37"
+    },
+    {
+      "Date": "2024-11-12",
+      "HR": 46,
+      "HRV": 41,
+      "byteScore": 69,
+      "SleepTimeStart": "12:23 AM",
+      "SleepTimeFinish": "6:17 AM",
+      "TotalSleepTime": "5:54"
+    },
+    {
+      "Date": "2024-11-11",
+      "HR": 57,
+      "HRV": 60,
+      "byteScore": 66,
+      "SleepTimeStart": "11:55 PM",
+      "SleepTimeFinish": "7:31 AM",
+      "TotalSleepTime": "7:36"
+    },
+    {
+      "Date": "2024-11-10",
+      "HR": 45,
+      "HRV": 39,
+      "byteScore": 69,
+      "SleepTimeStart": "1:17 AM",
+      "SleepTimeFinish": "7:46 AM",
+      "TotalSleepTime": "6:29"
+    },
+    {
+      "Date": "2024-11-09",
+      "HR": 50,
+      "HRV": 43,
+      "byteScore": 63,
+      "SleepTimeStart": "10:19 PM",
+      "SleepTimeFinish": "3:18 AM",
+      "TotalSleepTime": "4:59"
+    },
+    {
+      "Date": "2024-11-08",
+      "HR": 56,
+      "HRV": 49,
+      "byteScore": 57,
+      "SleepTimeStart": "12:09 AM",
+      "SleepTimeFinish": "5:54 AM",
+      "TotalSleepTime": "5:45"
+    },
+    {
+      "Date": "2024-11-07",
+      "HR": 59,
+      "HRV": 58,
+      "byteScore": 60,
+      "SleepTimeStart": "11:46 PM",
+      "SleepTimeFinish": "7:42 AM",
+      "TotalSleepTime": "7:56"
+    },
+    {
+      "Date": "2024-11-06",
+      "HR": 42,
+      "HRV": 45,
+      "byteScore": 81,
+      "SleepTimeStart": "1:30 AM",
+      "SleepTimeFinish": "6:18 AM",
+      "TotalSleepTime": "4:48"
+    },
+    {
+      "Date": "2024-11-05",
+      "HR": 49,
+      "HRV": 54,
+      "byteScore": 76,
+      "SleepTimeStart": "10:53 PM",
+      "SleepTimeFinish": "5:51 AM",
+      "TotalSleepTime": "6:58"
+    },
+    {
+      "Date": "2024-11-04",
+      "HR": 57,
+      "HRV": 47,
+      "byteScore": 53,
+      "SleepTimeStart": "12:47 AM",
+      "SleepTimeFinish": "6:14 AM",
+      "TotalSleepTime": "5:27"
+    },
+    {
+      "Date": "2024-11-03",
+      "HR": 51,
+      "HRV": 52,
+      "byteScore": 70,
+      "SleepTimeStart": "1:19 AM",
+      "SleepTimeFinish": "7:07 AM",
+      "TotalSleepTime": "5:48"
+    },
+    {
+      "Date": "2024-11-02",
+      "HR": 44,
+      "HRV": 40,
+      "byteScore": 72,
+      "SleepTimeStart": "10:38 PM",
+      "SleepTimeFinish": "5:06 AM",
+      "TotalSleepTime": "6:28"
+    },
+    {
+      "Date": "2024-11-01",
+      "HR": 52,
+      "HRV": 56,
+      "byteScore": 72,
+      "SleepTimeStart": "11:16 PM",
+      "SleepTimeFinish": "5:25 AM",
+      "TotalSleepTime": "6:09"
+    },
+    {
+      "Date": "2024-10-31",
+      "HR": 60,
+      "HRV": 44,
+      "byteScore": 44,
+      "SleepTimeStart": "12:30 AM",
+      "SleepTimeFinish": "5:41 AM",
+      "TotalSleepTime": "5:11"
+    },
+    {
+      "Date": "2024-10-30",
+      "HR": 43,
+      "HRV": 41,
+      "byteScore": 75,
+      "SleepTimeStart": "10:07 PM",
+      "SleepTimeFinish": "3:12 AM",
+      "TotalSleepTime": "5:05"
+    },
+    {
+      "Date": "2024-10-29",
+      "HR": 48,
+      "HRV": 57,
+      "byteScore": 81,
+      "SleepTimeStart": "12:38 AM",
+      "SleepTimeFinish": "8:02 AM",
+      "TotalSleepTime": "7:24"
+    },
+    {
+      "Date": "2024-10-28",
+      "HR": 55,
+      "HRV": 38,
+      "byteScore": 48,
+      "SleepTimeStart": "11:57 PM",
+      "SleepTimeFinish": "5:09 AM",
+      "TotalSleepTime": "5:12"
+    },
+    {
+      "Date": "2024-10-27",
+      "HR": 59,
+      "HRV": 50,
+      "byteScore": 52,
+      "SleepTimeStart": "10:35 PM",
+      "SleepTimeFinish": "5:26 AM",
+      "TotalSleepTime": "6:51"
+    },
+    {
+      "Date": "2024-10-26",
+      "HR": 42,
+      "HRV": 46,
+      "byteScore": 82,
+      "SleepTimeStart": "1:08 AM",
+      "SleepTimeFinish": "7:13 AM",
+      "TotalSleepTime": "6:05"
+    },
+    {
+      "Date": "2024-10-25",
+      "HR": 58,
+      "HRV": 60,
+      "byteScore": 64,
+      "SleepTimeStart": "11:49 PM",
+      "SleepTimeFinish": "7:36 AM",
+      "TotalSleepTime": "7:47"
+    },
+    {
+      "Date": "2024-10-24",
+      "HR": 53,
+      "HRV": 37,
+      "byteScore": 51,
+      "SleepTimeStart": "10:29 PM",
+      "SleepTimeFinish": "4:54 AM",
+      "TotalSleepTime": "6:25"
+    },
+    {
+      "Date": "2024-10-23",
+      "HR": 45,
+      "HRV": 42,
+      "byteScore": 72,
+      "SleepTimeStart": "1:20 AM",
+      "SleepTimeFinish": "6:32 AM",
+      "TotalSleepTime": "5:12"
+    },
+    {
+      "Date": "2024-10-22",
+      "HR": 51,
+      "HRV": 58,
+      "byteScore": 76,
+      "SleepTimeStart": "12:58 AM",
+      "SleepTimeFinish": "7:24 AM",
+      "TotalSleepTime": "6:26"
+    },
+    {
+      "Date": "2024-10-21",
+      "HR": 57,
+      "HRV": 48,
+      "byteScore": 54,
+      "SleepTimeStart": "11:45 PM",
+      "SleepTimeFinish": "6:47 AM",
+      "TotalSleepTime": "7:02"
+    },
+    {
+      "Date": "2024-10-20",
+      "HR": 60,
+      "HRV": 46,
+      "byteScore": 46,
+      "SleepTimeStart": "10:12 PM",
+      "SleepTimeFinish": "5:10 AM",
+      "TotalSleepTime": "6:58"
+    }
+  ]
+  

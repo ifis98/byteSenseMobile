@@ -225,9 +225,9 @@ const SplashScreen = () => {
           {/* Activities Section */}
           <Text style={styles.sectionTitle}>Activities</Text>
           <View style={styles.activitiesSection}>
-            {renderActivity('Meditation', '5:11 PM', '0:12', yoga)}
-            {renderActivity('Sleep', '12:01 PM', '8:27', moon)}
-            {renderActivity('Run', '12:01 PM', '0:27', PersonSimpleRun)}
+            {/* {renderActivity('Meditation', '5:11 PM', '0:12', yoga)} */}
+            {renderActivity('Sleep', '12:01 PM', '12:01 PM', '8:27', moon)}
+            {/* {renderActivity('Run', '12:01 PM', '0:27', PersonSimpleRun)} */}
           </View>
 
           {/* Key Statistics Section */}
@@ -308,7 +308,7 @@ const SplashScreen = () => {
   );
 };
 
-const renderActivity = (activity, time, duration, icon) => (
+const renderActivity = (activity, timeStart, timeEnd, duration, icon) => (
   <LinearGradient
     colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
     start={{x: 0, y: 0}}
@@ -317,10 +317,10 @@ const renderActivity = (activity, time, duration, icon) => (
     <View>
       <Text style={styles.activityText}>{activity}</Text>
       <View style={styles.activityTimeView}>
-        <Text style={styles.activityTextTime}>{time}</Text>
+        <Text style={styles.activityTextTime}>{timeStart}</Text>
         {MySvgComponent()}
 
-        <Text style={styles.activityTextTime}>{time}</Text>
+        <Text style={styles.activityTextTime}>{timeEnd}</Text>
       </View>
     </View>
     <View>
