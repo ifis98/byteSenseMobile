@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -78,6 +78,7 @@ const calibrate = () => (
 // const colabriate = () => ()
 const DeviceDataScreen = () => {
   const [device, setDevice] = useState(null);
+  const deviceRef = useRef(null);
   const navigation = useNavigation();
   const [batteryPercentage, setBatteryPercentage] = useState(null);
   const [realTimeData, setRealTimeData] = useState(null);
@@ -128,15 +129,18 @@ const DeviceDataScreen = () => {
   let respGraphBuffer = [];
   let updateCounter = 0;
   let dataStartTime = 0;
+  let deviceSolid = null
 
   useEffect(() => {
     // Retrieve the selected device info
     const getDeviceInfo = async () => {
       try {
+        console.log("device set")
         const savedDevice = await AsyncStorage.getItem('selectedDevice');
         if (savedDevice) {
           const parsedDevice = JSON.parse(savedDevice);
           setDevice(parsedDevice);
+          deviceRef.current = parsedDevice;
           console.log('Retrieved device:', parsedDevice);
 
           // Connect to the device before starting notifications
@@ -313,6 +317,26 @@ const DeviceDataScreen = () => {
 
   }
 
+  const sendMessage = message => {
+    console.log(deviceRef.current)
+    if (deviceRef.current) {
+      let processedMessage = Buffer.from(message+'\n');
+      BleManager.write(
+        deviceRef.current.id,
+        SERVICEUUID,
+        characteristicWUUID,
+        processedMessage.toJSON().data,
+      )
+        .then(() => {
+          console.log(`Message sent: ${message}`);
+        })
+        .catch(error => {
+          console.error(`Error sending message: ${error}`);
+        });
+    } else {
+      console.error('Device not connected');
+    }
+  };
 
   const decipherNotification = async value => {
     //console.log('Processing notification data...');
@@ -371,9 +395,6 @@ const DeviceDataScreen = () => {
     } else if (stringValue.includes(':')) {
       // Handle data with a time-based format
       console.log('Clock:', stringValue);
-      let currentTime = Math.floor(new Date().getTime()/1000)
-      console.log("Time Sent: "+currentTime)
-      sendMessage('data_sync,'+currentTime)
     } else {
       console.log('Unknown format:', stringValue);
     }
@@ -578,6 +599,10 @@ const DeviceDataScreen = () => {
 
   
 
+
+
+
+
   const handleIdentify = splitIdentifier => {
     console.log('Handling identify:', splitIdentifier);
     let identifier = splitIdentifier[0];
@@ -592,36 +617,16 @@ const DeviceDataScreen = () => {
         dataStartTime = new Date(splitIdentifier[2]*1000)
         let currentTime = Math.floor(new Date().getTime()/1000)
         console.log("Time Sent: "+currentTime)
-        this.sendMessage('data_sync,'+currentTime)
+        sendMessage("data_sync,"+currentTime)
     }
   }
     // Add logic here to handle the identified data
   };
 
-  const sendMessage = message => {
-    if (device) {
-      console.log(device.id)
-      let processedMessage = Buffer.from(message+'\n');
-      console.log(processedMessage.toJSON().data)
-      BleManager.write(
-        device.id,
-        SERVICEUUID,
-        characteristicWUUID,
-        processedMessage.toJSON().data,
-      )
-        .then(() => {
-          console.log(`Message sent: ${message}`);
-        })
-        .catch(error => {
-          console.error(`Error sending message: ${error}`);
-        });
-    } else {
-      console.error('Device not connected');
-    }
-  };
-
   const startSync = () => {
-    sendMessage('get_time')
+    let currentTime = Math.floor(new Date().getTime()/1000)
+    console.log("Time Sent: "+currentTime)
+    sendMessage('fram,1,8')
     console.log('Sync Pressed')
   }
 
