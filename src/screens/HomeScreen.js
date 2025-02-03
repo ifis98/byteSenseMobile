@@ -80,6 +80,9 @@ const SplashScreen = () => {
   const [hr, setHr] = useState('--');
   const [hrv, setHrv] = useState('--');
   const [score, setScore] = useState('--');
+  const [sleepStart, setSleepStart] = useState('--');
+  const [sleepStop, setSleepStop] = useState('--');
+  const [sleepTime, setSleepTime] = useState('--');
   const [selectedDateIndex, setSelectedDateIndex] = useState(0); // Default to first date
 
   const calculateAverages = data => {
@@ -113,6 +116,9 @@ const SplashScreen = () => {
     if (selectedDateData) {
       setHr(selectedDateData.HR || '--');
       setHrv(selectedDateData.HRV || '--');
+      setSleepStart(selectedDateData.SleepTimeStart || '--');
+      setSleepStop(selectedDateData.SleepTimeFinish || '--');
+      setSleepTime(selectedDateData.TotalSleepTime || '--');
       const hr = selectedDateData.HR;
       const hrv = selectedDateData.HRV;
       let calculatedScore = (70 - hr) * 2 + (hrv - 20);
@@ -123,6 +129,9 @@ const SplashScreen = () => {
     } else {
       setHr('--');
       setHrv('--');
+      setSleepStart('--');
+      setSleepStop('--');
+      setSleepTime('--');
       setScore(0);
     }
   };
@@ -226,7 +235,7 @@ const SplashScreen = () => {
           <Text style={styles.sectionTitle}>Activities</Text>
           <View style={styles.activitiesSection}>
             {/* {renderActivity('Meditation', '5:11 PM', '0:12', yoga)} */}
-            {renderActivity('Sleep', '12:01 PM', '12:01 PM', '8:27', moon)}
+            {renderActivity('Sleep', sleepStart, sleepStop, sleepTime, moon)}
             {/* {renderActivity('Run', '12:01 PM', '0:27', PersonSimpleRun)} */}
           </View>
 
@@ -284,24 +293,24 @@ const SplashScreen = () => {
           <Text style={styles.sectionTitle}>Daily Byte Score</Text>
           <GraphComponent data={dailyByteScoreData} color="#00BE2A" />
 
-          <Text style={styles.sectionTitle}>Bruxism</Text>
+          {/* <Text style={styles.sectionTitle}>Bruxism</Text> */}
 
           {/* <View style={{backgroundColor:'red'}}> */}
-          <GraphComponent data={bruxismData} color="#FF8B02" />
+          {/* <GraphComponent data={bruxismData} color="#FF8B02" /> */}
 
-          <Text style={styles.sectionTitle}>Sleep Readiness</Text>
+          {/* <Text style={styles.sectionTitle}>Sleep Readiness</Text>
           <View style={styles.sleedRadinessView}>
             <Text style={styles.sleepRed}>0</Text>
             <Text style={styles.sleepRedText}>Sleep Readiness Score</Text>
           </View>
-          {/* <SleepReadiness /> */}
+          <SleepReadiness /> */}
 
-          <Text style={styles.graphText}>
+          {/* <Text style={styles.graphText}>
             You mostly had a <Text style={styles.lowText}>High</Text> Sleep
             Readiness Score this week. Your highest Sleep Readiness Score was{' '}
             <Text style={styles.lowText}>67</Text> on{' '}
             <Text style={styles.lowText}>Friday</Text>
-          </Text>
+          </Text> */}
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>

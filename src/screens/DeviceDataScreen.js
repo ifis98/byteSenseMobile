@@ -151,6 +151,7 @@ const DeviceDataScreen = () => {
 
           // Connect to the device before starting notifications
           connectToDevice(parsedDevice.id);
+
         }
       } catch (error) {
         console.error('Error retrieving device:', error);
@@ -222,6 +223,7 @@ const DeviceDataScreen = () => {
 
         // Discover services and characteristics
         discoverServicesAndCharacteristics(deviceId);
+        sendMessage('battery')
       })
       .catch(error => {
         console.error('Error connecting to device:', error);
@@ -338,23 +340,25 @@ const DeviceDataScreen = () => {
   }
 
   const sendMessage = message => {
-    console.log(deviceRef.current)
-    if (deviceRef.current) {
-      let processedMessage = Buffer.from(message+'\n');
-      BleManager.write(
-        deviceRef.current.id,
-        SERVICEUUID,
-        characteristicWUUID,
-        processedMessage.toJSON().data,
-      )
-        .then(() => {
-          console.log(`Message sent: ${message}`);
-        })
-        .catch(error => {
-          console.error(`Error sending message: ${error}`);
-        });
-    } else {
-      console.error('Device not connected');
+    if(!syncInProgress){
+      console.log(deviceRef.current)
+      if (deviceRef.current) {
+        let processedMessage = Buffer.from(message+'\n');
+        BleManager.write(
+          deviceRef.current.id,
+          SERVICEUUID,
+          characteristicWUUID,
+          processedMessage.toJSON().data,
+        )
+          .then(() => {
+            console.log(`Message sent: ${message}`);
+          })
+          .catch(error => {
+            console.error(`Error sending message: ${error}`);
+          });
+      } else {
+        console.error('Device not connected');
+      }
     }
   };
 
@@ -401,8 +405,8 @@ const DeviceDataScreen = () => {
       let nibbles = hexHR.match(/.{1,2}/g);
       let bigEndian =  nibbles[1] + nibbles[0];
       let HRvalue = (parseInt(bigEndian, 16))/256
-      HRValue = Math.round(HRValue)
-      //console.log("HR stream: "+HRvalue)
+      HRvalue = Math.round(HRvalue)
+      console.log("HR stream: "+HRvalue)
       setHR(HRvalue)
       setTestHR(HRvalue)
       //console.log('Hex value:', hexValue);
@@ -629,7 +633,7 @@ const DeviceDataScreen = () => {
     let identifier = splitIdentifier[0];
     if (identifier == 0) {
       let batteryValue = (splitIdentifier[1] / 4095.0) * 3.6 * 2;
-      setBatteryPercentage(batteryValue);
+      setBatteryPercentage(Math.round(batteryValue * 100) / 100);
     }
     if (identifier == 2) {
       let framIdentifier = splitIdentifier[1]
@@ -652,13 +656,13 @@ const DeviceDataScreen = () => {
   }
 
   const batteryPoll = () => {
-    // if (syncInProgress) {
-    //   console.log('Sync in progress, skipping battery poll');
-    //   return;
-    // }
+    if (syncInProgress) {
+      console.log('Sync in progress, skipping battery poll');
+      return;
+    }
 
-    //console.log('Polling battery status...');
-    //sendMessage('battery');
+    console.log('Polling battery status...');
+    sendMessage('battery');
   };
 
   useEffect(() => {
@@ -710,7 +714,7 @@ const DeviceDataScreen = () => {
                 <Text style={styles.statusText}>Battery</Text>
                 <View style={styles.statusIconView}>
                   <Image source={batteryIcon} style={styles.statusIcon} />
-                  <Text style={styles.statusTextBold}>96</Text>
+                  <Text style={styles.statusTextBold}>{batteryPercentage}</Text>
                 </View>
               </View>
             </View>

@@ -53,7 +53,7 @@ const GraphComponent = props => {
           }}
           bezier={true}
         />
-         {color === "#00BE2A" && (<Text style={styles.graphText}>
+         {/* {color === "#00BE2A" && (<Text style={styles.graphText}>
          
          You mostly had a <Text style={styles.lowText}>low</Text> Byte Score
          this week. Your highest Byte Score was <Text style={styles.lowText}>65</Text>  on  <Text style={styles.lowText}>Friday.</Text>
@@ -61,7 +61,7 @@ const GraphComponent = props => {
          {color === "#FF8B02" && (<Text style={styles.graphText}>
          
           You had a <Text style={styles.lowText}>High</Text> number of bruxism episodes this week. Your highest number of episodes was <Text style={styles.lowText}>7</Text> on <Text style={styles.lowText}>Friday</Text>
-       </Text>)}
+       </Text>)} */}
         
       </View>
     </SafeAreaView>
