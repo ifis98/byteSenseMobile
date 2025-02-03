@@ -694,7 +694,7 @@ const DeviceDataScreen = () => {
               <View>
                 <Text style={styles.deviceName}>byteGuard</Text>
                 <View style={styles.syncTextView}>
-                  <Text style={styles.syncText} onPress={startSync}>Sync</Text>
+                  <Text style={styles.syncText} onPress={startSync}>{syncInProgress ? 'Syncing...':'Sync'}</Text>
                 </View>
               </View>
             </View>
