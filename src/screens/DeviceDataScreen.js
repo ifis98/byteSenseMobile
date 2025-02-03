@@ -86,7 +86,11 @@ const DeviceDataScreen = () => {
   const deviceRef = useRef(null);
   const fileName = useRef('');
   const navigation = useNavigation();
+
   const [batteryPercentage, setBatteryPercentage] = useState(null);
+  const pollFirstBatteryRef = useRef(true)
+
+
   const [realTimeData, setRealTimeData] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [services, setServices] = useState([]);
@@ -222,8 +226,7 @@ const DeviceDataScreen = () => {
         setIsConnected(true);
 
         // Discover services and characteristics
-        discoverServicesAndCharacteristics(deviceId);
-        sendMessage('battery')
+        discoverServicesAndCharacteristics(deviceId)
       })
       .catch(error => {
         console.error('Error connecting to device:', error);
@@ -270,6 +273,10 @@ const DeviceDataScreen = () => {
 
             //console.log('Received hex data:', hexValue);
             //console.log('Received ASCII data:', asciiValue);
+            if(pollFirstBatteryRef.current){
+              sendMessage('battery')
+              pollFirstBatteryRef.current = false
+            }
             decipherNotification(bufferValue); // Pass the value to the decipherNotification function
 
             setRealTimeData(asciiValue);
@@ -287,7 +294,7 @@ const DeviceDataScreen = () => {
   const parseReading = (value) => {
     let sensorLittleEndian = value.match(/.{1,4}/g)
 
-    let HRhex = sensorLittleEndian[0]
+    let HRhex = sensorLittleEndian[1]
     let bytes = HRhex.match(/.{1,2}/g);
     let bigEndian =  bytes[1] + bytes[0];
     let HRvalue = (parseInt(bigEndian, 16))/256
@@ -325,7 +332,9 @@ const DeviceDataScreen = () => {
 
         dataPoint = {
           HR: sensorValue,
-          ts: time
+          ts: time,
+          hrhex: split[1],
+          timehex: split[0]
         }
 
         console.log('Data Point: '+ dataPoint)
@@ -340,7 +349,7 @@ const DeviceDataScreen = () => {
   }
 
   const sendMessage = message => {
-    if(!syncInProgress){
+    if(!syncTimeoutRef.current){
       console.log(deviceRef.current)
       if (deviceRef.current) {
         let processedMessage = Buffer.from(message+'\n');
@@ -382,6 +391,7 @@ const DeviceDataScreen = () => {
         setSyncInProgress(true);
         // If you need to clear any old data, do so here:
         // setSyncData([]);
+        console.log('Sync Started')
       }
 
       if (syncTimeoutRef.current) {
@@ -390,6 +400,10 @@ const DeviceDataScreen = () => {
       syncTimeoutRef.current = setTimeout(() => {
         // If we get here, no new large packet arrived for 5s
         setSyncInProgress(false);
+        clearTimeout(syncTimeoutRef.current);
+        syncTimeoutRef.current = null
+
+        console.log('Sync Ended')
 
         // Now that sync ended, email your data
         handleSendEmail(syncData.current);
@@ -656,7 +670,7 @@ const DeviceDataScreen = () => {
   }
 
   const batteryPoll = () => {
-    if (syncInProgress) {
+    if (syncTimeoutRef.current) {
       console.log('Sync in progress, skipping battery poll');
       return;
     }
@@ -668,7 +682,7 @@ const DeviceDataScreen = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       batteryPoll();
-    }, 2000); // Poll battery every 2 seconds
+    }, 300000); // Poll battery every 5 mins
 
     return () => clearInterval(interval);
   }, []);
