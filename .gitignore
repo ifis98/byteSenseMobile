@@ -1,0 +1,50 @@
+# macOS
+.DS_Store
+*.DS_Store
+
+
+
+
+# CocoaPods
+
+
+# Android
+/.gradle/
+/build/
+local.properties
+.idea/
+/*.iml
+/.cxx/
+
+# Node.js
+node_modules/
+/npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Metro Bundler (React Native)
+
+
+# Testing
+/coverage/
+/jest-cache/
+/jest-config/
+
+# Code signing
+
+# Temporary IDEs
+.vscode/
+.idea/
+
+# Build artifacts
+build/
+dist/
+*.log
+
+# Misc
+.env
+.env.local
+*.env
+*.log
+yarn.lock

@@ -1,0 +1,15 @@
+current directory: /Users/anujb/Documents/mobile/BruxAway/vendor/bundle/ruby/2.7.0/gems/nkf-0.2.0/ext/nkf
+/Users/anujb/.rbenv/versions/2.7.5/bin/ruby -I /Users/anujb/.rbenv/versions/2.7.5/lib/ruby/2.7.0 -r ./siteconf20240923-98680-1hfd1c1.rb extconf.rb
+creating Makefile
+
+current directory: /Users/anujb/Documents/mobile/BruxAway/vendor/bundle/ruby/2.7.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR=" clean
+
+current directory: /Users/anujb/Documents/mobile/BruxAway/vendor/bundle/ruby/2.7.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR="
+compiling nkf.c
+linking shared-object nkf.bundle
+
+current directory: /Users/anujb/Documents/mobile/BruxAway/vendor/bundle/ruby/2.7.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR=" install
+/opt/homebrew/bin/ginstall -c -m 0755 nkf.bundle ./.gem.20240923-98680-p9gi6m
