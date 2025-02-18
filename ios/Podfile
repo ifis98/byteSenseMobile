@@ -17,11 +17,16 @@ end
 
 target 'BruxAway' do
   config = use_native_modules!
+  
+  pod "react-native-nordic-dfu", path: "../node_modules/react-native-nordic-dfu"
+  
+  use_frameworks! :linkage => :static
 
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
+    
   )
 
   # Add permissions path for react-native-permissions

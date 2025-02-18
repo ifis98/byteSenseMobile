@@ -1,4 +1,4 @@
-module Pods_BruxAway_BruxAwayTests {
+framework module Pods_BruxAway_BruxAwayTests {
   umbrella header "Pods-BruxAway-BruxAwayTests-umbrella.h"
 
   export *

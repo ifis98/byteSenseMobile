@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EC15A0F9563DA3A9F518B412A6F2F823"
-               BuildableName = "libRNAppleHealthKit.a"
+               BuildableName = "RNAppleHealthKit.framework"
                BlueprintName = "RNAppleHealthKit"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

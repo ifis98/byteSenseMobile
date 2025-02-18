@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D177B476252EBB587C97A05B1A506F1B"
-               BuildableName = "libreact-native-mail.a"
+               BuildableName = "react_native_mail.framework"
                BlueprintName = "react-native-mail"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

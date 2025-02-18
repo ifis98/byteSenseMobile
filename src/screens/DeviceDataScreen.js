@@ -25,6 +25,7 @@ import {findRealTimeHR, findRealTimeResp} from './HRCalc';
 import GraphComponentMultiple from '../components/GraphComponentMultiple';
 import RNFS from 'react-native-fs';
 import Mailer from 'react-native-mail';
+import { NordicDFU, DFUEmitter } from 'react-native-nordic-dfu';
 
 
 
@@ -92,6 +93,7 @@ const DeviceDataScreen = () => {
 
 
   const [realTimeData, setRealTimeData] = useState(null);
+  const [dfuStatus, setDfuStatus] = useState('');
   const [isConnected, setIsConnected] = useState(false);
   const [services, setServices] = useState([]);
   const [characteristics, setCharacteristics] = useState([]);
@@ -687,6 +689,94 @@ const DeviceDataScreen = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleDFUUpdate = async () => {
+    setDfuStatus('Sending DFU command...');
+    
+    // Use the existing sendMessage function to write the "enter_dfu" command.
+    if (deviceRef.current) {
+      try {
+        // sendMessage appends a newline automatically
+        await sendMessage('enter_dfu');
+        console.log('DFU command sent');
+        setDfuStatus('DFU command sent. Disconnecting...');
+      } catch (error) {
+        console.error('Error sending DFU command:', error);
+        setDfuStatus('Error sending DFU command');
+        return;
+      }
+      try {
+        await BleManager.disconnect(deviceRef.current.id);
+        console.log('Disconnected after DFU command');
+      } catch (error) {
+        console.error('Error disconnecting:', error);
+      }
+    } else {
+      console.error('No device connected');
+      setDfuStatus('No device connected');
+      return;
+    }
+  
+    // Wait for the device to reboot into DFU mode.
+    setDfuStatus('Waiting for DFU mode...');
+    await new Promise(resolve => setTimeout(resolve, 5000));
+  
+    // Scan for DFU target (a device advertising "DFUTarg")
+    setDfuStatus('Scanning for DFU target...');
+    let dfuTargetDevice = null;
+    const scanListener = DeviceEventEmitter.addListener(
+      'BleManagerDiscoverPeripheral',
+      (peripheral) => {
+        const deviceName = peripheral.name || peripheral.localName;
+        if (deviceName && deviceName.includes('DfuTarg')) {
+          dfuTargetDevice = peripheral;
+          console.log('Found DFU target device:', peripheral);
+          BleManager.stopScan();
+          scanListener.remove();
+          proceedDFU(dfuTargetDevice.id);
+        }
+      }
+    );
+  
+    BleManager.scan([], 10, true)
+      .then(() => {
+        console.log('Started scanning for DFU target');
+      })
+      .catch(error => {
+        console.error('Error starting scan for DFU target:', error);
+        setDfuStatus('Error scanning for DFU target');
+      });
+  
+    // In case the DFU target is not found, stop scanning after 10 seconds.
+    setTimeout(() => {
+      BleManager.stopScan();
+      if (!dfuTargetDevice) {
+        console.error('DFU target not found');
+        setDfuStatus('DFU target not found');
+        scanListener.remove();
+      }
+    }, 20000);
+  };
+  
+  const proceedDFU = async (dfuTargetId) => {
+    setDfuStatus('Starting DFU update...');
+    // Replace with the actual path to your DFU firmware package
+    const firmwareFilePath = 'path/to/your/firmware.zip';
+    try {
+      const result = await NordicDFU.startDFU({
+        deviceAddress: dfuTargetId,
+        filePath: firmwareFilePath,
+        // Optionally add a device name or other options if required:
+        // name: "Your Device Name"
+      });
+      console.log('DFU update successful:', result);
+      setDfuStatus('DFU update successful!');
+    } catch (error) {
+      console.error('DFU update failed:', error);
+      setDfuStatus('DFU update failed!');
+    }
+  };
+  // --- End of DFU Update Flow ---
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -801,6 +891,14 @@ const DeviceDataScreen = () => {
               {calibrate()}
               <Text style={styles.buttonTextCalibrate}>Calibrate</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleDFUUpdate}>
+              <Text style={styles.buttonText}>Update Firmware</Text>
+            </TouchableOpacity>
+            {dfuStatus ? (
+              <View style={styles.dfuStatusContainer}>
+                <Text style={styles.dfuStatusText}>{dfuStatus}</Text>
+              </View>
+              ) : null}
           </View>
         </View>
 
@@ -1040,6 +1138,15 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     // marginLeft:-10
+  },
+  dfuStatusContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  dfuStatusText: {
+    color: '#27FFE9',
+    fontFamily: 'Ubuntu',
+    fontSize: 14,
   },
 });
 

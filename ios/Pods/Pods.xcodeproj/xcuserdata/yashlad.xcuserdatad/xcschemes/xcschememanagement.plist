@@ -394,6 +394,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ZIPFoundation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>boost-boost_privacy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -424,6 +429,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>iOSDFULibrary.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>react-native-ble-manager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -435,6 +445,11 @@
 			<false/>
 		</dict>
 		<key>react-native-mail.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>react-native-nordic-dfu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

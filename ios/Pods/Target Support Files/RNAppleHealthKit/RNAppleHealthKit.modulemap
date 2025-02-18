@@ -1,0 +1,6 @@
+framework module RNAppleHealthKit {
+  umbrella header "RNAppleHealthKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

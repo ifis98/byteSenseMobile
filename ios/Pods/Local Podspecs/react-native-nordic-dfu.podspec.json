@@ -1,0 +1,25 @@
+{
+  "name": "react-native-nordic-dfu",
+  "version": "3.3.0",
+  "summary": "Nordic Device Firmware Update for React Native",
+  "authors": {
+    "Pilloxa": "recruitment@pilloxa.com"
+  },
+  "homepage": "https://github.com/Pilloxa/react-native-nordic-dfu",
+  "license": "Apache License 2.0",
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source": {
+    "git": "https://github.com/Pilloxa/react-native-nordic-dfu.git"
+  },
+  "source_files": "ios/**/*.{h,m}",
+  "dependencies": {
+    "React-Core": [
+
+    ],
+    "iOSDFULibrary": [
+      "~> 4.13.0"
+    ]
+  }
+}

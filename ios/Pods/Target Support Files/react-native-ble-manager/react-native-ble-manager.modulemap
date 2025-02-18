@@ -1,4 +1,4 @@
-module react_native_ble_manager {
+framework module react_native_ble_manager {
   umbrella header "react-native-ble-manager-umbrella.h"
 
   export *

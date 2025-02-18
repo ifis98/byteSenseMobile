@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9480A63FA3996BD44733F3E3BC5C302B"
-               BuildableName = "libMultiplatformBleAdapter.a"
+               BuildableName = "MultiplatformBleAdapter.framework"
                BlueprintName = "MultiplatformBleAdapter"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

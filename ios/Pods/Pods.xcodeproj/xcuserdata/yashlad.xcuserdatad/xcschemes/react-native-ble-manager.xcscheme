@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6CC4AC574A58173DBB3818411F6D3FE9"
-               BuildableName = "libreact-native-ble-manager.a"
+               BuildableName = "react_native_ble_manager.framework"
                BlueprintName = "react-native-ble-manager"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
