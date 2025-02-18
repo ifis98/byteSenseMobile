@@ -760,7 +760,8 @@ const DeviceDataScreen = () => {
   const proceedDFU = async (dfuTargetId) => {
     setDfuStatus('Starting DFU update...');
     // Replace with the actual path to your DFU firmware package
-    const firmwareFilePath = 'path/to/your/firmware.zip';
+    console.log("Firmware path:", RNFS.MainBundlePath);
+    const firmwareFilePath = `file://${RNFS.MainBundlePath}/ppgv3.0.zip`;
     try {
       const result = await NordicDFU.startDFU({
         deviceAddress: dfuTargetId,

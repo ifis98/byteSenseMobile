@@ -15,6 +15,8 @@
 		65F5FE652CE48FFC00C47EDE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65F5FE642CE48FFC00C47EDE /* Images.xcassets */; };
 		7FDF74B53F45BFC297F789C6 /* Pods_BruxAway.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21FA16A2062CB37A30B7C85E /* Pods_BruxAway.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A3D6041A2D641A6900586456 /* v7.5.zip in Resources */ = {isa = PBXBuildFile; fileRef = A3D604192D641A6900586456 /* v7.5.zip */; };
+		A3D6041C2D641A9900586456 /* ppgv3.0.zip in Resources */ = {isa = PBXBuildFile; fileRef = A3D6041B2D641A9900586456 /* ppgv3.0.zip */; };
 		CA17C44B06EAD077C30B11A3 /* Pods_BruxAway_BruxAwayTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F6CEC9EC684AE5333EF972 /* Pods_BruxAway_BruxAwayTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +51,8 @@
 		65F5FE642CE48FFC00C47EDE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BruxAway/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-BruxAway-BruxAwayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BruxAway-BruxAwayTests.release.xcconfig"; path = "Target Support Files/Pods-BruxAway-BruxAwayTests/Pods-BruxAway-BruxAwayTests.release.xcconfig"; sourceTree = "<group>"; };
+		A3D604192D641A6900586456 /* v7.5.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = v7.5.zip; sourceTree = "<group>"; };
+		A3D6041B2D641A9900586456 /* ppgv3.0.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = ppgv3.0.zip; sourceTree = "<group>"; };
 		D8F6CEC9EC684AE5333EF972 /* Pods_BruxAway_BruxAwayTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BruxAway_BruxAwayTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -127,6 +131,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A3D6041B2D641A9900586456 /* ppgv3.0.zip */,
+				A3D604192D641A6900586456 /* v7.5.zip */,
 				13B07FAE1A68108700A75B9A /* BruxAway */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* BruxAwayTests */,
@@ -255,8 +261,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				65F5FE652CE48FFC00C47EDE /* Images.xcassets in Resources */,
+				A3D6041C2D641A9900586456 /* ppgv3.0.zip in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				61C5E3A52CDF7D416E2DF4DD /* PrivacyInfo.xcprivacy in Resources */,
+				A3D6041A2D641A6900586456 /* v7.5.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,10 +641,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -720,10 +725,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
