@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const backendLink = 'http://13.59.234.168:4000/';
+const backendLink = 'https://api.bytesens.ai:4000/';
 
 // Create a new axios instance with base configuration
 const api = axios.create({
