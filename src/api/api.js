@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const backendLink = 'http://13.59.234.168:4000/';
+export const backendLink = 'https://api.bytesense.ai:4000/';
 
 // Create a new axios instance with base configuration
 const api = axios.create({
@@ -43,6 +43,8 @@ export const login = async (userName, password) => {
     const { token } = response.data;
 
     await AsyncStorage.setItem('token', token);
+    await AsyncStorage.setItem('userID', user._id); 
+    
     console.log('login api response',response);
 
     return token;

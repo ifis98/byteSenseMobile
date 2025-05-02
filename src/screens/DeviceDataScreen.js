@@ -26,8 +26,14 @@ import GraphComponentMultiple from '../components/GraphComponentMultiple';
 import RNFS from 'react-native-fs';
 import Mailer from 'react-native-mail';
 import { NordicDFU, DFUEmitter } from 'react-native-nordic-dfu';
+import io from 'socket.io-client';
+import {backendLink} from '../api/api'
 
 
+
+const socket = io(backendLink, {
+  transports: ['websocket'], // ensure stable connection
+});
 
 const MySvgComponent = () => (
   <Svg
@@ -91,6 +97,7 @@ const DeviceDataScreen = () => {
   const [batteryPercentage, setBatteryPercentage] = useState(null);
   const pollFirstBatteryRef = useRef(true)
 
+  const [userId, setUserId] = useState(null);
 
   const [realTimeData, setRealTimeData] = useState(null);
   const [dfuStatus, setDfuStatus] = useState('');
@@ -144,6 +151,20 @@ const DeviceDataScreen = () => {
   let deviceSolid = null
 
   useEffect(() => {
+
+    const getUserId = async () => {
+      try {
+        const storedId = await AsyncStorage.getItem('userID');
+        if (storedId) {
+          setUserId(storedId);
+          console.log('Loaded user ID:', storedId);
+        }
+      } catch (e) {
+        console.error('Failed to load user ID:', e);
+      }
+    };
+    getUserId();
+    
     // Retrieve the selected device info
     const getDeviceInfo = async () => {
       try {
@@ -165,7 +186,16 @@ const DeviceDataScreen = () => {
     };
 
     getDeviceInfo();
+
+    socket.on('connect', () => console.log('Socket connected:', socket.id));
+    socket.on('disconnect', () => console.log('Socket disconnected'));
+  
+    return () => {
+      socket.disconnect();
+    };
   }, []);
+
+
 
   const writeJsonToFile = async (jsonData) => {
     fileName.current = 'Sample_'+new Date().getTime()+'.json';
@@ -409,6 +439,17 @@ const DeviceDataScreen = () => {
 
         // Now that sync ended, email your data
         handleSendEmail(syncData.current);
+
+        if (userId) {
+          socket.emit('biometricData', {
+            user: userId,
+            data: syncData.current,
+          });
+          console.log('Sent biometricData for user:', userId);
+        } else {
+          console.warn('No userId found, cannot send biometricData');
+        } 
+        
       }, 5000);
     }
     else if (hexValue.length >= 100) {
