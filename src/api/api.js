@@ -40,7 +40,9 @@ const handleApiError = (error) => {
 export const login = async (userName, password) => {
   try {
     const response = await api.post('/user/loginMobile', { userName, password });
-    const { token } = response.data;
+    const { token, user } = response.data;
+    console.log(response.data)
+    console.log(token)
 
     await AsyncStorage.setItem('token', token);
     await AsyncStorage.setItem('userID', user._id); 
