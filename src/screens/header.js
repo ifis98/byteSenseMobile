@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between', // Space between arrow, title, and profile
-    marginTop:10,
+    marginTop:50,
   },
   backArrowContainer: {
     width: 40, // Ensure the back arrow has enough space

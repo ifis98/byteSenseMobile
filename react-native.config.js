@@ -1,7 +1,8 @@
 module.exports = {
-    project: {
-      android: {
-        packageName: "com.bruxaway",
-      },
+  assets: ['./src/assets/fonts'],
+  project: {
+    android: {
+      packageName: "com.bruxaway",
     },
-  };
+  },
+};

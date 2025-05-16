@@ -18,6 +18,15 @@
 		A3D6041A2D641A6900586456 /* v7.5.zip in Resources */ = {isa = PBXBuildFile; fileRef = A3D604192D641A6900586456 /* v7.5.zip */; };
 		A3D6041C2D641A9900586456 /* ppgv3.0.zip in Resources */ = {isa = PBXBuildFile; fileRef = A3D6041B2D641A9900586456 /* ppgv3.0.zip */; };
 		CA17C44B06EAD077C30B11A3 /* Pods_BruxAway_BruxAwayTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F6CEC9EC684AE5333EF972 /* Pods_BruxAway_BruxAwayTests.framework */; };
+		0FC891228D1F4A8F9EF32186 /* Ubuntu-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 816CB05308554A9DA6AAEF58 /* Ubuntu-Bold.ttf */; };
+		25FBE8028CDA45A580D1BBBC /* Ubuntu-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C76F0E729E6406CB90108AF /* Ubuntu-BoldItalic.ttf */; };
+		8D8C5D425026475E8BAF7614 /* Ubuntu-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF1E6721A3744F37AD0A9F6B /* Ubuntu-Italic.ttf */; };
+		8650102204C14BD99248DA56 /* Ubuntu-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441B77A63F30432FBCD45DC6 /* Ubuntu-Light.ttf */; };
+		E55371C21E5849EC8A7D5748 /* Ubuntu-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 277970B0AFA940C5B2D0B7AE /* Ubuntu-LightItalic.ttf */; };
+		86906CB74C0349FC9E0E2910 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAEECE5745ED482CA7DEC069 /* Ubuntu-Medium.ttf */; };
+		BC5E9C21FDE740BB88A23346 /* Ubuntu-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F98963356384EA9B113F277 /* Ubuntu-MediumItalic.ttf */; };
+		D99B7BC80659452EA3C2AD0E /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 716593EEB41F4C429E523C7B /* Ubuntu-Regular.ttf */; };
+		B5A470B5CACB4A63AF660E46 /* UFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 54D2EECBC7BF4DE19AB36719 /* UFL.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +64,15 @@
 		A3D6041B2D641A9900586456 /* ppgv3.0.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = ppgv3.0.zip; sourceTree = "<group>"; };
 		D8F6CEC9EC684AE5333EF972 /* Pods_BruxAway_BruxAwayTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BruxAway_BruxAwayTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		816CB05308554A9DA6AAEF58 /* Ubuntu-Bold.ttf */ = {isa = PBXFileReference; name = "Ubuntu-Bold.ttf"; path = "../src/assets/fonts/Ubuntu-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9C76F0E729E6406CB90108AF /* Ubuntu-BoldItalic.ttf */ = {isa = PBXFileReference; name = "Ubuntu-BoldItalic.ttf"; path = "../src/assets/fonts/Ubuntu-BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DF1E6721A3744F37AD0A9F6B /* Ubuntu-Italic.ttf */ = {isa = PBXFileReference; name = "Ubuntu-Italic.ttf"; path = "../src/assets/fonts/Ubuntu-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		441B77A63F30432FBCD45DC6 /* Ubuntu-Light.ttf */ = {isa = PBXFileReference; name = "Ubuntu-Light.ttf"; path = "../src/assets/fonts/Ubuntu-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		277970B0AFA940C5B2D0B7AE /* Ubuntu-LightItalic.ttf */ = {isa = PBXFileReference; name = "Ubuntu-LightItalic.ttf"; path = "../src/assets/fonts/Ubuntu-LightItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DAEECE5745ED482CA7DEC069 /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; name = "Ubuntu-Medium.ttf"; path = "../src/assets/fonts/Ubuntu-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2F98963356384EA9B113F277 /* Ubuntu-MediumItalic.ttf */ = {isa = PBXFileReference; name = "Ubuntu-MediumItalic.ttf"; path = "../src/assets/fonts/Ubuntu-MediumItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		716593EEB41F4C429E523C7B /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; name = "Ubuntu-Regular.ttf"; path = "../src/assets/fonts/Ubuntu-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		54D2EECBC7BF4DE19AB36719 /* UFL.txt */ = {isa = PBXFileReference; name = "UFL.txt"; path = "../src/assets/fonts/UFL.txt"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +157,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				667761718BC648549F8AA6A4 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -166,6 +185,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		667761718BC648549F8AA6A4 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				816CB05308554A9DA6AAEF58 /* Ubuntu-Bold.ttf */,
+				9C76F0E729E6406CB90108AF /* Ubuntu-BoldItalic.ttf */,
+				DF1E6721A3744F37AD0A9F6B /* Ubuntu-Italic.ttf */,
+				441B77A63F30432FBCD45DC6 /* Ubuntu-Light.ttf */,
+				277970B0AFA940C5B2D0B7AE /* Ubuntu-LightItalic.ttf */,
+				DAEECE5745ED482CA7DEC069 /* Ubuntu-Medium.ttf */,
+				2F98963356384EA9B113F277 /* Ubuntu-MediumItalic.ttf */,
+				716593EEB41F4C429E523C7B /* Ubuntu-Regular.ttf */,
+				54D2EECBC7BF4DE19AB36719 /* UFL.txt */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -177,7 +213,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
 				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -199,7 +234,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -265,6 +299,15 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				61C5E3A52CDF7D416E2DF4DD /* PrivacyInfo.xcprivacy in Resources */,
 				A3D6041A2D641A6900586456 /* v7.5.zip in Resources */,
+				0FC891228D1F4A8F9EF32186 /* Ubuntu-Bold.ttf in Resources */,
+				25FBE8028CDA45A580D1BBBC /* Ubuntu-BoldItalic.ttf in Resources */,
+				8D8C5D425026475E8BAF7614 /* Ubuntu-Italic.ttf in Resources */,
+				8650102204C14BD99248DA56 /* Ubuntu-Light.ttf in Resources */,
+				E55371C21E5849EC8A7D5748 /* Ubuntu-LightItalic.ttf in Resources */,
+				86906CB74C0349FC9E0E2910 /* Ubuntu-Medium.ttf in Resources */,
+				BC5E9C21FDE740BB88A23346 /* Ubuntu-MediumItalic.ttf in Resources */,
+				D99B7BC80659452EA3C2AD0E /* Ubuntu-Regular.ttf in Resources */,
+				B5A470B5CACB4A63AF660E46 /* UFL.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,23 +329,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
-		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BruxAway/Pods-BruxAway-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BruxAway/Pods-BruxAway-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BruxAway/Pods-BruxAway-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -346,23 +372,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BruxAway-BruxAwayTests/Pods-BruxAway-BruxAwayTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BruxAway-BruxAwayTests/Pods-BruxAway-BruxAwayTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BruxAway-BruxAwayTests/Pods-BruxAway-BruxAwayTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -641,11 +650,14 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
-				USE_HERMES = true;
+				USE_HERMES = false;
 			};
 			name = Debug;
 		};
@@ -725,10 +737,13 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
-				USE_HERMES = true;
+				USE_HERMES = false;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

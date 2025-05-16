@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Image,
@@ -8,9 +8,9 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
+import { Svg, Path, G, ClipPath, Rect, Defs } from 'react-native-svg';
 
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import heartRate from '../assets/heartRate.png';
 import cardiogram from '../assets/cardiogram.png';
@@ -26,17 +26,24 @@ import moon from '../assets/moon.png';
 import PersonSimpleRun from '../assets/PersonSimpleRun.png';
 import cardiogram2 from '../assets/cardiogram-03.png';
 import hearblack from '../assets/hearblack.png';
+import fatigueScore from "../assets/FatigueScore.png"
+import redLineVector from "../assets/redLineVector.png"
+import warningCircle from "../assets/warning-circle.png"
+import trendUp from "../assets/trend-up.png"
+import prev from "../assets/prev.png"
+import redTimer from "../assets/timer1.png";
 import lungs from '../assets/lungs.png';
 import dentalTooth from '../assets/dental-tooth.png';
 import dentalCare from '../assets/dental-care.png';
 import upAroorw from '../assets/upAroorw.png';
 import downArrow from '../assets/downArrow.png';
+import action from "../assets/action.png"
 import GraphComponent from '../components/GraphComponent';
 import CustomGraph from '../components/CustomGraph';
 import SleepReadiness from '../components/SleepReadiness';
 import healthData from '../hard_data/DashboardData.json'; // Import your health data JSON
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const MySvgComponent = () => (
   <Svg
@@ -86,7 +93,7 @@ const SplashScreen = () => {
   const [selectedDateIndex, setSelectedDateIndex] = useState(0); // Default to first date
 
   const calculateAverages = data => {
-    if (!data || data.length <= 1) return {avgHR: 0, avgHRV: 0};
+    if (!data || data.length <= 1) return { avgHR: 0, avgHRV: 0 };
 
     // Exclude the latest date (last element in the array)
     const filteredData = data.slice(0, data.length - 1);
@@ -97,7 +104,7 @@ const SplashScreen = () => {
         acc.totalHRV += curr.HRV;
         return acc;
       },
-      {totalHR: 0, totalHRV: 0},
+      { totalHR: 0, totalHRV: 0 },
     );
 
     const count = filteredData.length;
@@ -107,7 +114,7 @@ const SplashScreen = () => {
     };
   };
 
-  const {avgHR, avgHRV} = calculateAverages(healthData);
+  const { avgHR, avgHRV } = calculateAverages(healthData);
 
   // Function to handle date changes
   const handleDateChange = index => {
@@ -152,167 +159,296 @@ const SplashScreen = () => {
 
   const getColorForScore = score => {
     const threshold = 60; // 60% of 100 in this case
-    return score > threshold ? ['#0f3d3e', '#232323'] : ['#0f3d3e', '#232323'];
+    return score > threshold ? ['#0f3d3e', '#232323'] : ['#411E1F', '#232323'];
   };
 
   return (
     <LinearGradient
       colors={['#232323', '#232323', '#232323']}
-      start={{x: 0, y: 0}}
-      end={{x: 2, y: 1}}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 2, y: 1.4 }}
       style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <LinearGradient
-            colors={getColorForScore(score)}
-            start={{x: 0, y: 0}}
-            end={{x: 0.8, y: 1}}>
-            <Header showBackArrow={false} title="Sleep Report" />
-            <View style={styles.dataSliderView}>
-              <DateSlider
-                healthData={healthData}
-                handleDateChange={handleDateChange}
-                selectedDateIndex={selectedDateIndex}
-                setSelectedDateIndex={handleDateChange}
-              />
-            </View>
-            <View style={styles.statsSection}>
-              <View style={styles.heartImageView}>
-                <Image source={heartRate} style={styles.heartImage} />
-                <Text style={styles.rhrStyle}>RHR</Text>
-                <View style={styles.rhrView}>
-                  <Text style={styles.rhrValueStyle}>{hr}</Text>
-                  <Text style={styles.rhrBpmStyle}>bpm</Text>
-                </View>
-              </View>
-
-              <Image source={Line} style={styles.lineImage} />
-
-              <View style={styles.cardiImageView}>
-                <Image source={cardiogram} style={styles.heartImage} />
-                <Text style={styles.rhrStyle}>HRV</Text>
-                <View style={styles.rhrView}>
-                  <Text style={styles.rhrValueStyle}>{hrv}</Text>
-                  <Text style={styles.rhrBpmStyle}>ms</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.container2}>
-              <HalfCircleSVGs selectedIndex={score} />
-            </View>
-          </LinearGradient>
-
-          {/* Bruxism Duration */}
-          <LinearGradient
-            colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
-            start={{x: 0, y: 0}}
-            end={{x: 0.5, y: 0.5}}
-            style={styles.bruxismSection}>
-            <View style={styles.bruxismDetail}>
-              <View style={styles.bruxismView}>
-                <Image source={timer} style={styles.timerImage} />
-                <View style={styles.bruxismViewContent}>
-                  <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
-                  <Text style={styles.bruxismValue}>
-                    -- <Text style={styles.rhrBpmStyle}>min</Text>
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.border}></View>
-            <View style={styles.bruxismDetail}>
-              <View style={styles.bruxismView}>
-                <Image source={episode} style={styles.timerImage} />
-                <View style={styles.bruxismViewContent}>
-                  <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
-                  <Text style={styles.bruxismValue}>--</Text>
-                </View>
-              </View>
-            </View>
-          </LinearGradient>
-
-          {/* Activities Section */}
-          <Text style={styles.sectionTitle}>Activities</Text>
-          <View style={styles.activitiesSection}>
-            {/* {renderActivity('Meditation', '5:11 PM', '0:12', yoga)} */}
-            {renderActivity('Sleep', sleepStart, sleepStop, sleepTime, moon)}
-            {/* {renderActivity('Run', '12:01 PM', '0:27', PersonSimpleRun)} */}
+      {/* <SafeAreaView style={styles.safeArea}> */}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <LinearGradient
+          colors={getColorForScore(score)}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 1, y: 0.9 }}>
+        
+          <Header showBackArrow={false} title="Sleep Report" />
+          <View style={styles.dataSliderView}>
+            <DateSlider
+              healthData={healthData}
+              handleDateChange={handleDateChange}
+              selectedDateIndex={selectedDateIndex}
+              setSelectedDateIndex={handleDateChange}
+            />
           </View>
+          <View style={styles.statsSection}>
+            <View style={styles.heartImageView}>
+              <Image source={redTimer} style={[styles.heartImage, { alignSelf: "flex-start" }]} />
+              <Text style={styles.rhrStyle}>Bruxism Duration</Text>
+              <View style={styles.rhrView}>
+                <Text style={styles.rhrValueStyle}>6</Text>
+                <Text style={styles.rhrBpmStyle}>min</Text>
+              </View>
+            </View>
 
-          {/* Key Statistics Section */}
-          <View style={styles.sectionTitleView}>
-            <Text style={styles.sectionTitleKey}>Key Statistics</Text>
-            <Text style={styles.sectionTitlePrev}>vs. Previous 30 days</Text>
+            <Image source={redLineVector} style={styles.lineImage} />
+
+            <View style={styles.cardiImageView}>
+              <Image source={prev} style={styles.heartImage} />
+              <Text style={styles.rhrStyle}>Bruxism Episodes</Text>
+              <View style={[styles.rhrView, { alignSelf: "flex-end" }]}>
+                <Text style={styles.rhrValueStyle}>14</Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.keyStatistics}>
-            {renderKeyStatistic('HRV', hrv, avgHRV, false, cardiogram2)}
-            {renderKeyStatistic('RHR', hr, avgHR, true, hearblack)}
-            {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
-            {renderKeyStatistic(
-              'Bruxism Episodes',
-              '--',
-              '--',
-              false,
-              dentalTooth,
-            )}
-            {renderKeyStatistic(
-              'Bruxism Duration',
-              '--',
-              '--',
-              false,
-              dentalCare,
-            )}
+          <View style={styles.container2}>
+            <HalfCircleSVGs selectedIndex={score} />
           </View>
-          <View style={styles.yourTrendsView}>
-            <View style={styles.yourTrendsTextView}>
-              <Text style={styles.sectionTitle}>Your Trends</Text>
-              <Text style={styles.sectionTitleCalender}>
-                01 Jul - 07 Jul {downIcon()}
+        </LinearGradient>
+
+        {/* Bruxism Duration */}
+        {/* <LinearGradient
+          colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0.5, y: 0.5 }}
+          style={styles.bruxismSection}>
+          <View style={styles.bruxismDetail}>
+            <View style={styles.bruxismView}>
+              <Image source={timer} style={styles.timerImage} />
+              <View style={styles.bruxismViewContent}>
+                <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
+                <Text style={styles.bruxismValue}>
+                  -- <Text style={styles.rhrBpmStyle}>min</Text>
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.border}></View>
+          <View style={styles.bruxismDetail}>
+            <View style={styles.bruxismView}>
+              <Image source={episode} style={styles.timerImage} />
+              <View style={styles.bruxismViewContent}>
+                <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
+                <Text style={styles.bruxismValue}>--</Text>
+              </View>
+            </View>
+          </View>
+        </LinearGradient> */}
+        <LinearGradient
+          colors={['#00BE2A0A', '#00BE2A0A']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={[{ flex: 1 }, { marginTop: 16, marginHorizontal: 18, maxHeight: 106, borderRadius: 4 }]}
+        >
+          <View style={styles.statisItemView}>
+
+            <View style={{ flex: 1 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingTop: 10 }}>
+                <View style={styles.statisticIconView}>
+                  <Image source={trendUp} style={styles.statisticIcon} />
+                </View>
+                <Text
+                  style={{
+                    color: "white",
+                    paddingLeft: 10,
+                    fontSize: 15,
+                    fontFamily: "Ubuntu",
+                    fontWeight: 400
+                  }}
+                >
+                  You're Improving!
+                </Text>
+              </View>
+
+              <Text
+                numberOfLines={2}
+                style={{
+                  width: "95%",
+                  color: "#A8A9AA",
+                  fontSize: 14,
+                  paddingLeft: 20,
+                  fontFamily: "Ubuntu",
+                  marginTop: 5,
+                  lineHeight: 20,
+                }}
+              >
+                Last night you grinded 25% less than this time last week!
               </Text>
             </View>
-            <LinearGradient
-              colors={[
-                'rgba(255, 255, 255, 0.04)',
-                'rgba(255, 255, 255, 0.02)',
-              ]}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={styles.yourTrendViewMonth}>
-              {/* <View style={styles.trendTabs}> */}
-              <View style={styles.weekView}>
-                <Text style={styles.textMonthRed}>Week</Text>
-              </View>
-              <View style={styles.monthView}>
-                <Text style={styles.textMonth}>Month</Text>
-              </View>
-
-              {/* </View> */}
-            </LinearGradient>
           </View>
+        </LinearGradient>
 
-          <Text style={styles.sectionTitle}>Daily Byte Score</Text>
-          <GraphComponent data={dailyByteScoreData} color="#00BE2A" />
+        {/* Your Action Focus */}
+        <LinearGradient
+          colors={['#2D2D2D', '#411E1F', '#411E1F', '#411E1F', '#2D2D2D']}
+          locations={[0.0, 0.35, 0.5, 0.65, 1.0]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{
+            flex: 1,
+            marginTop: 16,
+            marginHorizontal: 18,
+            maxHeight: 77,
+            borderRadius: 4,
+            overflow: 'hidden',
+          }}
+        >
+          <View style={styles.statisItemView}>
+            <View style={{ flex: 1 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20 }}>
+                <Image source={action} style={styles.statisticIcon} />
+                <Text
+                  style={{
+                    color: "#858688",
+                    paddingLeft: 10,
+                    fontSize: 15,
+                    fontFamily: "Ubuntu",
+                    fontWeight: '400',
+                  }}
+                >
+                  Your Action Focus
+                </Text>
+              </View>
 
-          {/* <Text style={styles.sectionTitle}>Bruxism</Text> */}
+              <Text
+                numberOfLines={2}
+                style={{
+                  width: "95%",
+                  color: "white",
+                  fontSize: 14,
+                  paddingLeft: 30,
+                  fontFamily: "Ubuntu",
+                  marginTop: 5,
+                  lineHeight: 20,
+                }}
+              >
+                Stay under 200 mg of caffeine
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
 
-          {/* <View style={{backgroundColor:'red'}}> */}
-          {/* <GraphComponent data={bruxismData} color="#FF8B02" /> */}
 
-          {/* <Text style={styles.sectionTitle}>Sleep Readiness</Text>
+        {/* Activities Section */}
+        <Text style={styles.sectionTitle}>Damage Analysis</Text>
+        <View style={styles.activitiesSection}>
+
+          <LinearGradient
+            colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={[styles.activityItem]}>
+            <View style={styles.statisItemView}>
+              <View style={styles.statisticIconView}>
+                <Image source={warningCircle} style={styles.statisticIcon} />
+              </View>
+
+              <View style={{ flex: 1 }}>
+                <Text
+                  numberOfLines={2}
+                  style={{
+                    color: '#fff',
+                    fontSize: 15,
+                    fontFamily: "Ubuntu",
+                    textAlign: "justify",
+                    lineHeight: 25, // controls line spacing
+                    // flexWrap: 'wrap',
+                  }}
+                >
+                  You protected your teeth from 3 days of wear!
+                </Text>
+              </View>
+            </View>
+          </LinearGradient>
+        </View>
+
+
+        {/* Activities Section */}
+        <Text style={styles.sectionTitle}>Activities</Text>
+        <View style={styles.activitiesSection}>
+          {/* {renderActivity('Meditation', '5:11 PM', '0:12', yoga)} */}
+          {renderActivity('Sleep', sleepStart, sleepStop, sleepTime, moon)}
+          {/* {renderActivity('Run', '12:01 PM', '0:27', PersonSimpleRun)} */}
+        </View>
+
+        {/* Key Statistics Section */}
+        <View style={styles.sectionTitleView}>
+          <Text style={styles.sectionTitleKey}>Key Statistics</Text>
+          <Text style={styles.sectionTitlePrev}>vs. Previous 30 days</Text>
+        </View>
+        <View style={styles.keyStatistics}>
+          {renderKeyStatistic('Fatigue Score', '40', null, false, fatigueScore)}
+          {renderKeyStatistic('HRV', hrv, avgHRV, false, cardiogram2)}
+          {renderKeyStatistic('RHR', hr, avgHR, true, hearblack)}
+          {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
+          {renderKeyStatistic(
+            'Bruxism Episodes',
+            '--',
+            '--',
+            false,
+            dentalTooth,
+          )}
+          {renderKeyStatistic(
+            'Bruxism Duration',
+            '--',
+            '--',
+            false,
+            dentalCare,
+          )}
+        </View>
+        <View style={styles.yourTrendsView}>
+          <View style={styles.yourTrendsTextView}>
+            <Text style={styles.sectionTitle}>Your Trends</Text>
+            <Text style={styles.sectionTitleCalender}>
+              01 Jul - 07 Jul {downIcon()}
+            </Text>
+          </View>
+          <LinearGradient
+            colors={[
+              'rgba(255, 255, 255, 0.04)',
+              'rgba(255, 255, 255, 0.02)',
+            ]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.yourTrendViewMonth}>
+            {/* <View style={styles.trendTabs}> */}
+            <View style={styles.weekView}>
+              <Text style={styles.textMonthRed}>Week</Text>
+            </View>
+            <View style={styles.monthView}>
+              <Text style={styles.textMonth}>Month</Text>
+            </View>
+
+            {/* </View> */}
+          </LinearGradient>
+        </View>
+
+        <Text style={styles.sectionTitle}>Daily Byte Score</Text>
+        <GraphComponent data={dailyByteScoreData} color="#00BE2A" />
+
+        {/* <Text style={styles.sectionTitle}>Bruxism</Text> */}
+
+        {/* <View style={{backgroundColor:'red'}}> */}
+        {/* <GraphComponent data={bruxismData} color="#FF8B02" /> */}
+
+        {/* <Text style={styles.sectionTitle}>Sleep Readiness</Text>
           <View style={styles.sleedRadinessView}>
             <Text style={styles.sleepRed}>0</Text>
             <Text style={styles.sleepRedText}>Sleep Readiness Score</Text>
           </View>
           <SleepReadiness /> */}
 
-          {/* <Text style={styles.graphText}>
+        {/* <Text style={styles.graphText}>
             You mostly had a <Text style={styles.lowText}>High</Text> Sleep
             Readiness Score this week. Your highest Sleep Readiness Score was{' '}
             <Text style={styles.lowText}>67</Text> on{' '}
             <Text style={styles.lowText}>Friday</Text>
           </Text> */}
-        </ScrollView>
-      </SafeAreaView>
+      </ScrollView>
+      {/* </SafeAreaView> */}
     </LinearGradient>
   );
 };
@@ -320,8 +456,8 @@ const SplashScreen = () => {
 const renderActivity = (activity, timeStart, timeEnd, duration, icon) => (
   <LinearGradient
     colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
-    start={{x: 0, y: 0}}
-    end={{x: 1, y: 0}}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
     style={styles.activityItem}>
     <View>
       <Text style={styles.activityText}>{activity}</Text>
@@ -344,8 +480,8 @@ const renderActivity = (activity, timeStart, timeEnd, duration, icon) => (
 const renderKeyStatistic = (label, value, change, isNegative = false, icon) => (
   <LinearGradient
     colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
-    start={{x: 0, y: 0}}
-    end={{x: 1, y: 0}}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
     style={styles.activityItem}>
     <View style={styles.statisItemView}>
       <View style={styles.statisticIconView}>
@@ -357,7 +493,7 @@ const renderKeyStatistic = (label, value, change, isNegative = false, icon) => (
 
     <View style={styles.statisticValues}>
       <Text style={styles.statisticValue}>{value}</Text>
-      <View
+      {change && <View
         style={
           isNegative
             ? styles.statisticChangePositiveView
@@ -375,7 +511,7 @@ const renderKeyStatistic = (label, value, change, isNegative = false, icon) => (
           }>
           {change}
         </Text>
-      </View>
+      </View>}
     </View>
   </LinearGradient>
 );
@@ -385,6 +521,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    // paddingTop: 20,
   },
   border: {
     width: 1,
@@ -399,8 +536,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    // paddingHorizontal: 0,
-    marginTop: 10,
+    paddingHorizontal: 5,
+    marginTop: 15,
     // marginLeft:-5,
     // marginRight:-5,
     // width: '100%',
@@ -428,13 +565,16 @@ const styles = StyleSheet.create({
   },
   textMonth: {
     color: '#FFF',
+    fontFamily: "Ubuntu"
   },
   textMonthRed: {
     color: '#FF0405',
+    fontFamily: "Ubuntu"
   },
   sleepRedText: {
     color: 'rgba(255, 255, 255, 0.30)',
     fontSize: 14,
+    fontFamily: "Ubuntu"
   },
   monthView: {
     flex: 1,
@@ -495,10 +635,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingRight: 20,
+    fontFamily: "Ubuntu"
   },
   heartImage: {
     width: 16,
     height: 16,
+    alignSelf: "flex-end"
   },
   activityTimeView: {
     flex: 1,
@@ -555,8 +697,8 @@ const styles = StyleSheet.create({
   lineImage: {
     width: '100%',
     resizeMode: 'contain',
-    marginLeft: -70,
-    marginRight: -70,
+    marginLeft: -110,
+    marginRight: -110,
   },
   timerImage: {
     width: 16,
@@ -565,6 +707,7 @@ const styles = StyleSheet.create({
   rhrStyle: {
     color: 'rgba(241, 241, 241, 0.80)',
     fontSize: 12,
+    fontFamily: "Ubuntu",
     marginTop: 8,
   },
   bruxismView: {
@@ -587,6 +730,7 @@ const styles = StyleSheet.create({
   rhrValueStyle: {
     color: '#fff',
     fontSize: 16,
+    alignSelf: "flex-end",
     fontWeight: '500',
   },
   rhrBpmStyle: {
@@ -682,6 +826,7 @@ const styles = StyleSheet.create({
     // marginHorizontal:12,
     paddingVertical: 12,
     paddingHorizontal: 16,
+    borderRadius: 4
     // marginLeft:-10
   },
   yourTrendViewMonth: {
@@ -696,10 +841,12 @@ const styles = StyleSheet.create({
   activityText: {
     color: '#fff',
     fontSize: 14,
+    fontFamily: "Ubuntu"
   },
   activityTextTime: {
     color: '#A9A9A9',
     fontSize: 12,
+    fontFamily: "Ubuntu"
   },
   activityDuration: {
     color: '#fff',
@@ -750,6 +897,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     textAlign: 'center',
+    fontFamily: "Ubuntu"
   },
   trendTabs: {
     flexDirection: 'row',
@@ -779,12 +927,14 @@ const styles = StyleSheet.create({
     marginTop: 14,
     lineHeight: 18,
     marginBottom: 50,
+    fontFamily: "Ubuntu"
   },
   lowText: {
     color: 'rgba(255, 255, 255, 0.50)',
     fontSize: 12,
     fontWeight: '700',
     lineHight: 18,
+
   },
 });
 
