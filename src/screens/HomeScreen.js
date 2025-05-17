@@ -174,7 +174,7 @@ const SplashScreen = () => {
           colors={getColorForScore(score)}
           start={{ x: 1, y: 0 }}
           end={{ x: 1, y: 0.9 }}>
-        
+
           <Header showBackArrow={false} title="Sleep Report" />
           <View style={styles.dataSliderView}>
             <DateSlider
@@ -241,12 +241,12 @@ const SplashScreen = () => {
           colors={['#00BE2A0A', '#00BE2A0A']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={[{ flex: 1 }, { marginTop: 16, marginHorizontal: 18, maxHeight: 106, borderRadius: 4 }]}
+          style={[{ flex: 1 }, { marginTop: 20, marginHorizontal: 18, maxHeight: 105, borderRadius: 4 }]}
         >
           <View style={styles.statisItemView}>
 
-            <View style={{ flex: 1 }}>
-              <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingTop: 10 }}>
+            <View style={{ flex: 1,marginTop:10 }}>
+              <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingTop: 20 }}>
                 <View style={styles.statisticIconView}>
                   <Image source={trendUp} style={styles.statisticIcon} />
                 </View>
@@ -254,12 +254,12 @@ const SplashScreen = () => {
                   style={{
                     color: "white",
                     paddingLeft: 10,
-                    fontSize: 15,
+                    fontSize: 14,
                     fontFamily: "Ubuntu",
-                    fontWeight: 400
+                    fontWeight: 500
                   }}
                 >
-                  You're Improving!
+                  {"You're Improving!"}
                 </Text>
               </View>
 
@@ -269,10 +269,13 @@ const SplashScreen = () => {
                   width: "95%",
                   color: "#A8A9AA",
                   fontSize: 14,
+                  textAlign: "justify",
                   paddingLeft: 20,
                   fontFamily: "Ubuntu",
+                  fontWeight: 400,
+                  paddingBottom: 20,
                   marginTop: 5,
-                  lineHeight: 20,
+                  lineHeight: 24,
                 }}
               >
                 Last night you grinded 25% less than this time last week!
@@ -289,17 +292,17 @@ const SplashScreen = () => {
           end={{ x: 1, y: 0 }}
           style={{
             flex: 1,
-            marginTop: 16,
+            marginTop: 26,
             marginHorizontal: 18,
-            maxHeight: 77,
+            maxHeight: 80,
             borderRadius: 4,
             overflow: 'hidden',
           }}
         >
           <View style={styles.statisItemView}>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingTop: 10 }}>
               <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20 }}>
-                <Image source={action} style={styles.statisticIcon} />
+                <Image source={action} style={{ width: 14.5, height: 14.5, paddingTop: 3 }} />
                 <Text
                   style={{
                     color: "#858688",
@@ -319,9 +322,11 @@ const SplashScreen = () => {
                   width: "95%",
                   color: "white",
                   fontSize: 14,
-                  paddingLeft: 30,
+                  paddingLeft: 19,
+                  paddingTop: 14,
+                  fontWeight: 400,
                   fontFamily: "Ubuntu",
-                  marginTop: 5,
+                  paddingBottom: 10,
                   lineHeight: 20,
                 }}
               >
@@ -333,8 +338,8 @@ const SplashScreen = () => {
 
 
         {/* Activities Section */}
-        <Text style={styles.sectionTitle}>Damage Analysis</Text>
-        <View style={styles.activitiesSection}>
+        <Text style={[styles.sectionTitle, { marginBottom: 5 }]}>Damage Analysis</Text>
+        <View style={[styles.activitiesSection, { marginTop: 0 }]}>
 
           <LinearGradient
             colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
@@ -351,10 +356,10 @@ const SplashScreen = () => {
                   numberOfLines={2}
                   style={{
                     color: '#fff',
-                    fontSize: 15,
+                    fontSize: 14,
                     fontFamily: "Ubuntu",
-                    textAlign: "justify",
-                    lineHeight: 25, // controls line spacing
+                    fontWeight: 400,
+                    lineHeight: 20, // controls line spacing
                     // flexWrap: 'wrap',
                   }}
                 >
@@ -781,6 +786,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     // marginVertical: 15,
     marginLeft: 20,
+    fontFamily:"Ubuntu",
     fontWeight: '600',
     marginTop: 40,
     marginBottom: 16,
