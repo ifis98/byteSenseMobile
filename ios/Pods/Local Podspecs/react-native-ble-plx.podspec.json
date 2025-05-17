@@ -1,6 +1,6 @@
 {
   "name": "react-native-ble-plx",
-  "version": "3.2.1",
+  "version": "3.5.0",
   "summary": "React Native Bluetooth Low Energy library",
   "homepage": "https://github.com/dotintent/react-native-ble-plx#readme",
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/dotintent/react-native-ble-plx.git",
-    "tag": "3.2.1"
+    "tag": "3.5.0"
   },
   "source_files": "ios/**/*.{h,m,mm}",
   "dependencies": {
@@ -74,7 +74,7 @@
     "DoubleConversion": [
 
     ],
-    "hermes-engine": [
+    "React-jsi": [
 
     ]
   },
