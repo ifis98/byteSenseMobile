@@ -41,6 +41,7 @@ import action from "../assets/action.png"
 import GraphComponent from '../components/GraphComponent';
 import CustomGraph from '../components/CustomGraph';
 import SleepReadiness from '../components/SleepReadiness';
+import redLine from "../assets/redline.png"
 import healthData from '../hard_data/DashboardData.json'; // Import your health data JSON
 
 const { width } = Dimensions.get('window');
@@ -73,6 +74,10 @@ const downIcon = () => {
     </Svg>
   );
 };
+
+const renderRedLine = () => {
+  return <Image source={redLine} style={{ width: 20, height: 10 }} resizeMode='contain' />
+}
 const SplashScreen = () => {
   const navigation = useNavigation();
   // const dailyByteScoreData = [30, 80, 50, 70, 40, 90, 100];
@@ -245,7 +250,7 @@ const SplashScreen = () => {
         >
           <View style={styles.statisItemView}>
 
-            <View style={{ flex: 1,marginTop:10 }}>
+            <View style={{ flex: 1, marginTop: 10 }}>
               <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingTop: 20 }}>
                 <View style={styles.statisticIconView}>
                   <Image source={trendUp} style={styles.statisticIcon} />
@@ -286,7 +291,7 @@ const SplashScreen = () => {
 
         {/* Your Action Focus */}
         <LinearGradient
-          colors={['#2D2D2D', '#411E1F', '#411E1F', '#411E1F', '#2D2D2D']}
+          colors={['#2D2D2D', '#991616', '#991616', '#991616', '#2D2D2D']}
           locations={[0.0, 0.35, 0.5, 0.65, 1.0]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
@@ -297,18 +302,47 @@ const SplashScreen = () => {
             maxHeight: 80,
             borderRadius: 4,
             overflow: 'hidden',
+            position: 'relative',
           }}
         >
+          {/* Top border */}
+          <LinearGradient
+            colors={['#FF3B3B00', '#FF3B3B', '#FF3B3B00']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 70,
+              right: 70,
+              height: 2,
+            }}
+          />
+
+          {/* Bottom border */}
+          <LinearGradient
+            colors={['#FF3B3B00', '#FF3B3B', '#FF3B3B00']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 70,
+              right: 70,
+              height: 2,
+            }}
+          />
+
           <View style={styles.statisItemView}>
             <View style={{ flex: 1, paddingTop: 10 }}>
-              <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }}>
                 <Image source={action} style={{ width: 14.5, height: 14.5, paddingTop: 3 }} />
                 <Text
                   style={{
-                    color: "#858688",
+                    color: '#858688',
                     paddingLeft: 10,
                     fontSize: 15,
-                    fontFamily: "Ubuntu",
+                    fontFamily: 'Ubuntu',
                     fontWeight: '400',
                   }}
                 >
@@ -319,13 +353,13 @@ const SplashScreen = () => {
               <Text
                 numberOfLines={2}
                 style={{
-                  width: "95%",
-                  color: "white",
+                  width: '95%',
+                  color: 'white',
                   fontSize: 14,
                   paddingLeft: 19,
                   paddingTop: 14,
                   fontWeight: 400,
-                  fontFamily: "Ubuntu",
+                  fontFamily: 'Ubuntu',
                   paddingBottom: 10,
                   lineHeight: 20,
                 }}
@@ -335,6 +369,7 @@ const SplashScreen = () => {
             </View>
           </View>
         </LinearGradient>
+
 
 
         {/* Activities Section */}
@@ -468,7 +503,7 @@ const renderActivity = (activity, timeStart, timeEnd, duration, icon) => (
       <Text style={styles.activityText}>{activity}</Text>
       <View style={styles.activityTimeView}>
         <Text style={styles.activityTextTime}>{timeStart}</Text>
-        {MySvgComponent()}
+        {renderRedLine()}
 
         <Text style={styles.activityTextTime}>{timeEnd}</Text>
       </View>
@@ -786,7 +821,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     // marginVertical: 15,
     marginLeft: 20,
-    fontFamily:"Ubuntu",
+    fontFamily: "Ubuntu",
     fontWeight: '600',
     marginTop: 40,
     marginBottom: 16,

@@ -56,8 +56,9 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: "500",
+    fontFamily:"Ubuntu",
     flex: 1,  // Make sure the title takes available space
   },
   profileImage: {
