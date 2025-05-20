@@ -337,62 +337,66 @@ const DeviceDataScreen = () => {
   };
 
   // Function to decipher the received notification data
-  const parseReading = (value) => {
-    let sensorLittleEndian = value.match(/.{1,4}/g)
+  const parseReading = value => {
+    // value is expected to be 4 hex digits representing HR and HRV
+    let bytes = value.match(/.{1,2}/g);
+    if (!bytes || bytes.length < 2) {
+      return {hr: 0, hrv: 0};
+    }
 
-    let HRhex = sensorLittleEndian[1]
-    let bytes = HRhex.match(/.{1,2}/g);
-    let bigEndian =  bytes[1] + bytes[0];
-    let HRvalue = (parseInt(bigEndian, 16))/256
+    let hr = parseInt(bytes[0], 16);
+    let hrv = parseInt(bytes[1], 16);
 
-    return HRvalue
-  }
+    return {hr, hrv};
+  };
 
-  parseTime = (time) => {
-    let timeValues = time.match(/.{1,2}/g)
-    let hours = parseInt(timeValues[3],16)
-    let minutes = parseInt(timeValues[2],16)
-    let seconds = parseInt(timeValues[1],16)
-    let milliseconds = parseInt(timeValues[0],16)*100
-    console.log('Data Start Time: '+dataStartTime.current)
-    let startms = dataStartTime.current.getTime()
-    console.log('start ms: '+startms)
-    let addms = (hours*60*60*1000)+(minutes*60*1000)+(seconds*1000)+milliseconds
-    console.log('add ms: '+addms)
-    return new Date(startms+addms)
-  }
+  parseTime = time => {
+    // time is expected to be 4 hex digits (little endian)
+    const bytes = time.match(/.{1,2}/g);
+    if (!bytes || bytes.length < 2) {
+      return new Date(dataStartTime.current.getTime());
+    }
+
+    const raw = parseInt(bytes[1] + bytes[0], 16);
+
+    const hour = (raw >> 8) & 0xff;
+    const minute = (raw >> 2) & 0x3f;
+    const second = (raw & 0x03) * 20;
+
+    const startms = dataStartTime.current.getTime();
+    const addms = (hour * 3600 + minute * 60 + second) * 1000;
+
+    return new Date(startms + addms);
+  };
   
-  const processSync = (syncSamples) => {
+  const processSync = syncSamples => {
+    const sampleLength = 8;
+    let data = [];
 
-    let sampleLength = 16
-    let data = []
-    for(let sample of syncSamples){
-      //console.log(sample)
-      if(sample != "0000000000000000" && sample.length == sampleLength){
-        let split = sample.match(/.{1,8}/g)
-        console.log('sample split: '+split)
-        let sensorValue = parseReading(split[1])
-        console.log("HR: "+sensorValue)
-        let time = parseTime(split[0])
-        console.log("Time: "+time)
+    for (let sample of syncSamples) {
+      if (sample !== '00000000' && sample.length === sampleLength) {
+        const timeHex = sample.slice(0, 4);
+        const readingHex = sample.slice(4, 8);
 
-        dataPoint = {
-          HR: sensorValue,
+        const {hr, hrv} = parseReading(readingHex);
+        const time = parseTime(timeHex);
+
+        const dataPoint = {
+          HR: hr,
+          HRV: hrv,
           ts: time,
-          hrhex: split[1],
-          timehex: split[0]
-        }
+          hrhex: readingHex.slice(0, 2),
+          hrvhex: readingHex.slice(2, 4),
+          timehex: timeHex,
+        };
 
-        console.log('Data Point: '+ dataPoint)
-
-        //console.log(dataPoint)
-        data.push(dataPoint)
+        data.push(dataPoint);
       }
     }
-    console.log(JSON.stringify(data, null, 2))
-    syncData.current.push(...data);
 
-  }
+    console.log(JSON.stringify(data, null, 2));
+    syncData.current.push(...data);
+  };
 
   const sendMessage = message => {
     if(!syncTimeoutRef.current){
@@ -430,7 +434,7 @@ const DeviceDataScreen = () => {
 
     if(hexValue.length >= 120){
       console.log('Sync Hex: ' + hexValue + ' '+ hexValue.length)
-      let syncSamples = hexValue.match(/.{1,16}/g)
+      let syncSamples = hexValue.match(/.{1,8}/g)
       processSync(syncSamples)
 
       if (!syncInProgress) {
