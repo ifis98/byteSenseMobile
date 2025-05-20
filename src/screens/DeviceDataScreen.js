@@ -244,10 +244,24 @@ const DeviceDataScreen = () => {
   const handleSendEmail = async (data) => {
     try {
       const filePath = await writeJsonToFile(data);
-      
+
       await sendEmail(filePath);
     } catch (error) {
       console.error('Error:', error);
+    }
+  };
+
+  const sendSyncedData = async (data) => {
+    await handleSendEmail(data);
+
+    if (userId) {
+      socket.emit('biometricData', {
+        user: userId,
+        data,
+      });
+      console.log('Sent biometricData for user:', userId);
+    } else {
+      console.warn('No userId found, cannot send biometricData');
     }
   };
 
@@ -437,18 +451,8 @@ const DeviceDataScreen = () => {
 
         console.log('Sync Ended')
 
-        // Now that sync ended, email your data
-        handleSendEmail(syncData.current);
-
-        if (userId) {
-          socket.emit('biometricData', {
-            user: userId,
-            data: syncData.current,
-          });
-          console.log('Sent biometricData for user:', userId);
-        } else {
-          console.warn('No userId found, cannot send biometricData');
-        } 
+        // Sync ended, send data via email and socket
+        sendSyncedData(syncData.current);
         
       }, 5000);
     }
