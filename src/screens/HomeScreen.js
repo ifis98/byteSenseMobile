@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Image,
@@ -7,11 +7,15 @@ import {
   Text,
   ScrollView,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import { Svg, Path, G, ClipPath, Rect, Defs } from 'react-native-svg';
 
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPatientData } from '../api/api';
+import { setPatientData } from '../redux/patientDataSlice';
 import heartRate from '../assets/heartRate.png';
 import cardiogram from '../assets/cardiogram.png';
 import HalfCircleSVGs from '../components/CustomSVGComponent';
@@ -42,7 +46,7 @@ import GraphComponent from '../components/GraphComponent';
 import CustomGraph from '../components/CustomGraph';
 import SleepReadiness from '../components/SleepReadiness';
 import redLine from "../assets/redline.png"
-import healthData from '../hard_data/DashboardData.json'; // Import your health data JSON
+import moment from 'moment';
 
 const { width } = Dimensions.get('window');
 
@@ -80,71 +84,64 @@ const renderRedLine = () => {
 }
 const SplashScreen = () => {
   const navigation = useNavigation();
-  // const dailyByteScoreData = [30, 80, 50, 70, 40, 90, 100];
-  // const bruxismData = [10, 50, 20, 60, 30, 80, 45];
-  // const dailyByteScoreData = [30, 80, 50, 70, 40, 90, 100];
-  // const bruxismData = [10, 50, 20, 60, 30, 80, 45];
-  const dailyByteScoreData = [0, 0, 0, 0, 0, 0, 0];
-  const bruxismData = [0, 0, 0, 0, 0, 0, 0];
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split('T')[0],
-  ); // Default to today's date
+  const dispatch = useDispatch();
+  const patientData = useSelector(state => state.patientData.data);
+
+  const [healthData, setHealthData] = useState([]);
+  const [selectedDateIndex, setSelectedDateIndex] = useState(0);
   const [hr, setHr] = useState('--');
   const [hrv, setHrv] = useState('--');
   const [score, setScore] = useState('--');
-  const [sleepStart, setSleepStart] = useState('--');
-  const [sleepStop, setSleepStop] = useState('--');
-  const [sleepTime, setSleepTime] = useState('--');
-  const [selectedDateIndex, setSelectedDateIndex] = useState(0); // Default to first date
+  const [activities, setActivities] = useState([]);
+  const [prevAvgHR, setPrevAvgHR] = useState('--');
+  const [prevAvgHRV, setPrevAvgHRV] = useState('--');
+  const [refreshing, setRefreshing] = useState(false);
 
-  const calculateAverages = data => {
-    if (!data || data.length <= 1) return { avgHR: 0, avgHRV: 0 };
-
-    // Exclude the latest date (last element in the array)
-    const filteredData = data.slice(0, data.length - 1);
-
-    const total = filteredData.reduce(
-      (acc, curr) => {
-        acc.totalHR += curr.HR;
-        acc.totalHRV += curr.HRV;
-        return acc;
-      },
-      { totalHR: 0, totalHRV: 0 },
-    );
-
-    const count = filteredData.length;
-    return {
-      avgHR: parseInt(total.totalHR / count, 10),
-      avgHRV: parseInt(total.totalHRV / count, 10),
-    };
+  const loadData = async () => {
+    try {
+      const data = await fetchPatientData();
+      dispatch(setPatientData(data));
+    } catch (e) {
+      console.error('Failed to load patient data', e);
+    }
   };
 
-  const { avgHR, avgHRV } = calculateAverages(healthData);
+  useEffect(() => {
+    if (!patientData) {
+      loadData();
+      return;
+    }
+    const sorted = [...patientData.appData]
+      .filter(d => new Date(d.Date) <= new Date())
+      .sort((a, b) => new Date(b.Date) - new Date(a.Date));
+    setHealthData(sorted);
+    handleDateChange(0, sorted);
+  }, [patientData]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  }, []);
 
   // Function to handle date changes
-  const handleDateChange = index => {
+  const handleDateChange = (index, dataArr = healthData) => {
     setSelectedDateIndex(index);
-    const selectedDateData = healthData[index]; // Direct access by index
+    const selectedDateData = dataArr[index];
     if (selectedDateData) {
-      setHr(selectedDateData.HR || '--');
-      setHrv(selectedDateData.HRV || '--');
-      setSleepStart(selectedDateData.SleepTimeStart || '--');
-      setSleepStop(selectedDateData.SleepTimeFinish || '--');
-      setSleepTime(selectedDateData.TotalSleepTime || '--');
-      const hr = selectedDateData.HR;
-      const hrv = selectedDateData.HRV;
-      let calculatedScore = (70 - hr) * 2 + (hrv - 20);
-      if (calculatedScore % 2 !== 0) {
-        calculatedScore += 1; // Make the score even if it's odd
-      }
-      setScore(calculatedScore);
+      setHr(parseInt(selectedDateData.averageHR) || '--');
+      setHrv(parseInt(selectedDateData.averageHRV) || '--');
+      setScore(parseInt(selectedDateData.byteScore) || '--');
+      setActivities(selectedDateData.activities || []);
+      setPrevAvgHR(parseInt(selectedDateData.prevWeekAvgHR) || '--');
+      setPrevAvgHRV(parseInt(selectedDateData.prevWeekAvgHRV) || '--');
     } else {
       setHr('--');
       setHrv('--');
-      setSleepStart('--');
-      setSleepStop('--');
-      setSleepTime('--');
-      setScore(0);
+      setScore('--');
+      setActivities([]);
+      setPrevAvgHR('--');
+      setPrevAvgHRV('--');
     }
   };
 
@@ -157,15 +154,15 @@ const SplashScreen = () => {
   //     setScore(0);
   //   }
   // }, [hr, hrv]);
-  useEffect(() => {
-    // Optionally initialize the data if needed
-    handleDateChange(selectedDateIndex);
-  }, []);
 
   const getColorForScore = score => {
     const threshold = 60; // 60% of 100 in this case
     return score > threshold ? ['#0f3d3e', '#232323'] : ['#411E1F', '#232323'];
   };
+
+  const dailyByteScoreData = healthData
+    .slice(0, 7)
+    .map(d => parseInt(d.byteScore) || 0);
 
   return (
     <LinearGradient
@@ -174,7 +171,11 @@ const SplashScreen = () => {
       end={{ x: 2, y: 1.4 }}
       style={styles.container}>
       {/* <SafeAreaView style={styles.safeArea}> */}
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#fff" />
+        }>
         <LinearGradient
           colors={getColorForScore(score)}
           start={{ x: 1, y: 0 }}
@@ -289,8 +290,8 @@ const SplashScreen = () => {
           </View>
         </LinearGradient>
 
-        {/* Your Action Focus */}
-        <LinearGradient
+
+        {/* <LinearGradient  // Your Action Focus hidden
           colors={['#2D2D2D', '#991616', '#991616', '#991616', '#2D2D2D']}
           locations={[0.0, 0.35, 0.5, 0.65, 1.0]}
           start={{ x: 0, y: 0 }}
@@ -305,77 +306,14 @@ const SplashScreen = () => {
             position: 'relative',
           }}
         >
-          {/* Top border */}
-          <LinearGradient
-            colors={['#FF3B3B00', '#FF3B3B', '#FF3B3B00']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 70,
-              right: 70,
-              height: 2,
-            }}
-          />
-
-          {/* Bottom border */}
-          <LinearGradient
-            colors={['#FF3B3B00', '#FF3B3B', '#FF3B3B00']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 70,
-              right: 70,
-              height: 2,
-            }}
-          />
-
-          <View style={styles.statisItemView}>
-            <View style={{ flex: 1, paddingTop: 10 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }}>
-                <Image source={action} style={{ width: 14.5, height: 14.5, paddingTop: 3 }} />
-                <Text
-                  style={{
-                    color: '#858688',
-                    paddingLeft: 10,
-                    fontSize: 15,
-                    fontFamily: 'Ubuntu',
-                    fontWeight: '400',
-                  }}
-                >
-                  Your Action Focus
-                </Text>
-              </View>
-
-              <Text
-                numberOfLines={2}
-                style={{
-                  width: '95%',
-                  color: 'white',
-                  fontSize: 14,
-                  paddingLeft: 19,
-                  paddingTop: 14,
-                  fontWeight: 400,
-                  fontFamily: 'Ubuntu',
-                  paddingBottom: 10,
-                  lineHeight: 20,
-                }}
-              >
-                Stay under 200 mg of caffeine
-              </Text>
-            </View>
-          </View>
-        </LinearGradient>
+          ...
+        </LinearGradient> */}
 
 
 
         {/* Activities Section */}
-        <Text style={[styles.sectionTitle, { marginBottom: 5 }]}>Damage Analysis</Text>
+        {/** <Text style={[styles.sectionTitle, { marginBottom: 5 }]}>Damage Analysis</Text>
         <View style={[styles.activitiesSection, { marginTop: 0 }]}>
-
           <LinearGradient
             colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
             start={{ x: 0, y: 0 }}
@@ -385,7 +323,6 @@ const SplashScreen = () => {
               <View style={styles.statisticIconView}>
                 <Image source={warningCircle} style={styles.statisticIcon} />
               </View>
-
               <View style={{ flex: 1 }}>
                 <Text
                   numberOfLines={2}
@@ -394,8 +331,7 @@ const SplashScreen = () => {
                     fontSize: 14,
                     fontFamily: "Ubuntu",
                     fontWeight: 400,
-                    lineHeight: 20, // controls line spacing
-                    // flexWrap: 'wrap',
+                    lineHeight: 20,
                   }}
                 >
                   You protected your teeth from 3 days of wear!
@@ -403,41 +339,63 @@ const SplashScreen = () => {
               </View>
             </View>
           </LinearGradient>
-        </View>
+        </View> */}
 
 
         {/* Activities Section */}
         <Text style={styles.sectionTitle}>Activities</Text>
         <View style={styles.activitiesSection}>
-          {/* {renderActivity('Meditation', '5:11 PM', '0:12', yoga)} */}
-          {renderActivity('Sleep', sleepStart, sleepStop, sleepTime, moon)}
-          {/* {renderActivity('Run', '12:01 PM', '0:27', PersonSimpleRun)} */}
+          {activities.map((act, idx) => {
+            let icon = moon;
+            if (act.type === 'Meditation') icon = yoga;
+            if (act.type === 'Run') icon = PersonSimpleRun;
+            let label = act.type;
+            if (act.type === 'Sleep') {
+              const sleepActs = activities.filter(a => a.type === 'Sleep');
+              const maxDur = Math.max(...sleepActs.map(a => a.duration || 0));
+              label = act.duration === maxDur ? 'Sleep' : 'Nap';
+            }
+            const formatTime = t => {
+              return t ? moment(t).format('h:mm A') : '--';
+            };
+            const dur = act.duration || 0;
+            const durText = `${Math.floor(dur / 60)}:${(dur % 60)
+              .toString()
+              .padStart(2, '0')}`;
+            return (
+              <React.Fragment key={idx}>
+                {renderActivity(label, formatTime(act.start), formatTime(act.end), durText, icon)}
+              </React.Fragment>
+            );
+          })}
         </View>
 
         {/* Key Statistics Section */}
         <View style={styles.sectionTitleView}>
           <Text style={styles.sectionTitleKey}>Key Statistics</Text>
-          <Text style={styles.sectionTitlePrev}>vs. Previous 30 days</Text>
+          <Text style={styles.sectionTitlePrev}>vs. Last Week's Avg</Text>
         </View>
         <View style={styles.keyStatistics}>
           {renderKeyStatistic('Fatigue Score', '40', null, false, fatigueScore)}
-          {renderKeyStatistic('HRV', hrv, avgHRV, false, cardiogram2)}
-          {renderKeyStatistic('RHR', hr, avgHR, true, hearblack)}
-          {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
-          {renderKeyStatistic(
-            'Bruxism Episodes',
-            '--',
-            '--',
-            false,
-            dentalTooth,
-          )}
-          {renderKeyStatistic(
-            'Bruxism Duration',
-            '--',
-            '--',
-            false,
-            dentalCare,
-          )}
+          {renderKeyStatistic('HRV', hrv, prevAvgHRV, parseInt(hrv) <= parseInt(prevAvgHRV), cardiogram2)}
+          {renderKeyStatistic('RHR', hr, prevAvgHR, parseInt(hr) >= parseInt(prevAvgHR), hearblack)}
+          {/**
+           {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
+           {renderKeyStatistic(
+             'Bruxism Episodes',
+             '--',
+             '--',
+             false,
+             dentalTooth,
+           )}
+           {renderKeyStatistic(
+             'Bruxism Duration',
+             '--',
+             '--',
+             false,
+             dentalCare,
+           )}
+          */}
         </View>
         <View style={styles.yourTrendsView}>
           <View style={styles.yourTrendsTextView}>
