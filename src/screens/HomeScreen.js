@@ -8,6 +8,8 @@ import {
   ScrollView,
   Dimensions,
   RefreshControl,
+  TouchableOpacity,
+  Modal,
 } from 'react-native';
 import { Svg, Path, G, ClipPath, Rect, Defs } from 'react-native-svg';
 
@@ -97,6 +99,10 @@ const SplashScreen = () => {
   const [prevAvgHR, setPrevAvgHR] = useState('--');
   const [prevAvgHRV, setPrevAvgHRV] = useState('--');
   const [refreshing, setRefreshing] = useState(false);
+  const [viewMode, setViewMode] = useState('Week');
+  const [rangeStart, setRangeStart] = useState(moment().startOf('week'));
+  const [rangeEnd, setRangeEnd] = useState(moment().endOf('week'));
+  const [calendarVisible, setCalendarVisible] = useState(false);
 
 
   const loadData = async () => {
@@ -119,6 +125,16 @@ const SplashScreen = () => {
     setHealthData(sorted);
     handleDateChange(0, sorted);
   }, [patientData]);
+
+  useEffect(() => {
+    if (viewMode === 'Week') {
+      setRangeStart(moment(rangeStart).startOf('week'));
+      setRangeEnd(moment(rangeStart).endOf('week'));
+    } else {
+      setRangeStart(moment(rangeStart).startOf('month'));
+      setRangeEnd(moment(rangeStart).endOf('month'));
+    }
+  }, [viewMode]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -163,6 +179,7 @@ const SplashScreen = () => {
       title: '',
       description: '',
       color: '#00BE2A0A',
+      icon: '😀',
     };
 
     if (typeof scoreValue !== 'number') {
@@ -177,6 +194,7 @@ const SplashScreen = () => {
         description:
           'Strong night overall — calm, restorative, and recharging. Keep doing what’s working.',
         color: '#00BE2A0A',
+        icon: '😀',
       };
     }
 
@@ -186,6 +204,7 @@ const SplashScreen = () => {
         description:
           'Some recovery happened, but the night wasn’t fully restorative. Try to keep today light if possible and prioritize winding down well tonight.',
         color: '#FF8B020A',
+        icon: '😐',
       };
     }
 
@@ -194,6 +213,7 @@ const SplashScreen = () => {
       description:
         'Sleep didn’t do its full job. Take it slow, skip intense effort, and grab a nap or recovery break if you can.',
       color: '#FD36370A',
+      icon: '☹️',
     };
   };
 
@@ -212,9 +232,46 @@ const SplashScreen = () => {
     return score > threshold ? ['#0f3d3e', '#232323'] : ['#411E1F', '#232323'];
   };
 
-  const dailyByteScoreData = healthData
-    .slice(0, 7)
-    .map(d => toNumber(d.byteScore) || 0);
+  const getRangeGraphData = () => {
+    const days = [];
+    for (let m = rangeStart.clone(); m.isSameOrBefore(rangeEnd); m.add(1, 'day')) {
+      days.push(m.clone());
+    }
+    const labels = days.map((d, i) =>
+      viewMode === 'Month' ? (i % 5 === 0 ? d.format('MM/DD') : '') : d.format('ddd')
+    );
+    const data = days.map(d => {
+      const found = healthData.find(h => moment(h.Date).isSame(d, 'day'));
+      const val = found ? toNumber(found.byteScore) : NaN;
+      return val;
+    });
+    return { labels, data };
+  };
+
+  const { labels: graphLabels, data: dailyByteScoreData } = getRangeGraphData();
+
+  const handleSelectDay = day => {
+    if (viewMode === 'Week') {
+      setRangeStart(day.clone().startOf('week'));
+      setRangeEnd(day.clone().endOf('week'));
+    } else {
+      setRangeStart(day.clone().startOf('month'));
+      setRangeEnd(day.clone().endOf('month'));
+    }
+    setCalendarVisible(false);
+  };
+
+  const buildCalendarDays = () => {
+    const days = [];
+    const first = rangeStart.clone().startOf('month').startOf('week');
+    const end = rangeStart.clone().endOf('month').endOf('week');
+    for (let m = first.clone(); m.isSameOrBefore(end); m.add(1, 'day')) {
+      days.push(m.clone());
+    }
+    return days;
+  };
+
+  const calendarDays = buildCalendarDays();
 
   const byteScoreFeedback = getByteScoreFeedback(
     score === '--' ? null : score,
@@ -310,7 +367,7 @@ const SplashScreen = () => {
             <View style={{ flex: 1, marginTop: 10 }}>
               <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingTop: 20 }}>
                 <View style={styles.statisticIconView}>
-                  <Image source={trendUp} style={styles.statisticIcon} />
+                  <Text style={styles.statisticIconText}>{byteScoreFeedback.icon}</Text>
                 </View>
                 <Text
                   style={{
@@ -433,7 +490,7 @@ const SplashScreen = () => {
           <Text style={styles.sectionTitlePrev}>vs. Last Week's Avg</Text>
         </View>
         <View style={styles.keyStatistics}>
-          {renderKeyStatistic('Fatigue Score', '40', null, false, fatigueScore)}
+          {/* {renderKeyStatistic('Fatigue Score', '40', null, false, fatigueScore)} */}
           {renderKeyStatistic('HRV', hrv, prevAvgHRV, toNumber(hrv) <= toNumber(prevAvgHRV), cardiogram2)}
           {renderKeyStatistic('RHR', hr, prevAvgHR, toNumber(hr) >= toNumber(prevAvgHR), hearblack)}
           {/**
@@ -457,9 +514,11 @@ const SplashScreen = () => {
         <View style={styles.yourTrendsView}>
           <View style={styles.yourTrendsTextView}>
             <Text style={styles.sectionTitle}>Your Trends</Text>
-            <Text style={styles.sectionTitleCalender}>
-              01 Jul - 07 Jul {downIcon()}
-            </Text>
+            <TouchableOpacity onPress={() => setCalendarVisible(true)}>
+              <Text style={styles.sectionTitleCalender}>
+                {rangeStart.format('DD MMM')} - {rangeEnd.format('DD MMM')} {downIcon()}
+              </Text>
+            </TouchableOpacity>
           </View>
           <LinearGradient
             colors={[
@@ -471,10 +530,14 @@ const SplashScreen = () => {
             style={styles.yourTrendViewMonth}>
             {/* <View style={styles.trendTabs}> */}
             <View style={styles.weekView}>
-              <Text style={styles.textMonthRed}>Week</Text>
+              <TouchableOpacity onPress={() => setViewMode('Week')}>
+                <Text style={viewMode === 'Week' ? styles.textMonthRed : styles.textMonth}>Week</Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.monthView}>
-              <Text style={styles.textMonth}>Month</Text>
+              <TouchableOpacity onPress={() => setViewMode('Month')}>
+                <Text style={viewMode === 'Month' ? styles.textMonthRed : styles.textMonth}>Month</Text>
+              </TouchableOpacity>
             </View>
 
             {/* </View> */}
@@ -482,7 +545,7 @@ const SplashScreen = () => {
         </View>
 
         <Text style={styles.sectionTitle}>Daily Byte Score</Text>
-        <GraphComponent data={dailyByteScoreData} color="#00BE2A" />
+        <GraphComponent data={dailyByteScoreData} labels={graphLabels} color="#00BE2A" />
 
         {/* <Text style={styles.sectionTitle}>Bruxism</Text> */}
 
@@ -502,6 +565,36 @@ const SplashScreen = () => {
             <Text style={styles.lowText}>67</Text> on{' '}
             <Text style={styles.lowText}>Friday</Text>
           </Text> */}
+
+        <Modal transparent visible={calendarVisible} animationType="fade">
+          <View style={styles.calendarOverlay}>
+            <View style={styles.calendarContainer}>
+              <Text style={styles.calendarMonth}>{rangeStart.format('MMMM YYYY')}</Text>
+              <View style={styles.calendarGrid}>
+                {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => (
+                  <Text key={d} style={styles.calendarHeaderText}>{d}</Text>
+                ))}
+                {calendarDays.map((d, idx) => {
+                  const hasData = healthData.some(h => moment(h.Date).isSame(d, 'day'));
+                  return (
+                    <TouchableOpacity
+                      key={idx}
+                      style={styles.calendarCell}
+                      disabled={!hasData}
+                      onPress={() => handleSelectDay(d)}>
+                      <Text style={hasData ? styles.calendarText : styles.calendarDisabled}>
+                        {d.date()}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+              <TouchableOpacity onPress={() => setCalendarVisible(false)} style={styles.closeButton}>
+                <Text style={styles.closeText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
       {/* </SafeAreaView> */}
     </LinearGradient>
@@ -821,6 +914,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.04)',
   },
+  statisticIconText: {
+    fontSize: 20,
+    color: '#FFF',
+  },
   bruxismTitle: {
     color: '#fff',
     fontSize: 12,
@@ -991,6 +1088,55 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     lineHight: 18,
 
+  },
+  calendarOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  calendarContainer: {
+    backgroundColor: '#232323',
+    padding: 16,
+    borderRadius: 8,
+    width: '90%',
+  },
+  calendarMonth: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 10,
+    fontFamily: 'Ubuntu',
+  },
+  calendarGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  calendarHeaderText: {
+    color: '#fff',
+    width: '14%',
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  calendarCell: {
+    width: '14%',
+    alignItems: 'center',
+    marginVertical: 4,
+  },
+  calendarText: {
+    color: '#fff',
+  },
+  calendarDisabled: {
+    color: '#555',
+  },
+  closeButton: {
+    marginTop: 10,
+    alignSelf: 'flex-end',
+  },
+  closeText: {
+    color: '#fff',
+    fontSize: 14,
   },
 });
 
