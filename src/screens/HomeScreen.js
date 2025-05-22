@@ -382,7 +382,7 @@ const SplashScreen = () => {
           colors={[byteScoreFeedback.color, byteScoreFeedback.color]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={[{ flex: 1 }, { marginTop: 20, marginHorizontal: 18, maxHeight: 105, borderRadius: 4 }]}
+          style={styles.feedbackContainer}
         >
           <View style={styles.statisItemView}>
 
@@ -735,13 +735,21 @@ const styles = StyleSheet.create({
   },
   container2: {
     // alignItems: 'center',
-    marginTop: 10,
+    marginTop: 40,
     justifyContent: 'flex-start',
     alignContent: 'flex-start',
     alignItems: 'flex-start',
     flexDirection: 'row',
     height: 189,
     // backgroundColor:"red"
+  },
+  feedbackContainer: {
+    flex: 1,
+    marginTop: 20,
+    marginHorizontal: 18,
+    borderRadius: 4,
+    paddingBottom: 10,
+    minHeight: 105,
   },
   weekView: {
     flex: 1,

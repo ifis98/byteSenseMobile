@@ -17,14 +17,16 @@ const Header = ({ title = "Sleep Report", showBackArrow = true }) => {
           <Image source={backArrow} style={styles.backArrow} />
         </TouchableOpacity>
       ) : (
-        <View style={styles.spacer} />  // Empty view for spacing
+        <View style={styles.backArrowContainer} />  // Empty view for spacing
       )}
-      
+
       {/* Title, centered */}
       <Text style={styles.title}>{title}</Text>
 
       {/* Profile Image */}
-      <Image source={profileLogo} style={styles.profileImage} />
+      <View style={styles.profileContainer}>
+        <Image source={profileLogo} style={styles.profileImage} />
+      </View>
     </View>
   );
 };
@@ -50,9 +52,6 @@ const styles = StyleSheet.create({
     height: 18,
     resizeMode: 'contain',
   },
-  spacer: {
-    width: 40, // Empty space to replace the back arrow
-  },
   title: {
     textAlign: 'center',
     color: 'white',
@@ -60,6 +59,11 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontFamily:"Ubuntu",
     flex: 1,  // Make sure the title takes available space
+  },
+  profileContainer: {
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   profileImage: {
     width: 28,
