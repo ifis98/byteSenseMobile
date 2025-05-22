@@ -100,9 +100,22 @@ const SplashScreen = () => {
   const [prevAvgHRV, setPrevAvgHRV] = useState('--');
   const [refreshing, setRefreshing] = useState(false);
   const [viewMode, setViewMode] = useState('Week');
-  const [rangeStart, setRangeStart] = useState(moment().startOf('week'));
-  const [rangeEnd, setRangeEnd] = useState(moment().endOf('week'));
+
+  const initialRef = moment().subtract(1, 'day');
+  const [weekRange, setWeekRange] = useState({
+    start: initialRef.clone().startOf('week'),
+    end: initialRef.clone().endOf('week'),
+  });
+  const [monthRange, setMonthRange] = useState({
+    start: initialRef.clone().startOf('month'),
+    end: initialRef.clone().endOf('month'),
+  });
+
+  const rangeStart = viewMode === 'Week' ? weekRange.start : monthRange.start;
+  const rangeEnd = viewMode === 'Week' ? weekRange.end : monthRange.end;
+
   const [calendarVisible, setCalendarVisible] = useState(false);
+  const [calendarViewDate, setCalendarViewDate] = useState(rangeStart.clone());
 
 
   const loadData = async () => {
@@ -127,14 +140,8 @@ const SplashScreen = () => {
   }, [patientData]);
 
   useEffect(() => {
-    if (viewMode === 'Week') {
-      setRangeStart(moment(rangeStart).startOf('week'));
-      setRangeEnd(moment(rangeStart).endOf('week'));
-    } else {
-      setRangeStart(moment(rangeStart).startOf('month'));
-      setRangeEnd(moment(rangeStart).endOf('month'));
-    }
-  }, [viewMode]);
+    setCalendarViewDate(viewMode === 'Week' ? weekRange.start.clone() : monthRange.start.clone());
+  }, [viewMode, weekRange.start, monthRange.start]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -250,21 +257,30 @@ const SplashScreen = () => {
 
   const { labels: graphLabels, data: dailyByteScoreData } = getRangeGraphData();
 
+  const changeMonth = offset => {
+    setCalendarViewDate(prev => prev.clone().add(offset, 'month'));
+  };
+
   const handleSelectDay = day => {
     if (viewMode === 'Week') {
-      setRangeStart(day.clone().startOf('week'));
-      setRangeEnd(day.clone().endOf('week'));
+      setWeekRange({
+        start: day.clone().startOf('week'),
+        end: day.clone().endOf('week'),
+      });
     } else {
-      setRangeStart(day.clone().startOf('month'));
-      setRangeEnd(day.clone().endOf('month'));
+      setMonthRange({
+        start: day.clone().startOf('month'),
+        end: day.clone().endOf('month'),
+      });
     }
+    setCalendarViewDate(day.clone());
     setCalendarVisible(false);
   };
 
   const buildCalendarDays = () => {
     const days = [];
-    const first = rangeStart.clone().startOf('month').startOf('week');
-    const end = rangeStart.clone().endOf('month').endOf('week');
+    const first = calendarViewDate.clone().startOf('month').startOf('week');
+    const end = calendarViewDate.clone().endOf('month').endOf('week');
     for (let m = first.clone(); m.isSameOrBefore(end); m.add(1, 'day')) {
       days.push(m.clone());
     }
@@ -514,7 +530,11 @@ const SplashScreen = () => {
         <View style={styles.yourTrendsView}>
           <View style={styles.yourTrendsTextView}>
             <Text style={styles.sectionTitle}>Your Trends</Text>
-            <TouchableOpacity onPress={() => setCalendarVisible(true)}>
+            <TouchableOpacity
+              onPress={() => {
+                setCalendarViewDate(rangeStart.clone());
+                setCalendarVisible(true);
+              }}>
               <Text style={styles.sectionTitleCalender}>
                 {rangeStart.format('DD MMM')} - {rangeEnd.format('DD MMM')} {downIcon()}
               </Text>
@@ -529,16 +549,16 @@ const SplashScreen = () => {
             end={{ x: 1, y: 0 }}
             style={styles.yourTrendViewMonth}>
             {/* <View style={styles.trendTabs}> */}
-            <View style={styles.weekView}>
-              <TouchableOpacity onPress={() => setViewMode('Week')}>
-                <Text style={viewMode === 'Week' ? styles.textMonthRed : styles.textMonth}>Week</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.monthView}>
-              <TouchableOpacity onPress={() => setViewMode('Month')}>
-                <Text style={viewMode === 'Month' ? styles.textMonthRed : styles.textMonth}>Month</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={styles.weekView}
+              onPress={() => setViewMode('Week')}>
+              <Text style={viewMode === 'Week' ? styles.textMonthRed : styles.textMonth}>Week</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.monthView}
+              onPress={() => setViewMode('Month')}>
+              <Text style={viewMode === 'Month' ? styles.textMonthRed : styles.textMonth}>Month</Text>
+            </TouchableOpacity>
 
             {/* </View> */}
           </LinearGradient>
@@ -569,7 +589,15 @@ const SplashScreen = () => {
         <Modal transparent visible={calendarVisible} animationType="fade">
           <View style={styles.calendarOverlay}>
             <View style={styles.calendarContainer}>
-              <Text style={styles.calendarMonth}>{rangeStart.format('MMMM YYYY')}</Text>
+              <View style={styles.monthHeader}>
+                <TouchableOpacity onPress={() => changeMonth(-1)}>
+                  <Text style={styles.monthNav}>{'<'}</Text>
+                </TouchableOpacity>
+                <Text style={styles.calendarMonth}>{calendarViewDate.format('MMMM YYYY')}</Text>
+                <TouchableOpacity onPress={() => changeMonth(1)}>
+                  <Text style={styles.monthNav}>{'>'}</Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.calendarGrid}>
                 {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => (
                   <Text key={d} style={styles.calendarHeaderText}>{d}</Text>
@@ -1100,6 +1128,17 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     width: '90%',
+  },
+  monthHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  monthNav: {
+    color: '#fff',
+    fontSize: 18,
+    paddingHorizontal: 10,
   },
   calendarMonth: {
     color: '#fff',
