@@ -20,7 +20,6 @@
 		8650102204C14BD99248DA56 /* Ubuntu-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441B77A63F30432FBCD45DC6 /* Ubuntu-Light.ttf */; };
 		86906CB74C0349FC9E0E2910 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAEECE5745ED482CA7DEC069 /* Ubuntu-Medium.ttf */; };
 		8D8C5D425026475E8BAF7614 /* Ubuntu-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF1E6721A3744F37AD0A9F6B /* Ubuntu-Italic.ttf */; };
-		A34458832DDFD1850049152F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A34458822DDFD1850049152F /* GoogleService-Info.plist */; };
 		A34458842DDFD1850049152F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A34458822DDFD1850049152F /* GoogleService-Info.plist */; };
 		A34458872DDFD27F0049152F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A34458862DDFD27F0049152F /* FirebaseCore */; };
 		A34458892DDFD27F0049152F /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = A34458882DDFD27F0049152F /* FirebaseMessaging */; };
@@ -296,7 +295,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A34458832DDFD1850049152F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

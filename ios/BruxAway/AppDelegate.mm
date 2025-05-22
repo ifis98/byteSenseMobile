@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import "RNNordicDfu.h"
+#import <FirebaseCore/FirebaseCore.h>
 
 #import <React/RCTBundleURLProvider.h>
 
@@ -7,17 +8,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+
   self.moduleName = @"BruxAway";
-  // You can add your custom initial props in the dictionary below.
-  // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
-  // Nordic DFU Setup
   [RNNordicDfu setCentralManagerGetter:^() {
       return [[CBCentralManager alloc] initWithDelegate:nil queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)];
   }];
 
-  // Reset manager delegate since the Nordic DFU lib "steals" control over it
   [RNNordicDfu setOnDFUComplete:^() {
       NSLog(@"onDFUComplete");
   }];
