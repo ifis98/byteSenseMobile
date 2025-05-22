@@ -28,6 +28,7 @@ import Mailer from 'react-native-mail';
 import { NordicDFU, DFUEmitter } from 'react-native-nordic-dfu';
 import io from 'socket.io-client';
 import {backendLink} from '../api/api'
+import {firmwareFilePath} from '../utils/firmwareManager';
 
 
 
@@ -808,13 +809,11 @@ const DeviceDataScreen = () => {
   
   const proceedDFU = async (dfuTargetId) => {
     setDfuStatus('Starting DFU update...');
-    // Replace with the actual path to your DFU firmware package
-    console.log("Firmware path:", RNFS.MainBundlePath);
-    const firmwareFilePath = `file://${RNFS.MainBundlePath}/ppgv3.0.zip`;
+    const dfuPath = `file://${firmwareFilePath}`;
     try {
       const result = await NordicDFU.startDFU({
         deviceAddress: dfuTargetId,
-        filePath: firmwareFilePath,
+        filePath: dfuPath,
         // Optionally add a device name or other options if required:
         // name: "Your Device Name"
       });
