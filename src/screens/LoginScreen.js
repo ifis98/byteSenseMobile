@@ -18,11 +18,12 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Add AsyncStorage
 import {setUser} from '../redux/userSlice';
+import {setPatientData} from '../redux/patientDataSlice';
+import {login, fetchPatientData} from '../api/api';
 import ButtonComponent from '../components/Button';
 import logo from '../assets/logo.png';
 import eclipse from '../assets/eclipse.png';
 import InputComponent from '../components/InputComponent';
-import {login} from '../api/api';
 
 const {width, height} = Dimensions.get('window');
 
@@ -81,6 +82,13 @@ const LoginScreen = ({navigation}) => {
         // Save user token in AsyncStorage
         await AsyncStorage.setItem('userToken', token);
         dispatch(setUser(dummyUser));
+
+        try {
+          const data = await fetchPatientData();
+          dispatch(setPatientData(data));
+        } catch (e) {
+          console.error('Failed to fetch patient data', e);
+        }
 
         navigation.replace('HomeTabs');
       } else {

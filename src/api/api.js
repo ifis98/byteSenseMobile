@@ -108,4 +108,13 @@ export const sendRequest = async (body) => {
     throw new Error(handleApiError(error));
   }
 };
+
+export const fetchPatientData = async () => {
+  try {
+    const response = await api.get('/myPatientData');
+    return response.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
 export default api;

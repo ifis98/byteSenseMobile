@@ -3,6 +3,7 @@ import {persistStore, persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {combineReducers} from 'redux';
 import userReducer from './userSlice';
+import patientDataReducer from './patientDataSlice';
 
 // Configuration for redux-persist
 const persistConfig = {
@@ -13,6 +14,7 @@ const persistConfig = {
 // Combine reducers (if you have more than one)
 const rootReducer = combineReducers({
   user: userReducer,
+  patientData: patientDataReducer,
 });
 
 // Persist the reducer
