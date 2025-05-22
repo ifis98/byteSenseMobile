@@ -3,14 +3,14 @@ import {View, Dimensions, StyleSheet, SafeAreaView, Text} from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
 
 const GraphComponent = props => {
-  const {data, color} = props;
+  const {data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], color} = props;
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <LineChart
           data={{
-            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            labels: labels,
             datasets: [
               {
                 data: data, // Single continuous dataset
