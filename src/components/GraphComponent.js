@@ -5,6 +5,13 @@ import {LineChart} from 'react-native-chart-kit';
 const GraphComponent = props => {
   const {data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], color} = props;
 
+  // react-native-chart-kit will generate invalid SVG paths if the dataset
+  // contains NaN values. Convert any invalid entries to `null` so the line chart
+  // creates a gap rather than trying to plot "NaN" or coercing the value to 0.
+  const sanitizedData = (data || []).map(d =>
+    typeof d === 'number' && !isNaN(d) ? d : null,
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
@@ -13,7 +20,7 @@ const GraphComponent = props => {
             labels: labels,
             datasets: [
               {
-                data: data, // Single continuous dataset
+                data: sanitizedData, // Single continuous dataset after sanitization
                 color: (opacity = 1) =>
                   color || `rgba(39, 255, 233, ${opacity})`, // Overall color function with adjustable opacity
                 strokeWidth: 0.4, // Line thickness
