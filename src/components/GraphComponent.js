@@ -6,9 +6,12 @@ import * as scale from 'd3-scale';
 import { Defs, LinearGradient, Stop } from 'react-native-svg';
 
 const GraphComponent = ({ data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], color = '#00BE2A' }) => {
-  const sanitizedData = (data || []).map(d => (typeof d === 'number' && !isNaN(d) ? d : 0));
+  const sanitizedData = (data || []).map(d =>
+    typeof d === 'number' && !isNaN(d) ? d : 0,
+  );
   const finalData = sanitizedData.length > 0 ? sanitizedData : [0];
   const contentInset = { top: 20, bottom: 20 };
+  const chartHeight = 250;
   const screenWidth = Dimensions.get('window').width - 32;
 
   return (
@@ -33,7 +36,13 @@ const GraphComponent = ({ data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fr
           curve={shape.curveMonotoneX}
         >
           <Defs>
-            <LinearGradient id="lineGradient" x1="0" y1="1" x2="0" y2="0">
+            <LinearGradient
+              id="lineGradient"
+              x1="0"
+              y1={chartHeight - contentInset.bottom}
+              x2="0"
+              y2={contentInset.top}
+              gradientUnits="userSpaceOnUse">
               <Stop offset="0%" stopColor="#FF0000" />
               <Stop offset="50%" stopColor="#FFFF00" />
               <Stop offset="100%" stopColor="#00BE2A" />
