@@ -16,6 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPatientData } from '../api/api';
 import { setPatientData } from '../redux/patientDataSlice';
+import { toNumber } from '../utils/numberUtils';
 import heartRate from '../assets/heartRate.png';
 import cardiogram from '../assets/cardiogram.png';
 import HalfCircleSVGs from '../components/CustomSVGComponent';
@@ -97,6 +98,7 @@ const SplashScreen = () => {
   const [prevAvgHRV, setPrevAvgHRV] = useState('--');
   const [refreshing, setRefreshing] = useState(false);
 
+
   const loadData = async () => {
     try {
       const data = await fetchPatientData();
@@ -127,17 +129,19 @@ const SplashScreen = () => {
   // Function to handle date changes
   const handleDateChange = (index, dataArr = healthData) => {
     setSelectedDateIndex(index);
-    const targetDate = moment().subtract(index, 'days').format('YYYY-MM-DD');
+    const targetDate = moment()
+      .subtract(index + 1, 'days')
+      .format('YYYY-MM-DD');
     const selectedDateData = dataArr.find(d =>
       moment(d.Date).format('YYYY-MM-DD') === targetDate,
     );
     if (selectedDateData) {
-      setHr(parseInt(selectedDateData.averageHR) || '--');
-      setHrv(parseInt(selectedDateData.averageHRV) || '--');
-      setScore(parseInt(selectedDateData.byteScore) || '--');
+      setHr(toNumber(selectedDateData.averageHR) ?? '--');
+      setHrv(toNumber(selectedDateData.averageHRV) ?? '--');
+      setScore(toNumber(selectedDateData.byteScore) ?? '--');
       setActivities(selectedDateData.activities || []);
-      setPrevAvgHR(parseInt(selectedDateData.prevWeekAvgHR) || '--');
-      setPrevAvgHRV(parseInt(selectedDateData.prevWeekAvgHRV) || '--');
+      setPrevAvgHR(toNumber(selectedDateData.prevWeekAvgHR) ?? '--');
+      setPrevAvgHRV(toNumber(selectedDateData.prevWeekAvgHRV) ?? '--');
     } else {
       setHr('--');
       setHrv('--');
@@ -165,7 +169,7 @@ const SplashScreen = () => {
 
   const dailyByteScoreData = healthData
     .slice(0, 7)
-    .map(d => parseInt(d.byteScore) || 0);
+    .map(d => toNumber(d.byteScore) || 0);
 
   return (
     <LinearGradient
@@ -381,8 +385,8 @@ const SplashScreen = () => {
         </View>
         <View style={styles.keyStatistics}>
           {renderKeyStatistic('Fatigue Score', '40', null, false, fatigueScore)}
-          {renderKeyStatistic('HRV', hrv, prevAvgHRV, parseInt(hrv) <= parseInt(prevAvgHRV), cardiogram2)}
-          {renderKeyStatistic('RHR', hr, prevAvgHR, parseInt(hr) >= parseInt(prevAvgHR), hearblack)}
+          {renderKeyStatistic('HRV', hrv, prevAvgHRV, toNumber(hrv) <= toNumber(prevAvgHRV), cardiogram2)}
+          {renderKeyStatistic('RHR', hr, prevAvgHR, toNumber(hr) >= toNumber(prevAvgHR), hearblack)}
           {/**
            {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
            {renderKeyStatistic(
