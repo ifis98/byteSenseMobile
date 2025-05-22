@@ -22,7 +22,10 @@ const DateSlider = props => {
   //   currentDate.clone().add(i - 10, 'days'),
   // ); // 50 past and 50 future dates
 
-  const dates = props?.healthData.map(data => moment(data.Date));
+  const numDays = props.numDays || 30;
+  const dates = Array.from({length: numDays}, (_, i) =>
+    currentDate.clone().subtract(i, 'days'),
+  );
 
   // Ensure the selected date is always in the center
   const handleScroll = event => {
