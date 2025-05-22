@@ -127,7 +127,10 @@ const SplashScreen = () => {
   // Function to handle date changes
   const handleDateChange = (index, dataArr = healthData) => {
     setSelectedDateIndex(index);
-    const selectedDateData = dataArr[index];
+    const targetDate = moment().subtract(index, 'days').format('YYYY-MM-DD');
+    const selectedDateData = dataArr.find(d =>
+      moment(d.Date).format('YYYY-MM-DD') === targetDate,
+    );
     if (selectedDateData) {
       setHr(parseInt(selectedDateData.averageHR) || '--');
       setHrv(parseInt(selectedDateData.averageHRV) || '--');
@@ -359,9 +362,10 @@ const SplashScreen = () => {
               return t ? moment(t).format('h:mm A') : '--';
             };
             const dur = act.duration || 0;
-            const durText = `${Math.floor(dur / 60)}:${(dur % 60)
-              .toString()
-              .padStart(2, '0')}`;
+            const totalMinutes = Math.round(dur);
+            const durHours = Math.floor(totalMinutes / 60);
+            const durMinutes = totalMinutes % 60;
+            const durText = `${durHours}:${durMinutes.toString().padStart(2, '0')}`;
             return (
               <React.Fragment key={idx}>
                 {renderActivity(label, formatTime(act.start), formatTime(act.end), durText, icon)}
