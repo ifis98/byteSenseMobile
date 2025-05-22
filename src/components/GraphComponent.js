@@ -5,12 +5,17 @@ import {LineChart} from 'react-native-chart-kit';
 const GraphComponent = props => {
   const {data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], color} = props;
 
-  // react-native-chart-kit will generate invalid SVG paths if the dataset
-  // contains NaN values. Convert any invalid entries to `null` so the line chart
-  // creates a gap rather than trying to plot "NaN" or coercing the value to 0.
+  // react-native-chart-kit expects all data points to be numeric values. If the
+  // dataset contains `NaN` or non-numeric values, the library may attempt to
+  // call `.toFixed()` on them which results in the runtime error observed in
+  // `HomeScreen`.
+  //
+  // To avoid that, convert any invalid entries to `0` and ensure that the
+  // dataset always contains at least one value.
   const sanitizedData = (data || []).map(d =>
-    typeof d === 'number' && !isNaN(d) ? d : null,
+    typeof d === 'number' && !isNaN(d) ? d : 0,
   );
+  const finalData = sanitizedData.length > 0 ? sanitizedData : [0];
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -20,7 +25,7 @@ const GraphComponent = props => {
             labels: labels,
             datasets: [
               {
-                data: sanitizedData, // Single continuous dataset after sanitization
+                data: finalData, // Sanitised dataset guaranteed to have numeric values
                 color: (opacity = 1) =>
                   color || `rgba(39, 255, 233, ${opacity})`, // Overall color function with adjustable opacity
                 strokeWidth: 0.4, // Line thickness
