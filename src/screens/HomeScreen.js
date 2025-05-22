@@ -136,12 +136,18 @@ const SplashScreen = () => {
       moment(d.Date).format('YYYY-MM-DD') === targetDate,
     );
     if (selectedDateData) {
-      setHr(toNumber(selectedDateData.averageHR) ?? '--');
-      setHrv(toNumber(selectedDateData.averageHRV) ?? '--');
-      setScore(toNumber(selectedDateData.byteScore) ?? '--');
+      const hrVal = toNumber(selectedDateData.averageHR);
+      const hrvVal = toNumber(selectedDateData.averageHRV);
+      const scoreVal = toNumber(selectedDateData.byteScore);
+      const prevHrVal = toNumber(selectedDateData.prevWeekAvgHR);
+      const prevHrvVal = toNumber(selectedDateData.prevWeekAvgHRV);
+
+      setHr(hrVal != null ? Math.round(hrVal) : '--');
+      setHrv(hrvVal != null ? Math.round(hrvVal) : '--');
+      setScore(scoreVal != null ? Math.round(scoreVal) : '--');
       setActivities(selectedDateData.activities || []);
-      setPrevAvgHR(toNumber(selectedDateData.prevWeekAvgHR) ?? '--');
-      setPrevAvgHRV(toNumber(selectedDateData.prevWeekAvgHRV) ?? '--');
+      setPrevAvgHR(prevHrVal != null ? Math.round(prevHrVal) : '--');
+      setPrevAvgHRV(prevHrvVal != null ? Math.round(prevHrvVal) : '--');
     } else {
       setHr('--');
       setHrv('--');
