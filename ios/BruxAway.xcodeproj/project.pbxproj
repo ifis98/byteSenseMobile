@@ -20,6 +20,10 @@
 		8650102204C14BD99248DA56 /* Ubuntu-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441B77A63F30432FBCD45DC6 /* Ubuntu-Light.ttf */; };
 		86906CB74C0349FC9E0E2910 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAEECE5745ED482CA7DEC069 /* Ubuntu-Medium.ttf */; };
 		8D8C5D425026475E8BAF7614 /* Ubuntu-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF1E6721A3744F37AD0A9F6B /* Ubuntu-Italic.ttf */; };
+		A34458832DDFD1850049152F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A34458822DDFD1850049152F /* GoogleService-Info.plist */; };
+		A34458842DDFD1850049152F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A34458822DDFD1850049152F /* GoogleService-Info.plist */; };
+		A34458872DDFD27F0049152F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A34458862DDFD27F0049152F /* FirebaseCore */; };
+		A34458892DDFD27F0049152F /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = A34458882DDFD27F0049152F /* FirebaseMessaging */; };
 		A3D6041A2D641A6900586456 /* v7.5.zip in Resources */ = {isa = PBXBuildFile; fileRef = A3D604192D641A6900586456 /* v7.5.zip */; };
 		A3D6041C2D641A9900586456 /* ppgv3.0.zip in Resources */ = {isa = PBXBuildFile; fileRef = A3D6041B2D641A9900586456 /* ppgv3.0.zip */; };
 		B5A470B5CACB4A63AF660E46 /* UFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 54D2EECBC7BF4DE19AB36719 /* UFL.txt */; };
@@ -67,6 +71,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BruxAway/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-BruxAway-BruxAwayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BruxAway-BruxAwayTests.release.xcconfig"; path = "Target Support Files/Pods-BruxAway-BruxAwayTests/Pods-BruxAway-BruxAwayTests.release.xcconfig"; sourceTree = "<group>"; };
 		9C76F0E729E6406CB90108AF /* Ubuntu-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-BoldItalic.ttf"; path = "../src/assets/fonts/Ubuntu-BoldItalic.ttf"; sourceTree = "<group>"; };
+		A34458822DDFD1850049152F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3D604192D641A6900586456 /* v7.5.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = v7.5.zip; sourceTree = "<group>"; };
 		A3D6041B2D641A9900586456 /* ppgv3.0.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = ppgv3.0.zip; sourceTree = "<group>"; };
 		D8F6CEC9EC684AE5333EF972 /* Pods_BruxAway_BruxAwayTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BruxAway_BruxAwayTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +93,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A34458892DDFD27F0049152F /* FirebaseMessaging in Frameworks */,
+				A34458872DDFD27F0049152F /* FirebaseCore in Frameworks */,
 				7FDF74B53F45BFC297F789C6 /* Pods_BruxAway.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +172,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A34458822DDFD1850049152F /* GoogleService-Info.plist */,
 				A3D6041B2D641A9900586456 /* ppgv3.0.zip */,
 				A3D604192D641A6900586456 /* v7.5.zip */,
 				13B07FAE1A68108700A75B9A /* BruxAway */,
@@ -270,6 +278,9 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
+			packageReferences = (
+				A34458852DDFD27F0049152F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -285,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A34458832DDFD1850049152F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +313,7 @@
 				0FC891228D1F4A8F9EF32186 /* Ubuntu-Bold.ttf in Resources */,
 				25FBE8028CDA45A580D1BBBC /* Ubuntu-BoldItalic.ttf in Resources */,
 				8D8C5D425026475E8BAF7614 /* Ubuntu-Italic.ttf in Resources */,
+				A34458842DDFD1850049152F /* GoogleService-Info.plist in Resources */,
 				8650102204C14BD99248DA56 /* Ubuntu-Light.ttf in Resources */,
 				E55371C21E5849EC8A7D5748 /* Ubuntu-LightItalic.ttf in Resources */,
 				86906CB74C0349FC9E0E2910 /* Ubuntu-Medium.ttf in Resources */,
@@ -772,6 +785,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A34458852DDFD27F0049152F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A34458862DDFD27F0049152F /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A34458852DDFD27F0049152F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		A34458882DDFD27F0049152F /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A34458852DDFD27F0049152F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
