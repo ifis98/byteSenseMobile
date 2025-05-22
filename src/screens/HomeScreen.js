@@ -239,7 +239,7 @@ const SplashScreen = () => {
     return score > threshold ? ['#0f3d3e', '#232323'] : ['#411E1F', '#232323'];
   };
 
-  const getRangeGraphData = () => {
+  const getRangeGraphData = (field = 'byteScore') => {
     const days = [];
     for (let m = rangeStart.clone(); m.isSameOrBefore(rangeEnd); m.add(1, 'day')) {
       days.push(m.clone());
@@ -249,13 +249,16 @@ const SplashScreen = () => {
     );
     const data = days.map(d => {
       const found = healthData.find(h => moment(h.Date).isSame(d, 'day'));
-      const val = found ? toNumber(found.byteScore) : NaN;
+      const val = found ? toNumber(found[field]) : NaN;
       return val;
     });
     return { labels, data };
   };
 
-  const { labels: graphLabels, data: dailyByteScoreData } = getRangeGraphData();
+  const { labels: graphLabels, data: dailyByteScoreData } = getRangeGraphData('byteScore');
+  const { data: recoveryScoreData } = getRangeGraphData('recoveryScore');
+  const { data: stressLoadScoreData } = getRangeGraphData('stressLoadScore');
+  const { data: recoveryTrendScoreData } = getRangeGraphData('recoveryTrendScore');
 
   const changeMonth = offset => {
     setCalendarViewDate(prev => prev.clone().add(offset, 'month'));
@@ -319,6 +322,7 @@ const SplashScreen = () => {
               setSelectedDateIndex={handleDateChange}
             />
           </View>
+          {/**
           <View style={styles.statsSection}>
             <View style={styles.heartImageView}>
               <Image source={redTimer} style={[styles.heartImage, { alignSelf: "flex-start" }]} />
@@ -339,6 +343,7 @@ const SplashScreen = () => {
               </View>
             </View>
           </View>
+          */}
           <View style={styles.container2}>
             <HalfCircleSVGs selectedIndex={score} />
           </View>
@@ -372,6 +377,7 @@ const SplashScreen = () => {
             </View>
           </View>
         </LinearGradient> */}
+        {score !== '--' && (
         <LinearGradient
           colors={[byteScoreFeedback.color, byteScoreFeedback.color]}
           start={{ x: 0, y: 0 }}
@@ -399,18 +405,16 @@ const SplashScreen = () => {
               </View>
 
               <Text
-                numberOfLines={2}
                 style={{
                   width: "95%",
-                  color: "#A8A9AA",
+                  color: "#fff",
                   fontSize: 14,
-                  textAlign: "justify",
                   paddingLeft: 20,
                   fontFamily: "Ubuntu",
-                  fontWeight: 400,
-                  paddingBottom: 20,
+                  fontWeight: "400",
+                  lineHeight: 20,
                   marginTop: 5,
-                  lineHeight: 24,
+                  marginBottom: 10,
                 }}
               >
                 {byteScoreFeedback.description}
@@ -418,6 +422,7 @@ const SplashScreen = () => {
             </View>
           </View>
         </LinearGradient>
+        )}
 
 
         {/* <LinearGradient  // Your Action Focus hidden
@@ -566,6 +571,15 @@ const SplashScreen = () => {
 
         <Text style={styles.sectionTitle}>Daily Byte Score</Text>
         <GraphComponent data={dailyByteScoreData} labels={graphLabels} color="#00BE2A" />
+
+        <Text style={styles.sectionTitle}>Daily Morning Readiness</Text>
+        <GraphComponent data={recoveryScoreData} labels={graphLabels} color="#00BE2A" />
+
+        <Text style={styles.sectionTitle}>Daily Relaxation Index</Text>
+        <GraphComponent data={stressLoadScoreData} labels={graphLabels} color="#00BE2A" />
+
+        <Text style={styles.sectionTitle}>Stress Relief Score</Text>
+        <GraphComponent data={recoveryTrendScoreData} labels={graphLabels} color="#00BE2A" />
 
         {/* <Text style={styles.sectionTitle}>Bruxism</Text> */}
 

@@ -70,6 +70,7 @@ const HalfCircleSVGs = ({ selectedIndex = 26 }) => {
       </View>
 
       {/* Badge and subtitle in one row */}
+      {/**
       <View style={styles.badgeRow}>
         <View style={styles.badge}>
           <Text style={styles.badgeText}>5%</Text>
@@ -78,6 +79,7 @@ const HalfCircleSVGs = ({ selectedIndex = 26 }) => {
           of your sleep was{'\n'}compromised by bruxism
         </Text>
       </View>
+      */}
     </View>
   );
 };

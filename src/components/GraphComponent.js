@@ -1,81 +1,45 @@
 import React from 'react';
-import {View, Dimensions, StyleSheet, SafeAreaView, Text} from 'react-native';
-import {LineChart} from 'react-native-chart-kit';
+import { View, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
+import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts';
+import * as scale from 'd3-scale';
 
-const GraphComponent = props => {
-  const {data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], color} = props;
-
-  // react-native-chart-kit expects all data points to be numeric values. If the
-  // dataset contains `NaN` or non-numeric values, the library may attempt to
-  // call `.toFixed()` on them which results in the runtime error observed in
-  // `HomeScreen`.
-  //
-  // To avoid that, convert any invalid entries to `0` and ensure that the
-  // dataset always contains at least one value.
-  const sanitizedData = (data || []).map(d =>
-    typeof d === 'number' && !isNaN(d) ? d : 0,
-  );
+const GraphComponent = ({ data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], color = '#00BE2A' }) => {
+  const sanitizedData = (data || []).map(d => (typeof d === 'number' && !isNaN(d) ? d : 0));
   const finalData = sanitizedData.length > 0 ? sanitizedData : [0];
+  const contentInset = { top: 20, bottom: 20 };
+  const screenWidth = Dimensions.get('window').width - 32;
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.container}>
-        <LineChart
-          data={{
-            labels: labels,
-            datasets: [
-              {
-                data: finalData, // Sanitised dataset guaranteed to have numeric values
-                color: (opacity = 1) =>
-                  color || `rgba(39, 255, 233, ${opacity})`, // Overall color function with adjustable opacity
-                strokeWidth: 0.4, // Line thickness
-              },
-            ],
-          }}
-          width={Dimensions.get('window').width - 32}
-          height={250}
-          yAxisLabel=""
-          chartConfig={{
-            backgroundColor: '#232323',
-            backgroundGradientFrom: '#232323',
-            backgroundGradientTo: '#232323',
-            decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(39, 255, 233, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: '0', // No dots on the line
-            },
-            propsForBackgroundLines: {
-              strokeDasharray: '5',
-              strokeWidth: 1,
-              stroke: '#333',
-            },
-          }}
-          withDots={false}
-          withInnerLines={true}
-          withOuterLines={false}
-          withShadow={false}
-          withVerticalLines={false}
-          withHorizontalLines={true}
-          style={{
-            backgroundColor: 'transparent',
-          }}
-          bezier={true}
+      <View style={styles.row}>
+        <YAxis
+          data={finalData}
+          contentInset={contentInset}
+          svg={{ fill: 'rgba(255,255,255,0.7)', fontSize: 10 }}
+          numberOfTicks={5}
+          min={0}
+          max={100}
+          style={{ marginRight: 10 }}
         />
-         {/* {color === "#00BE2A" && (<Text style={styles.graphText}>
-         
-         You mostly had a <Text style={styles.lowText}>low</Text> Byte Score
-         this week. Your highest Byte Score was <Text style={styles.lowText}>65</Text>  on  <Text style={styles.lowText}>Friday.</Text>
-       </Text>)}
-         {color === "#FF8B02" && (<Text style={styles.graphText}>
-         
-          You had a <Text style={styles.lowText}>High</Text> number of bruxism episodes this week. Your highest number of episodes was <Text style={styles.lowText}>7</Text> on <Text style={styles.lowText}>Friday</Text>
-       </Text>)} */}
-        
+        <LineChart
+          style={{ height: 250, width: screenWidth - 20 }}
+          data={finalData}
+          svg={{ stroke: color, strokeWidth: 2 }}
+          contentInset={contentInset}
+          yMin={0}
+          yMax={100}
+        >
+          <Grid svg={{ stroke: '#333', strokeDasharray: '5', strokeWidth: 1 }} />
+        </LineChart>
       </View>
+      <XAxis
+        style={{ marginHorizontal: 16, height: 20 }}
+        data={finalData}
+        formatLabel={(value, index) => labels[index]}
+        contentInset={{ left: 20, right: 20 }}
+        svg={{ fontSize: 10, fill: 'white' }}
+        scale={scale.scaleBand}
+      />
     </SafeAreaView>
   );
 };
@@ -85,23 +49,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
   },
-  container: {
+  row: {
+    flexDirection: 'row',
     marginHorizontal: 16,
-    backgroundColor: 'transparent',
-  },
-  graphText: {
-    color: 'rgba(255, 255, 255, 0.50)',
-    fontSize: 12,
-    fontWeight: '400',
-    marginHorizontal: 18,
-    marginTop: 14,
-    lineHeight: 18,
-  },
-  lowText: {
-    color: 'rgba(255, 255, 255, 0.50)',
-    fontSize: 12,
-    fontWeight: '700',
-    lineHight: 18,
   },
 });
 
