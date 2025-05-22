@@ -158,6 +158,45 @@ const SplashScreen = () => {
     }
   };
 
+  const getByteScoreFeedback = scoreValue => {
+    const defaultFeedback = {
+      title: '',
+      description: '',
+      color: '#00BE2A0A',
+    };
+
+    if (typeof scoreValue !== 'number') {
+      return defaultFeedback;
+    }
+
+    const rounded = Math.round(scoreValue);
+
+    if (rounded >= 80) {
+      return {
+        title: 'Incredible sleep!',
+        description:
+          'Strong night overall — calm, restorative, and recharging. Keep doing what’s working.',
+        color: '#00BE2A0A',
+      };
+    }
+
+    if (rounded >= 50) {
+      return {
+        title: 'It was alright.',
+        description:
+          'Some recovery happened, but the night wasn’t fully restorative. Try to keep today light if possible and prioritize winding down well tonight.',
+        color: '#FF8B020A',
+      };
+    }
+
+    return {
+      title: 'A bit rough...',
+      description:
+        'Sleep didn’t do its full job. Take it slow, skip intense effort, and grab a nap or recovery break if you can.',
+      color: '#FD36370A',
+    };
+  };
+
   // Effect to calculate score whenever HR or HRV changes
   // useEffect(() => {
   //   if (hr !== '--' && hrv !== '--') {
@@ -176,6 +215,10 @@ const SplashScreen = () => {
   const dailyByteScoreData = healthData
     .slice(0, 7)
     .map(d => toNumber(d.byteScore) || 0);
+
+  const byteScoreFeedback = getByteScoreFeedback(
+    score === '--' ? null : score,
+  );
 
   return (
     <LinearGradient
@@ -257,7 +300,7 @@ const SplashScreen = () => {
           </View>
         </LinearGradient> */}
         <LinearGradient
-          colors={['#00BE2A0A', '#00BE2A0A']}
+          colors={[byteScoreFeedback.color, byteScoreFeedback.color]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={[{ flex: 1 }, { marginTop: 20, marginHorizontal: 18, maxHeight: 105, borderRadius: 4 }]}
@@ -278,7 +321,7 @@ const SplashScreen = () => {
                     fontWeight: 500
                   }}
                 >
-                  {"You're Improving!"}
+                  {byteScoreFeedback.title}
                 </Text>
               </View>
 
@@ -297,7 +340,7 @@ const SplashScreen = () => {
                   lineHeight: 24,
                 }}
               >
-                Last night you grinded 25% less than this time last week!
+                {byteScoreFeedback.description}
               </Text>
             </View>
           </View>
