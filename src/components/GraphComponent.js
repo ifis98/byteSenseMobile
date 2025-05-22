@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts';
+import * as shape from 'd3-shape';
 import * as scale from 'd3-scale';
+import { Defs, LinearGradient, Stop } from 'react-native-svg';
 
 const GraphComponent = ({ data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], color = '#00BE2A' }) => {
   const sanitizedData = (data || []).map(d => (typeof d === 'number' && !isNaN(d) ? d : 0));
@@ -24,11 +26,19 @@ const GraphComponent = ({ data, labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fr
         <LineChart
           style={{ height: 250, width: screenWidth - 20 }}
           data={finalData}
-          svg={{ stroke: color, strokeWidth: 2 }}
+          svg={{ stroke: 'url(#lineGradient)', strokeWidth: 2 }}
           contentInset={contentInset}
           yMin={0}
           yMax={100}
+          curve={shape.curveMonotoneX}
         >
+          <Defs>
+            <LinearGradient id="lineGradient" x1="0" y1="1" x2="0" y2="0">
+              <Stop offset="0%" stopColor="#FF0000" />
+              <Stop offset="50%" stopColor="#FFFF00" />
+              <Stop offset="100%" stopColor="#00BE2A" />
+            </LinearGradient>
+          </Defs>
           <Grid svg={{ stroke: '#333', strokeDasharray: '5', strokeWidth: 1 }} />
         </LineChart>
       </View>
