@@ -99,6 +99,12 @@ const DeviceDataScreen = () => {
   const pollFirstBatteryRef = useRef(true)
 
   const [userId, setUserId] = useState(null);
+  const userIdRef = useRef(null);
+
+  // Keep a reference to the latest userId for event listeners
+  useEffect(() => {
+    userIdRef.current = userId;
+  }, [userId]);
 
   const [realTimeData, setRealTimeData] = useState(null);
   const [dfuStatus, setDfuStatus] = useState('');
@@ -158,6 +164,7 @@ const DeviceDataScreen = () => {
         const storedId = await AsyncStorage.getItem('userID');
         if (storedId) {
           setUserId(storedId);
+          userIdRef.current = storedId;
           console.log('Loaded user ID:', storedId);
         }
       } catch (e) {
@@ -255,12 +262,12 @@ const DeviceDataScreen = () => {
   const sendSyncedData = async (data) => {
     await handleSendEmail(data);
 
-    if (userId) {
+    if (userIdRef.current) {
       socket.emit('biometricData', {
-        user: userId,
+        user: userIdRef.current,
         data,
       });
-      console.log('Sent biometricData for user:', userId);
+      console.log('Sent biometricData for user:', userIdRef.current);
     } else {
       console.warn('No userId found, cannot send biometricData');
     }
