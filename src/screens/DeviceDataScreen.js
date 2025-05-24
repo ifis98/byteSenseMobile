@@ -446,11 +446,11 @@ const DeviceDataScreen = () => {
     let identifier;
     let splitIdentifier = [];
 
-    if(hexValue.length >= 120){
+    if(hexValue.length >= 120 && hexValue.length != 312){
       console.log('Sync Hex: ' + hexValue + ' '+ hexValue.length)
       let syncSamples = hexValue.match(/.{1,8}/g)
       processSync(syncSamples)
-
+      
       if (!syncInProgressRef.current) {
         setSyncInProgress(true);
         syncInProgressRef.current = true;
