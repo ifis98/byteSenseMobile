@@ -87,6 +87,7 @@ const calibrate = () => (
 // const colabriate = () => ()
 const DeviceDataScreen = () => {
   const [syncInProgress, setSyncInProgress] = useState(false);
+  const syncInProgressRef = useRef(false);
   const syncTimeoutRef = useRef(null);
   const syncData = useRef([])
 
@@ -105,6 +106,11 @@ const DeviceDataScreen = () => {
   useEffect(() => {
     userIdRef.current = userId;
   }, [userId]);
+
+  // Keep an immediate ref for sync status
+  useEffect(() => {
+    syncInProgressRef.current = syncInProgress;
+  }, [syncInProgress]);
 
   const [realTimeData, setRealTimeData] = useState(null);
   const [dfuStatus, setDfuStatus] = useState('');
@@ -445,8 +451,9 @@ const DeviceDataScreen = () => {
       let syncSamples = hexValue.match(/.{1,8}/g)
       processSync(syncSamples)
 
-      if (!syncInProgress) {
+      if (!syncInProgressRef.current) {
         setSyncInProgress(true);
+        syncInProgressRef.current = true;
         // If you need to clear any old data, do so here:
         // setSyncData([]);
         console.log('Sync Started')
@@ -458,6 +465,7 @@ const DeviceDataScreen = () => {
       syncTimeoutRef.current = setTimeout(() => {
         // If we get here, no new large packet arrived for 5s
         setSyncInProgress(false);
+        syncInProgressRef.current = false;
         clearTimeout(syncTimeoutRef.current);
         syncTimeoutRef.current = null
 
