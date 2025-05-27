@@ -277,20 +277,31 @@ const DeviceDataScreen = () => {
     }
   };
 
-  const sendSyncedData = async (data) => {
-    await handleSendEmail(data);
-
-    if (userIdRef.current) {
-      socket.emit('biometricData', {
-        user: userIdRef.current,
-        data,
-      });
+  const emitBiometricData = payload => {
+    const send = () => {
+      socket.emit('biometricData', payload);
       console.log(
         'Sent biometricData for user:',
-        userIdRef.current,
+        payload.user,
         'socket connected:',
         socket.connected,
       );
+    };
+
+    if (socket.connected) {
+      send();
+    } else {
+      console.log('Socket not connected. Attempting to connect...');
+      socket.connect();
+      socket.once('connect', send);
+    }
+  };
+
+  const sendSyncedData = async data => {
+    await handleSendEmail(data);
+
+    if (userIdRef.current) {
+      emitBiometricData({user: userIdRef.current, data});
     } else {
       console.warn('No userId found, cannot send biometricData');
     }
