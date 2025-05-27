@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
+import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 
 import {Buffer} from 'buffer';
@@ -125,6 +126,7 @@ const DeviceDataScreen = () => {
     {data: [], color: 'rgba(0, 190, 42, 1)'},
   ]);
   const [xAxisData, setXAxisData] = useState(['0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0']);
+  const [optionsVisible, setOptionsVisible] = useState(false);
   // const [graphData, setGraphData] = useState([
   //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
   //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
@@ -855,6 +857,25 @@ const DeviceDataScreen = () => {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}
             style={styles.deviceInfoContainer}>
+            <TouchableOpacity
+              style={styles.optionsButton}
+              onPress={() => setOptionsVisible(!optionsVisible)}>
+              <Feather name="settings" size={20} color="#27FFE9" />
+            </TouchableOpacity>
+            {optionsVisible && (
+              <View style={styles.dropdownMenu}>
+                <TouchableOpacity
+                  style={styles.dropdownItem}
+                  onPress={handleDFUUpdate}>
+                  <Text style={styles.buttonText}>Update Firmware</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.dropdownItem}
+                  onPress={() => navigation.navigate('ProfileScreen')}>
+                  <Text style={styles.buttonText}>Disconnect</Text>
+                </TouchableOpacity>
+              </View>
+            )
             <View style={styles.deviceInfoContainerImage}>
               <View style={styles.imageBackground}>
                 <Image source={teethLogo} style={styles.teethlogo} />
@@ -930,33 +951,9 @@ const DeviceDataScreen = () => {
             </View>
           </LinearGradient>
           <View style={styles.buttonContainer}>
-            <LinearGradient
-              colors={[
-                'rgba(255, 255, 255, 0.04)',
-                'rgba(255, 255, 255, 0.02)',
-              ]}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              style={styles.button}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('ProfileScreen');
-                }}>
-                {disccountComponent()}
-                </TouchableOpacity>
-                <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('ProfileScreen');
-                }}>
-                <Text style={styles.buttonText}>Disconnect</Text>
-              </TouchableOpacity>
-            </LinearGradient>
             <TouchableOpacity style={styles.button}>
               {calibrate()}
               <Text style={styles.buttonTextCalibrate}>Calibrate</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleDFUUpdate}>
-              <Text style={styles.buttonText}>Update Firmware</Text>
             </TouchableOpacity>
             {dfuStatus ? (
               <View style={styles.dfuStatusContainer}>
@@ -1192,6 +1189,26 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     // lineHeight: 12,
+  },
+  optionsButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    padding: 4,
+  },
+  dropdownMenu: {
+    position: 'absolute',
+    top: 40,
+    right: 10,
+    backgroundColor: '#2B2D2E',
+    borderRadius: 8,
+    paddingVertical: 8,
+    width: 150,
+    zIndex: 100,
+  },
+  dropdownItem: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
   activityItem: {
     flexDirection: 'row',
