@@ -33,8 +33,10 @@ import {firmwareFilePath} from '../utils/firmwareManager';
 
 
 
-const socket = io(backendLink, {
-  transports: ['websocket'], // ensure stable connection
+const socket = io(backendLink.replace(/\/$/, ''), {
+  transports: ['websocket'],
+  path: '/socket.io',
+  timeout: 10000,
 });
 
 const MySvgComponent = () => (
@@ -204,7 +206,15 @@ const DeviceDataScreen = () => {
     getDeviceInfo();
 
     socket.on('connect', () => console.log('Socket connected:', socket.id));
-    socket.on('disconnect', () => console.log('Socket disconnected'));
+    socket.on('connect_error', err =>
+      console.log('Socket connection error:', err.message),
+    );
+    socket.on('disconnect', reason =>
+      console.log('Socket disconnected:', reason),
+    );
+    socket.on('biometric data updated', () =>
+      console.log('Server acknowledged biometric data'),
+    );
   
     return () => {
       socket.disconnect();
@@ -275,7 +285,12 @@ const DeviceDataScreen = () => {
         user: userIdRef.current,
         data,
       });
-      console.log('Sent biometricData for user:', userIdRef.current);
+      console.log(
+        'Sent biometricData for user:',
+        userIdRef.current,
+        'socket connected:',
+        socket.connected,
+      );
     } else {
       console.warn('No userId found, cannot send biometricData');
     }
