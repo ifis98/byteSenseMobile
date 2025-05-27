@@ -875,7 +875,7 @@ const DeviceDataScreen = () => {
                   <Text style={styles.buttonText}>Disconnect</Text>
                 </TouchableOpacity>
               </View>
-            )
+            )}
             <View style={styles.deviceInfoContainerImage}>
               <View style={styles.imageBackground}>
                 <Image source={teethLogo} style={styles.teethlogo} />
