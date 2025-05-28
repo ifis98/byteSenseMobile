@@ -36,6 +36,10 @@
     {
       "path": "src/assets/fonts/Ubuntu-Regular.ttf",
       "sha1": "8238e55f0320c3abc74057c988367c2f25fa3727"
+    },
+    {
+      "path": "src/assets/fonts/Feather.ttf",
+      "sha1": "e6604258b1ced5efd51360875d782fca65381d47"
     }
   ]
 }
