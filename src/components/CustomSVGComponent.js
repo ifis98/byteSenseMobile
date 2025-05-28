@@ -62,7 +62,7 @@ const HalfCircleSVGs = ({ selectedIndex = 26, bruxismPercent = '--' }) => {
 
       {/* Score content inside the arc */}
       <View style={styles.content}>
-        <Text style={styles.text}>BYTE SCORE</Text>
+        <Text style={styles.text}>MORNING READINESS</Text>
         <View style={styles.percentage}>
           <Text style={styles.bigText}>{selectedIndex}</Text>
           <Text style={styles.smallText}> /100</Text>

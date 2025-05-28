@@ -25,8 +25,6 @@ import HalfCircleSVGs from '../components/CustomSVGComponent';
 import Header from './header';
 import DateSlider from './DateSlider';
 import Line from '../assets/lineVector.png';
-import timer from '../assets/timer.png';
-import episode from '../assets/episode.png';
 import LineActivity from '../assets/Line.png';
 import yoga from '../assets/yoga.png';
 import moon from '../assets/moon.png';
@@ -164,7 +162,7 @@ const SplashScreen = () => {
     if (selectedDateData) {
       const hrVal = toNumber(selectedDateData.averageHR);
       const hrvVal = toNumber(selectedDateData.averageHRV);
-      const scoreVal = toNumber(selectedDateData.byteScore);
+      const scoreVal = toNumber(selectedDateData.recoveryScore);
       const prevHrVal = toNumber(selectedDateData.prevWeekAvgHR);
       const prevHrvVal = toNumber(selectedDateData.prevWeekAvgHRV);
       const bruxDurVal = toNumber(selectedDateData.totalDuration);
@@ -281,7 +279,6 @@ const SplashScreen = () => {
   const { data: recoveryScoreData } = getRangeGraphData('recoveryScore');
   const { data: stressLoadScoreData } = getRangeGraphData('stressLoadScore');
   const { data: recoveryTrendScoreData } = getRangeGraphData('recoveryTrendScore');
-  const { data: bruxismData } = getRangeGraphData('totalDuration');
 
   const changeMonth = offset => {
     setCalendarViewDate(prev => prev.clone().add(offset, 'month'));
@@ -373,35 +370,7 @@ const SplashScreen = () => {
           </View>
         </LinearGradient>
 
-        {/* Bruxism Duration */}
-        <LinearGradient
-          colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0.5, y: 0.5 }}
-          style={styles.bruxismSection}>
-          <View style={styles.bruxismDetail}>
-            <View style={styles.bruxismView}>
-              <Image source={timer} style={styles.timerImage} />
-              <View style={styles.bruxismViewContent}>
-                <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
-                <Text style={styles.bruxismValue}>
-                  {bruxDuration}{' '}
-                  <Text style={styles.rhrBpmStyle}>min</Text>
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.border}></View>
-          <View style={styles.bruxismDetail}>
-            <View style={styles.bruxismView}>
-              <Image source={episode} style={styles.timerImage} />
-              <View style={styles.bruxismViewContent}>
-                <Text style={styles.bruxismTitle}>Bruxism Episodes</Text>
-                <Text style={styles.bruxismValue}>{bruxEpisodes}</Text>
-              </View>
-            </View>
-          </View>
-        </LinearGradient>
+
         {score !== '--' && (
         <LinearGradient
           colors={[byteScoreFeedback.color, byteScoreFeedback.color]}
@@ -610,11 +579,7 @@ const SplashScreen = () => {
         <Text style={styles.sectionTitle}>Stress Relief Score</Text>
         <GraphComponent data={recoveryTrendScoreData} labels={graphLabels} color="#00BE2A" />
 
-        <Text style={styles.sectionTitle}>Bruxism</Text>
 
-        <View style={{ backgroundColor: 'red' }}>
-          <GraphComponent data={bruxismData} color="#FF8B02" />
-        </View>
 
         {/* <Text style={styles.sectionTitle}>Sleep Readiness</Text>
           <View style={styles.sleedRadinessView}>
