@@ -322,10 +322,12 @@ const SplashScreen = () => {
               setSelectedDateIndex={handleDateChange}
             />
           </View>
-          {/**
           <View style={styles.statsSection}>
             <View style={styles.heartImageView}>
-              <Image source={redTimer} style={[styles.heartImage, { alignSelf: "flex-start" }]} />
+              <Image
+                source={redTimer}
+                style={[styles.heartImage, { alignSelf: 'flex-start' }]}
+              />
               <Text style={styles.rhrStyle}>Bruxism Duration</Text>
               <View style={styles.rhrView}>
                 <Text style={styles.rhrValueStyle}>6</Text>
@@ -338,19 +340,18 @@ const SplashScreen = () => {
             <View style={styles.cardiImageView}>
               <Image source={prev} style={styles.heartImage} />
               <Text style={styles.rhrStyle}>Bruxism Episodes</Text>
-              <View style={[styles.rhrView, { alignSelf: "flex-end" }]}>
+              <View style={[styles.rhrView, { alignSelf: 'flex-end' }]}>
                 <Text style={styles.rhrValueStyle}>14</Text>
               </View>
             </View>
           </View>
-          */}
           <View style={styles.container2}>
             <HalfCircleSVGs selectedIndex={score} />
           </View>
         </LinearGradient>
 
         {/* Bruxism Duration */}
-        {/* <LinearGradient
+        <LinearGradient
           colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
           start={{ x: 0, y: 0 }}
           end={{ x: 0.5, y: 0.5 }}
@@ -376,7 +377,7 @@ const SplashScreen = () => {
               </View>
             </View>
           </View>
-        </LinearGradient> */}
+        </LinearGradient>
         {score !== '--' && (
         <LinearGradient
           colors={[byteScoreFeedback.color, byteScoreFeedback.color]}
@@ -513,24 +514,28 @@ const SplashScreen = () => {
         <View style={styles.keyStatistics}>
           {/* {renderKeyStatistic('Fatigue Score', '40', null, false, fatigueScore)} */}
           {renderKeyStatistic('HRV', hrv, prevAvgHRV, toNumber(hrv) <= toNumber(prevAvgHRV), cardiogram2)}
-          {renderKeyStatistic('RHR', hr, prevAvgHR, toNumber(hr) >= toNumber(prevAvgHR), hearblack)}
-          {/**
-           {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
-           {renderKeyStatistic(
-             'Bruxism Episodes',
-             '--',
-             '--',
-             false,
-             dentalTooth,
-           )}
-           {renderKeyStatistic(
-             'Bruxism Duration',
-             '--',
-             '--',
-             false,
-             dentalCare,
-           )}
-          */}
+          {renderKeyStatistic(
+            'RHR',
+            hr,
+            prevAvgHR,
+            toNumber(hr) >= toNumber(prevAvgHR),
+            hearblack,
+          )}
+          {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
+          {renderKeyStatistic(
+            'Bruxism Episodes',
+            '--',
+            '--',
+            false,
+            dentalTooth,
+          )}
+          {renderKeyStatistic(
+            'Bruxism Duration',
+            '--',
+            '--',
+            false,
+            dentalCare,
+          )}
         </View>
         <View style={styles.yourTrendsView}>
           <View style={styles.yourTrendsTextView}>
@@ -581,10 +586,11 @@ const SplashScreen = () => {
         <Text style={styles.sectionTitle}>Stress Relief Score</Text>
         <GraphComponent data={recoveryTrendScoreData} labels={graphLabels} color="#00BE2A" />
 
-        {/* <Text style={styles.sectionTitle}>Bruxism</Text> */}
+        <Text style={styles.sectionTitle}>Bruxism</Text>
 
-        {/* <View style={{backgroundColor:'red'}}> */}
-        {/* <GraphComponent data={bruxismData} color="#FF8B02" /> */}
+        <View style={{ backgroundColor: 'red' }}>
+          <GraphComponent data={bruxismData} color="#FF8B02" />
+        </View>
 
         {/* <Text style={styles.sectionTitle}>Sleep Readiness</Text>
           <View style={styles.sleedRadinessView}>
