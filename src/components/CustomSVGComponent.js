@@ -36,7 +36,7 @@ const CustomSVG = ({ angle, selected, index }) => {
   );
 };
 
-const HalfCircleSVGs = ({ selectedIndex = 26 }) => {
+const HalfCircleSVGs = ({ selectedIndex = 26, bruxismPercent = '--' }) => {
   const TOTAL_TICKS = 60;
   const START_ANGLE = (11 * Math.PI) / 12; // 165°
   const END_ANGLE = Math.PI / 12;          // 15°
@@ -70,16 +70,14 @@ const HalfCircleSVGs = ({ selectedIndex = 26 }) => {
       </View>
 
       {/* Badge and subtitle in one row */}
-      {/**
       <View style={styles.badgeRow}>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>5%</Text>
+          <Text style={styles.badgeText}>{bruxismPercent}</Text>
         </View>
         <Text style={styles.subtitle}>
           of your sleep was{'\n'}compromised by bruxism
         </Text>
       </View>
-      */}
     </View>
   );
 };

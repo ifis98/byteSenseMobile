@@ -98,6 +98,9 @@ const SplashScreen = () => {
   const [activities, setActivities] = useState([]);
   const [prevAvgHR, setPrevAvgHR] = useState('--');
   const [prevAvgHRV, setPrevAvgHRV] = useState('--');
+  const [bruxDuration, setBruxDuration] = useState('--');
+  const [bruxEpisodes, setBruxEpisodes] = useState('--');
+  const [bruxPercent, setBruxPercent] = useState('--');
   const [refreshing, setRefreshing] = useState(false);
   const [viewMode, setViewMode] = useState('Week');
 
@@ -164,6 +167,15 @@ const SplashScreen = () => {
       const scoreVal = toNumber(selectedDateData.byteScore);
       const prevHrVal = toNumber(selectedDateData.prevWeekAvgHR);
       const prevHrvVal = toNumber(selectedDateData.prevWeekAvgHRV);
+      const bruxDurVal = toNumber(selectedDateData.totalDuration);
+      const bruxEpVal = toNumber(selectedDateData.totalEpisode);
+      const sleepMinutes = (selectedDateData.activities || [])
+        .filter(a => a.type === 'Sleep')
+        .reduce((sum, a) => sum + (a.duration || 0), 0);
+      const percentVal =
+        bruxDurVal != null && sleepMinutes > 0
+          ? Math.round((bruxDurVal / sleepMinutes) * 100)
+          : null;
 
       setHr(hrVal != null ? Math.round(hrVal) : '--');
       setHrv(hrvVal != null ? Math.round(hrvVal) : '--');
@@ -171,6 +183,13 @@ const SplashScreen = () => {
       setActivities(selectedDateData.activities || []);
       setPrevAvgHR(prevHrVal != null ? Math.round(prevHrVal) : '--');
       setPrevAvgHRV(prevHrvVal != null ? Math.round(prevHrvVal) : '--');
+      setBruxDuration(
+        bruxDurVal != null ? Math.round(bruxDurVal) : '--',
+      );
+      setBruxEpisodes(
+        bruxEpVal != null ? Math.round(bruxEpVal) : '--',
+      );
+      setBruxPercent(percentVal != null ? `${percentVal}%` : '--');
     } else {
       setHr('--');
       setHrv('--');
@@ -178,6 +197,9 @@ const SplashScreen = () => {
       setActivities([]);
       setPrevAvgHR('--');
       setPrevAvgHRV('--');
+      setBruxDuration('--');
+      setBruxEpisodes('--');
+      setBruxPercent('--');
     }
   };
 
@@ -259,6 +281,7 @@ const SplashScreen = () => {
   const { data: recoveryScoreData } = getRangeGraphData('recoveryScore');
   const { data: stressLoadScoreData } = getRangeGraphData('stressLoadScore');
   const { data: recoveryTrendScoreData } = getRangeGraphData('recoveryTrendScore');
+  const { data: bruxismData } = getRangeGraphData('totalDuration');
 
   const changeMonth = offset => {
     setCalendarViewDate(prev => prev.clone().add(offset, 'month'));
@@ -330,7 +353,7 @@ const SplashScreen = () => {
               />
               <Text style={styles.rhrStyle}>Bruxism Duration</Text>
               <View style={styles.rhrView}>
-                <Text style={styles.rhrValueStyle}>6</Text>
+                <Text style={styles.rhrValueStyle}>{bruxDuration}</Text>
                 <Text style={styles.rhrBpmStyle}>min</Text>
               </View>
             </View>
@@ -341,12 +364,12 @@ const SplashScreen = () => {
               <Image source={prev} style={styles.heartImage} />
               <Text style={styles.rhrStyle}>Bruxism Episodes</Text>
               <View style={[styles.rhrView, { alignSelf: 'flex-end' }]}>
-                <Text style={styles.rhrValueStyle}>14</Text>
+                <Text style={styles.rhrValueStyle}>{bruxEpisodes}</Text>
               </View>
             </View>
           </View>
           <View style={styles.container2}>
-            <HalfCircleSVGs selectedIndex={score} />
+            <HalfCircleSVGs selectedIndex={score} bruxismPercent={bruxPercent} />
           </View>
         </LinearGradient>
 
@@ -362,7 +385,8 @@ const SplashScreen = () => {
               <View style={styles.bruxismViewContent}>
                 <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
                 <Text style={styles.bruxismValue}>
-                  -- <Text style={styles.rhrBpmStyle}>min</Text>
+                  {bruxDuration}{' '}
+                  <Text style={styles.rhrBpmStyle}>min</Text>
                 </Text>
               </View>
             </View>
@@ -372,8 +396,8 @@ const SplashScreen = () => {
             <View style={styles.bruxismView}>
               <Image source={episode} style={styles.timerImage} />
               <View style={styles.bruxismViewContent}>
-                <Text style={styles.bruxismTitle}>Bruxism Duration</Text>
-                <Text style={styles.bruxismValue}>--</Text>
+                <Text style={styles.bruxismTitle}>Bruxism Episodes</Text>
+                <Text style={styles.bruxismValue}>{bruxEpisodes}</Text>
               </View>
             </View>
           </View>
@@ -524,14 +548,14 @@ const SplashScreen = () => {
           {renderKeyStatistic('Respiratory rate', '--', '--', true, lungs)}
           {renderKeyStatistic(
             'Bruxism Episodes',
-            '--',
+            bruxEpisodes,
             '--',
             false,
             dentalTooth,
           )}
           {renderKeyStatistic(
             'Bruxism Duration',
-            '--',
+            bruxDuration,
             '--',
             false,
             dentalCare,
