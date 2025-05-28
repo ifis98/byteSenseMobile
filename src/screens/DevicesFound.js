@@ -77,7 +77,9 @@ const DevicesFoundScreen = () => {
       'BleManagerDiscoverPeripheral',
       peripheral => {
         setBluetoothDevices(prevDevices => {
-          if (peripheral.name && peripheral.name.includes('yteG')) {
+          const advName = peripheral.advertising?.localName;
+          const deviceName = peripheral.name || advName;
+          if (deviceName && deviceName.includes('yteG')) {
             console.log('Discovered Peripheral:', peripheral);
             const deviceExists = prevDevices.some(
               device => device.id === peripheral.id,
@@ -91,67 +93,92 @@ const DevicesFoundScreen = () => {
       },
     );
 
+    const stopScanListener = bleManagerEmitter.addListener(
+      'BleManagerStopScan',
+      () => {
+        console.log('Scan stopped event received');
+        setIsScanning(false);
+        scaleAnim.setValue(0);
+      },
+    );
+
     return () => {
       discoverListener.remove();
+      stopScanListener.remove();
     };
   }, []);
 
   useEffect(() => {
     if (permissionsGranted && bleInitialized) {
-      repeatedScan(); // Start continuous scan
+      const cleanup = repeatedScan();
+      return cleanup;
     }
   }, [permissionsGranted, bleInitialized]);
 
   // Function to initiate scanning
   const startScanning = () => {
     if (!isScanning) {
-      BleManager.scan([], 30, true)
+      BleManager.stopScan()
+        .catch(() => {})
         .then(() => {
-          console.log('Scan started...');
-          setIsScanning(true);
-          Animated.loop(
-            Animated.sequence([
-              Animated.timing(scaleAnim, {
-                toValue: 1,
-                duration: 1500,
-                easing: Easing.inOut(Easing.ease),
-                useNativeDriver: true,
-              }),
-              Animated.timing(scaleAnim, {
-                toValue: 0,
-                duration: 1500,
-                easing: Easing.inOut(Easing.ease),
-                useNativeDriver: true,
-              }),
-            ]),
-          ).start();
-        })
-        .catch(error => {
-          console.error('Scan error:', error);
+          BleManager.scan([], 5, true, {scanMode: 2})
+            .then(() => {
+              console.log('Scan started...');
+              setIsScanning(true);
+              Animated.loop(
+                Animated.sequence([
+                  Animated.timing(scaleAnim, {
+                    toValue: 1,
+                    duration: 1500,
+                    easing: Easing.inOut(Easing.ease),
+                    useNativeDriver: true,
+                  }),
+                  Animated.timing(scaleAnim, {
+                    toValue: 0,
+                    duration: 1500,
+                    easing: Easing.inOut(Easing.ease),
+                    useNativeDriver: true,
+                  }),
+                ]),
+              ).start();
+            })
+            .catch(error => {
+              console.error('Scan error:', error);
+            });
         });
     }
   };
 
   // Function to stop scanning
   const stopScanning = () => {
-    BleManager.stopScan().then(() => {
-      console.log('Scan stopped');
-      setIsScanning(false);
-      scaleAnim.setValue(0);
-    });
+    return BleManager.stopScan()
+      .then(() => {
+        console.log('Scan stopped');
+        setIsScanning(false);
+        scaleAnim.setValue(0);
+      })
+      .catch(() => {});
   };
 
-  // Function to continuously scan
+  // Function to continuously scan with cooldown
   const repeatedScan = () => {
-    startScanning();
-    const scanInterval = setInterval(() => {
-      if (!isScanning) {
-        startScanning();
-      }
-    }, 10000); // Adjust interval to restart scan as needed
+    const SCAN_DURATION = 5000; // 5 seconds
+    const COOLDOWN_DELAY = 3000; // cooldown before restarting
 
-    // Clean up the interval when the component unmounts
-    return () => clearInterval(scanInterval);
+    let timeoutId;
+
+    const cycle = async () => {
+      await stopScanning();
+      startScanning();
+      timeoutId = setTimeout(cycle, SCAN_DURATION + COOLDOWN_DELAY);
+    };
+
+    cycle();
+
+    return () => {
+      clearTimeout(timeoutId);
+      stopScanning();
+    };
   };
 
   const renderDeviceItem = (device, index) => (
