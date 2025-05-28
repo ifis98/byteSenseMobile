@@ -8,7 +8,6 @@ import {
   Switch,
   TouchableOpacity,
   Dimensions,
-  SafeAreaView,
   Alert,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
@@ -75,7 +74,7 @@ const ProfileScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.safeArea}>
       <ScrollView
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}>
@@ -117,7 +116,7 @@ const ProfileScreen = () => {
         {/* Logout Option */}
         {renderOption(logoutIcon, 'Logout', null, handleLogout, false)}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
