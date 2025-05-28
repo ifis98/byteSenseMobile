@@ -6,13 +6,13 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   ScrollView,
   DeviceEventEmitter,
   Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Svg, Path, G, ClipPath, Rect, Defs} from 'react-native-svg';
-import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 
 import {Buffer} from 'buffer';
@@ -871,6 +871,11 @@ const DeviceDataScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {optionsVisible && (
+        <TouchableWithoutFeedback onPress={() => setOptionsVisible(false)}>
+          <View style={styles.overlay} />
+        </TouchableWithoutFeedback>
+      )}
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <LinearGradient
           colors={['#0f3d3e', '#232323']}
@@ -886,7 +891,7 @@ const DeviceDataScreen = () => {
             <TouchableOpacity
               style={styles.optionsButton}
               onPress={() => setOptionsVisible(!optionsVisible)}>
-              <Feather name="settings" size={20} color="#27FFE9" />
+              <Text style={styles.settingsText}>Settings</Text>
             </TouchableOpacity>
             {optionsVisible && (
               <View style={styles.dropdownMenu}>
@@ -977,10 +982,10 @@ const DeviceDataScreen = () => {
             </View>
           </LinearGradient>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
+            {/* <TouchableOpacity style={styles.button}>
               {calibrate()}
               <Text style={styles.buttonTextCalibrate}>Calibrate</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {dfuStatus ? (
               <View style={styles.dfuStatusContainer}>
                 <Text style={styles.dfuStatusText}>{dfuStatus}</Text>
@@ -1215,6 +1220,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
     // lineHeight: 12,
+  },
+  settingsText: {
+    color: '#27FFE9',
+    fontFamily: 'Ubuntu',
+    fontSize: 16,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 90,
   },
   optionsButton: {
     position: 'absolute',
