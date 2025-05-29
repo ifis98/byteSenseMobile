@@ -307,11 +307,11 @@ const DeviceDataScreen = () => {
     }
   };
 
-  const connectToDevice = deviceId => {
-    BleManager.connect(deviceId)
-      .then(() => {
-        console.log(`Connected to ${deviceId}`);
-        setIsConnected(true);
+const connectToDevice = deviceId => {
+  BleManager.connect(deviceId)
+    .then(() => {
+      console.log(`Connected to ${deviceId}`);
+      setIsConnected(true);
 
         // Discover services and characteristics
         discoverServicesAndCharacteristics(deviceId)
@@ -319,7 +319,19 @@ const DeviceDataScreen = () => {
       .catch(error => {
         console.error('Error connecting to device:', error);
       });
-  };
+};
+
+const disconnectDevice = async () => {
+  if (deviceRef.current) {
+    try {
+      await BleManager.disconnect(deviceRef.current.id);
+      setIsConnected(false);
+      console.log('Device disconnected');
+    } catch (error) {
+      console.error('Error disconnecting:', error);
+    }
+  }
+};
 
   const discoverServicesAndCharacteristics = deviceId => {
     BleManager.retrieveServices(deviceId)
@@ -890,6 +902,7 @@ const DeviceDataScreen = () => {
             style={styles.deviceInfoContainer}>
             <TouchableOpacity
               style={styles.optionsButton}
+              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
               onPress={() => setOptionsVisible(!optionsVisible)}>
               <Text style={styles.settingsText}>Settings</Text>
             </TouchableOpacity>
@@ -902,7 +915,10 @@ const DeviceDataScreen = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.dropdownItem}
-                  onPress={() => navigation.navigate('ProfileScreen')}>
+                  onPress={() => {
+                    disconnectDevice();
+                    navigation.navigate('ProfileScreen');
+                  }}>
                   <Text style={styles.buttonText}>Disconnect</Text>
                 </TouchableOpacity>
               </View>
@@ -1234,7 +1250,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    padding: 4,
+    padding: 10,
   },
   dropdownMenu: {
     position: 'absolute',
