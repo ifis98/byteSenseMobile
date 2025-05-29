@@ -42,6 +42,7 @@ import dentalTooth from '../assets/dental-tooth.png';
 import dentalCare from '../assets/dental-care.png';
 import upAroorw from '../assets/upAroorw.png';
 import downArrow from '../assets/downArrow.png';
+import rightArrow from '../assets/CaretRight.png';
 import action from "../assets/action.png"
 import GraphComponent from '../components/GraphComponent';
 import CustomGraph from '../components/CustomGraph';
@@ -316,6 +317,8 @@ const SplashScreen = () => {
     score === '--' ? null : score,
   );
 
+  console.log(selectedDateIndex)
+
   return (
     <LinearGradient
       colors={['#232323', '#232323', '#232323']}
@@ -372,52 +375,74 @@ const SplashScreen = () => {
 
 
         {score !== '--' && (
-        <LinearGradient
-          colors={[byteScoreFeedback.color, byteScoreFeedback.color]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.feedbackContainer}
-        >
-          <View style={styles.statisItemView}>
+          <LinearGradient
+            colors={[byteScoreFeedback.color, byteScoreFeedback.color]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.feedbackContainer}
+          >
+            <View style={styles.statisItemView}>
 
-            <View style={{ flex: 1, marginTop: 10 }}>
-              <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingTop: 20 }}>
-                <View style={styles.statisticIconView}>
-                  <Text style={styles.statisticIconText}>{byteScoreFeedback.icon}</Text>
+              <View style={{ flex: 1, marginTop: 10 }}>
+                <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingTop: 20 }}>
+                  <View style={styles.statisticIconView}>
+                    <Text style={styles.statisticIconText}>{byteScoreFeedback.icon}</Text>
+                  </View>
+                  <Text
+                    style={{
+                      color: "white",
+                      paddingLeft: 10,
+                      fontSize: 14,
+                      fontFamily: "Ubuntu",
+                      fontWeight: 500
+                    }}
+                  >
+                    {byteScoreFeedback.title}
+                  </Text>
                 </View>
+
                 <Text
                   style={{
-                    color: "white",
-                    paddingLeft: 10,
+                    width: "95%",
+                    color: "#fff",
                     fontSize: 14,
+                    paddingLeft: 20,
                     fontFamily: "Ubuntu",
-                    fontWeight: 500
+                    fontWeight: "400",
+                    lineHeight: 20,
+                    marginTop: 5,
+                    marginBottom: 10,
                   }}
                 >
-                  {byteScoreFeedback.title}
+                  {byteScoreFeedback.description}
                 </Text>
               </View>
-
-              <Text
-                style={{
-                  width: "95%",
-                  color: "#fff",
-                  fontSize: 14,
-                  paddingLeft: 20,
-                  fontFamily: "Ubuntu",
-                  fontWeight: "400",
-                  lineHeight: 20,
-                  marginTop: 5,
-                  marginBottom: 10,
-                }}
-              >
-                {byteScoreFeedback.description}
-              </Text>
             </View>
-          </View>
-        </LinearGradient>
+          </LinearGradient>
         )}
+        <LinearGradient  // Sleep Insights Screen
+          colors={['#2D2D2D', '#991616', '#991616', '#991616', '#2D2D2D']}
+          locations={[0.0, 0.35, 0.5, 0.65, 1.0]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{
+            flex: 1,
+            marginTop: 26,
+            marginHorizontal: 18,
+            height: 92,
+            borderRadius: 4,
+            overflow: 'hidden',
+            position: 'relative',
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("SleepInsightsScreen", { title: "Wed, May 28" })}>
+            <Image
+              source={rightArrow}
+              style={{ width: 15, height: 15, alignSelf: "flex-end", marginTop: 10, marginRight: 10 }}
+            />
+          </TouchableOpacity>
 
+        </LinearGradient>
 
         {/* <LinearGradient  // Your Action Focus hidden
           colors={['#2D2D2D', '#991616', '#991616', '#991616', '#2D2D2D']}
@@ -608,7 +633,7 @@ const SplashScreen = () => {
                 </TouchableOpacity>
               </View>
               <View style={styles.calendarGrid}>
-                {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => (
+                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
                   <Text key={d} style={styles.calendarHeaderText}>{d}</Text>
                 ))}
                 {calendarDays.map((d, idx) => {

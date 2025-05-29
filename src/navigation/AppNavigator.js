@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Image} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -24,7 +24,7 @@ import DevicesFoundScreen from '../screens/DevicesFound';
 import DeviceFoundScreen from '../screens/DeviceFoundScreen';
 import DeviceDataScreen from '../screens/DeviceDataScreen';
 import AppleHealth from '../screens/AppleHealth'; // Import the AppleHealth screen
-
+import SleepInsightsScreen from '../screens/SleepInsightsScreen';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -44,10 +44,10 @@ const HomeTabs = () => {
         name="Tab1"
         component={HomeScreen} // Replace with actual screen components
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={focused ? chartred : ChartBarGrey}
-              style={{width: 24, height: 24, resizeMode: 'contain'}}
+              style={{ width: 24, height: 24, resizeMode: 'contain' }}
             />
           ),
         }}
@@ -56,10 +56,10 @@ const HomeTabs = () => {
         name="Tab2"
         component={ProfileScreen} // Replace with actual screen components
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={focused ? squrefourredsqurefourred : SquaresFourgray}
-              style={{width: 24, height: 24, resizeMode: 'contain'}}
+              style={{ width: 24, height: 24, resizeMode: 'contain' }}
             />
           ),
         }}
@@ -107,62 +107,67 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="HomeTabs"
           component={HomeTabs} // This will be the bottom tab navigator
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Registration"
           component={Registration}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="ScanningForDeviceScreen"
           component={DevicesFoundScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="ObserverScreen"
           component={ObserverScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="AddDeviceScreen"
           component={AddDeviceScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="DevicesFoundScreen"
           component={DevicesFoundScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="DevicesFoundScreenMain"
           component={DeviceFoundScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="DeviceDataScreen"
           component={DeviceDataScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="AddObserver"
           component={AddObserver}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="ProfileScreen"
           component={ProfileScreen}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SleepInsightsScreen"
+          component={SleepInsightsScreen}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
