@@ -35,6 +35,7 @@ const DevicesFoundScreen = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [bleInitialized, setBleInitialized] = useState(false);
   const [permissionsGranted, setPermissionsGranted] = useState(false);
+  const scanTimeoutRef = useRef(null);
 
   const requestPermissions = async () => {
     if (Platform.OS === 'android') {
@@ -165,26 +166,30 @@ const DevicesFoundScreen = () => {
     const SCAN_DURATION = 5000; // 5 seconds
     const COOLDOWN_DELAY = 3000; // cooldown before restarting
 
-    let timeoutId;
-
     const cycle = async () => {
       await stopScanning();
       startScanning();
-      timeoutId = setTimeout(cycle, SCAN_DURATION + COOLDOWN_DELAY);
+      scanTimeoutRef.current = setTimeout(cycle, SCAN_DURATION + COOLDOWN_DELAY);
     };
 
     cycle();
 
     return () => {
-      clearTimeout(timeoutId);
+      clearTimeout(scanTimeoutRef.current);
       stopScanning();
     };
+  };
+
+  const cleanupScan = () => {
+    clearTimeout(scanTimeoutRef.current);
+    stopScanning();
   };
 
   const renderDeviceItem = (device, index) => (
     <TouchableOpacity
       onPress={async () => {
         try {
+          cleanupScan();
           await AsyncStorage.setItem('selectedDevice', JSON.stringify(device));
           console.log('Device saved:', device);
           navigation.navigate('DeviceDataScreen');
