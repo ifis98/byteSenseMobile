@@ -6,10 +6,9 @@ const SleepHypnogram = ({ summary }) => (
     {/* Sleep Stage Title & Subtitle */}
     <Text style={styles.stageTitle}>Sleep Stage</Text>
     <Text style={styles.stageSubtitle}>7h55m <Text style={styles.timeInBed}>time in bed</Text></Text>
-
-    <View style={styles.legendGrid}>
+    {/* <View style={styles.legendGrid}>
       <View style={styles.legendRowGrid}>
-        {/* AWAKE */}
+     
         <View style={styles.legendColGrid}>
           <View style={styles.inlineRow}>
             <View style={[styles.legendBox, styles.legendAwake]} />
@@ -17,7 +16,7 @@ const SleepHypnogram = ({ summary }) => (
           </View>
           <Text style={styles.legendMeta}>{summary.awake}</Text>
         </View>
-        {/* LIGHT SLEEP */}
+      
         <View style={styles.legendColGrid}>
           <View style={styles.inlineRow}>
             <View style={[styles.legendBox, styles.legendLight]} />
@@ -27,7 +26,7 @@ const SleepHypnogram = ({ summary }) => (
         </View>
       </View>
       <View style={styles.legendRowGrid}>
-        {/* REM SLEEP */}
+
         <View style={styles.legendColGrid}>
           <View style={styles.inlineRow}>
             <View style={[styles.legendBox, styles.legendRem]} />
@@ -35,7 +34,7 @@ const SleepHypnogram = ({ summary }) => (
           </View>
           <Text style={styles.legendMeta}>{summary.rem}</Text>
         </View>
-        {/* DEEP SLEEP */}
+ 
         <View style={styles.legendColGrid}>
           <View style={styles.inlineRow}>
             <View style={[styles.legendBox, styles.legendDeep]} />
@@ -44,7 +43,7 @@ const SleepHypnogram = ({ summary }) => (
           <Text style={styles.legendMeta}>{summary.deep}</Text>
         </View>
       </View>
-    </View>
+    </View> */}
     <View style={{ height: 60 }} />
   </View>
 );
