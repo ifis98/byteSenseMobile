@@ -884,6 +884,23 @@ const disconnectDevice = async () => {
   return (
     <SafeAreaView style={styles.container}>
       {optionsVisible && (
+        <View style={styles.dropdownMenu}>
+          <TouchableOpacity
+            style={styles.dropdownItem}
+            onPress={handleDFUUpdate}>
+            <Text style={styles.buttonText}>Update Firmware</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.dropdownItem}
+            onPress={() => {
+              disconnectDevice();
+              navigation.navigate('ProfileScreen');
+            }}>
+            <Text style={styles.buttonText}>Disconnect</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      {optionsVisible && (
         <TouchableWithoutFeedback onPress={() => setOptionsVisible(false)}>
           <View style={styles.overlay} />
         </TouchableWithoutFeedback>
@@ -902,27 +919,10 @@ const disconnectDevice = async () => {
             style={styles.deviceInfoContainer}>
             <TouchableOpacity
               style={styles.optionsButton}
-              hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+              activeOpacity={0.7}
               onPress={() => setOptionsVisible(!optionsVisible)}>
               <Text style={styles.settingsText}>Settings</Text>
             </TouchableOpacity>
-            {optionsVisible && (
-              <View style={styles.dropdownMenu}>
-                <TouchableOpacity
-                  style={styles.dropdownItem}
-                  onPress={handleDFUUpdate}>
-                  <Text style={styles.buttonText}>Update Firmware</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.dropdownItem}
-                  onPress={() => {
-                    disconnectDevice();
-                    navigation.navigate('ProfileScreen');
-                  }}>
-                  <Text style={styles.buttonText}>Disconnect</Text>
-                </TouchableOpacity>
-              </View>
-            )}
             <View style={styles.deviceInfoContainerImage}>
               <View style={styles.imageBackground}>
                 <Image source={teethLogo} style={styles.teethlogo} />
@@ -1250,7 +1250,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    padding: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   dropdownMenu: {
     position: 'absolute',
