@@ -130,6 +130,18 @@ const DeviceDataScreen = () => {
   const [xAxisData, setXAxisData] = useState(['0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0']);
   const [optionsVisible, setOptionsVisible] = useState(false);
   const [settingsBtnLayout, setSettingsBtnLayout] = useState(null);
+  const settingsBtnRef = useRef(null);
+
+  const toggleOptionsMenu = () => {
+    if (settingsBtnRef.current && settingsBtnRef.current.measureInWindow) {
+      settingsBtnRef.current.measureInWindow((x, y, width, height) => {
+        setSettingsBtnLayout({y, height});
+        setOptionsVisible(prev => !prev);
+      });
+    } else {
+      setOptionsVisible(prev => !prev);
+    }
+  };
   // const [graphData, setGraphData] = useState([
   //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
   //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
@@ -925,10 +937,10 @@ const disconnectDevice = async () => {
             end={{x: 1, y: 0}}
             style={styles.deviceInfoContainer}>
             <TouchableOpacity
+              ref={settingsBtnRef}
               style={styles.optionsButton}
               activeOpacity={0.7}
-              onLayout={e => setSettingsBtnLayout(e.nativeEvent.layout)}
-              onPress={() => setOptionsVisible(!optionsVisible)}>
+              onPress={toggleOptionsMenu}>
               <Text style={styles.settingsText}>Settings</Text>
             </TouchableOpacity>
             <View style={styles.deviceInfoContainerImage}>
