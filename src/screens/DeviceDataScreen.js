@@ -20,7 +20,7 @@ import Header from './header'; // Assuming you have a header component
 import batteryIcon from '../assets/battery.png'; // Battery icon image path
 import connectedIcon from '../assets/CheckCircle.png'; // Connected icon image path
 import teethLogo from '../assets/night-guard.png'; // Tooth logo image
-import BleManager from 'react-native-ble-manager';
+import bleManager from '../utils/bleManager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {findRealTimeHR, findRealTimeResp} from './HRCalc';
 import GraphComponentMultiple from '../components/GraphComponentMultiple';
@@ -308,7 +308,7 @@ const DeviceDataScreen = () => {
   };
 
 const connectToDevice = deviceId => {
-  BleManager.connect(deviceId)
+  bleManager.connect(deviceId)
     .then(() => {
       console.log(`Connected to ${deviceId}`);
       setIsConnected(true);
@@ -324,7 +324,7 @@ const connectToDevice = deviceId => {
 const disconnectDevice = async () => {
   if (deviceRef.current) {
     try {
-      await BleManager.disconnect(deviceRef.current.id);
+      await bleManager.disconnect(deviceRef.current.id);
       setIsConnected(false);
       console.log('Device disconnected');
     } catch (error) {
@@ -334,7 +334,7 @@ const disconnectDevice = async () => {
 };
 
   const discoverServicesAndCharacteristics = deviceId => {
-    BleManager.retrieveServices(deviceId)
+    bleManager.retrieveServices(deviceId)
       .then(peripheralInfo => {
         //console.log('Peripheral info:', peripheralInfo);
 
@@ -354,7 +354,7 @@ const disconnectDevice = async () => {
   };
 
   const monitorDevice = (deviceId, serviceUUID, characteristicUUID) => {
-    BleManager.startNotification(deviceId, serviceUUID, characteristicUUID)
+    bleManager.startNotification(deviceId, serviceUUID, characteristicUUID)
       .then(() => {
         console.log(`Started notification on ${characteristicUUID}`);
 
@@ -457,7 +457,7 @@ const disconnectDevice = async () => {
       console.log(deviceRef.current)
       if (deviceRef.current) {
         let processedMessage = Buffer.from(message+'\n');
-        BleManager.write(
+        bleManager.write(
           deviceRef.current.id,
           SERVICEUUID,
           characteristicWUUID,
@@ -810,7 +810,7 @@ const disconnectDevice = async () => {
         return;
       }
       try {
-        await BleManager.disconnect(deviceRef.current.id);
+        await bleManager.disconnect(deviceRef.current.id);
         console.log('Disconnected after DFU command');
       } catch (error) {
         console.error('Error disconnecting:', error);
@@ -835,14 +835,14 @@ const disconnectDevice = async () => {
         if (deviceName && deviceName.includes('DfuTarg')) {
           dfuTargetDevice = peripheral;
           console.log('Found DFU target device:', peripheral);
-          BleManager.stopScan();
+          bleManager.stopScan();
           scanListener.remove();
           proceedDFU(dfuTargetDevice.id);
         }
       }
     );
   
-    BleManager.scan([], 10, true)
+    bleManager.scan([], 10, true)
       .then(() => {
         console.log('Started scanning for DFU target');
       })
@@ -853,7 +853,7 @@ const disconnectDevice = async () => {
   
     // In case the DFU target is not found, stop scanning after 10 seconds.
     setTimeout(() => {
-      BleManager.stopScan();
+      bleManager.stopScan();
       if (!dfuTargetDevice) {
         console.error('DFU target not found');
         setDfuStatus('DFU target not found');

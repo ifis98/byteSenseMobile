@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, FlatList, PermissionsAndroid, Platform } from 'react-native';
-import BleManager from 'react-native-ble-manager';
+import bleManager from '../utils/bleManager';
 import { NativeEventEmitter, NativeModules } from 'react-native';
 
 const BleManagerModule = NativeModules.BleManager;
@@ -38,7 +38,7 @@ const BluetoothScanner = () => {
     requestPermissions();
 
     // Start BleManager
-    BleManager.start({ showAlert: false }).then(() => {
+    bleManager.start({ showAlert: false }).then(() => {
       console.log('Bluetooth module initialized');
     });
 
@@ -58,7 +58,7 @@ const BluetoothScanner = () => {
 
   const startScanning = () => {
     if (!isScanning) {
-      BleManager.scan([], 30, true)  // Scan for 30 seconds
+      bleManager.scan([], 30, true)  // Scan for 30 seconds
         .then(() => {
           console.log('Scan started...');
           setIsScanning(true);
@@ -69,7 +69,7 @@ const BluetoothScanner = () => {
 
       // Stop scanning after 30 seconds
       setTimeout(() => {
-        BleManager.stopScan().then(() => {
+        bleManager.stopScan().then(() => {
           console.log('Scan stopped');
           setIsScanning(false);
         });
