@@ -129,6 +129,7 @@ const DeviceDataScreen = () => {
   ]);
   const [xAxisData, setXAxisData] = useState(['0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0']);
   const [optionsVisible, setOptionsVisible] = useState(false);
+  const [settingsBtnLayout, setSettingsBtnLayout] = useState(null);
   // const [graphData, setGraphData] = useState([
   //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
   //   { data: [0, 50, 100, 200, 250, 150, 100], color: 'rgba(255, 139, 2, 1)' },
@@ -884,7 +885,13 @@ const disconnectDevice = async () => {
   return (
     <SafeAreaView style={styles.container}>
       {optionsVisible && (
-        <View style={styles.dropdownMenu}>
+        <View
+          style={[
+            styles.dropdownMenu,
+            settingsBtnLayout && {
+              top: settingsBtnLayout.y + settingsBtnLayout.height + 8,
+            },
+          ]}>
           <TouchableOpacity
             style={styles.dropdownItem}
             onPress={handleDFUUpdate}>
@@ -920,6 +927,7 @@ const disconnectDevice = async () => {
             <TouchableOpacity
               style={styles.optionsButton}
               activeOpacity={0.7}
+              onLayout={e => setSettingsBtnLayout(e.nativeEvent.layout)}
               onPress={() => setOptionsVisible(!optionsVisible)}>
               <Text style={styles.settingsText}>Settings</Text>
             </TouchableOpacity>
@@ -1257,7 +1265,7 @@ const styles = StyleSheet.create({
   },
   dropdownMenu: {
     position: 'absolute',
-    top: 40,
+    top: 0,
     right: 10,
     backgroundColor: '#2B2D2E',
     borderRadius: 8,
