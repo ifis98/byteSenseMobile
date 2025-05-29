@@ -37,10 +37,8 @@ const BluetoothScanner = () => {
     // Request permissions
     requestPermissions();
 
-    // Start BleManager
-    bleManager.start({ showAlert: false }).then(() => {
-      console.log('Bluetooth module initialized');
-    });
+    // The BLE manager is started once when the app launches (see App.js).
+    // Avoid reinitializing it here and proceed directly with scanning.
 
     // Add listener for discovered peripherals
     const discoverListener = bleManagerEmitter.addListener('BleManagerDiscoverPeripheral', (peripheral) => {

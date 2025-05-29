@@ -69,10 +69,9 @@ const DevicesFoundScreen = () => {
   useEffect(() => {
     requestPermissions();
 
-    bleManager.start({showAlert: false}).then(() => {
-      console.log('Bluetooth module initialized');
-      setBleInitialized(true);
-    });
+    // BLE manager is started once in App.js. Simply mark it as
+    // initialized so scanning can begin when permissions are granted.
+    setBleInitialized(true);
 
     const discoverListener = bleManagerEmitter.addListener(
       'BleManagerDiscoverPeripheral',
