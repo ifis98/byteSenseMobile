@@ -14,7 +14,7 @@ import {
   Easing,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import BleManager from 'react-native-ble-manager';
+import bleManager from '../utils/bleManager';
 import {NativeEventEmitter, NativeModules} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -69,7 +69,7 @@ const DevicesFoundScreen = () => {
   useEffect(() => {
     requestPermissions();
 
-    BleManager.start({showAlert: false}).then(() => {
+    bleManager.start({showAlert: false}).then(() => {
       console.log('Bluetooth module initialized');
       setBleInitialized(true);
     });
@@ -119,40 +119,37 @@ const DevicesFoundScreen = () => {
   // Function to initiate scanning
   const startScanning = () => {
     if (!isScanning) {
-      BleManager.stopScan()
-        .catch(() => {})
+      bleManager
+        .scan([], 5, true, {scanMode: 2})
         .then(() => {
-          BleManager.scan([], 5, true, {scanMode: 2})
-            .then(() => {
-              console.log('Scan started...');
-              setIsScanning(true);
-              Animated.loop(
-                Animated.sequence([
-                  Animated.timing(scaleAnim, {
-                    toValue: 1,
-                    duration: 1500,
-                    easing: Easing.inOut(Easing.ease),
-                    useNativeDriver: true,
-                  }),
-                  Animated.timing(scaleAnim, {
-                    toValue: 0,
-                    duration: 1500,
-                    easing: Easing.inOut(Easing.ease),
-                    useNativeDriver: true,
-                  }),
-                ]),
-              ).start();
-            })
-            .catch(error => {
-              console.error('Scan error:', error);
-            });
+          console.log('Scan started...');
+          setIsScanning(true);
+          Animated.loop(
+            Animated.sequence([
+              Animated.timing(scaleAnim, {
+                toValue: 1,
+                duration: 1500,
+                easing: Easing.inOut(Easing.ease),
+                useNativeDriver: true,
+              }),
+              Animated.timing(scaleAnim, {
+                toValue: 0,
+                duration: 1500,
+                easing: Easing.inOut(Easing.ease),
+                useNativeDriver: true,
+              }),
+            ]),
+          ).start();
+        })
+        .catch(error => {
+          console.error('Scan error:', error);
         });
     }
   };
 
   // Function to stop scanning
   const stopScanning = () => {
-    return BleManager.stopScan()
+    return bleManager.stopScan()
       .then(() => {
         console.log('Scan stopped');
         setIsScanning(false);
@@ -166,8 +163,12 @@ const DevicesFoundScreen = () => {
     const SCAN_DURATION = 5000; // 5 seconds
     const COOLDOWN_DELAY = 3000; // cooldown before restarting
 
-    const cycle = async () => {
-      await stopScanning();
+    let cancelled = false;
+
+    const cycle = () => {
+      if (cancelled) {
+        return;
+      }
       startScanning();
       scanTimeoutRef.current = setTimeout(cycle, SCAN_DURATION + COOLDOWN_DELAY);
     };
@@ -175,6 +176,7 @@ const DevicesFoundScreen = () => {
     cycle();
 
     return () => {
+      cancelled = true;
       clearTimeout(scanTimeoutRef.current);
       stopScanning();
     };

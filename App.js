@@ -7,12 +7,12 @@ import { ActivityIndicator } from 'react-native';
 import { ThemeProvider } from './src/context/ThemeContext';
 import { LogBox, StatusBar } from 'react-native';
 import {downloadLatestFirmware} from './src/utils/firmwareManager';
-import BleManager from 'react-native-ble-manager';
+import bleManager from './src/utils/bleManager';
 LogBox.ignoreAllLogs();
 
 const App = () => {
   useEffect(() => {
-    BleManager.start({showAlert: false}).catch(err =>
+    bleManager.start({showAlert: false}).catch(err =>
       console.error('Failed to initialize BLE:', err),
     );
     downloadLatestFirmware().catch(err =>
