@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-// Dummy icon and arrow, replace with your actual assets
-import bedIcon from '../assets/bed.png';         // <--- update with your path
-import rightArrow from '../assets/CaretRight.png'; // <--- update with your path
+import bedIcon from '../assets/bed.png';        
+import rightArrow from '../assets/CaretRight.png'; 
 import moment from 'moment';
 const ByteSleepScoreCard = ({ navigation, selectedDateIndex }) => {
   const date = moment()
