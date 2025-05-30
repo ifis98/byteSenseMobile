@@ -27,17 +27,11 @@ import GraphComponentMultiple from '../components/GraphComponentMultiple';
 import RNFS from 'react-native-fs';
 import Mailer from 'react-native-mail';
 import { NordicDFU, DFUEmitter } from 'react-native-nordic-dfu';
-import io from 'socket.io-client';
-import {backendLink} from '../api/api'
+import {postBiometricData} from '../api/api';
 import {firmwareFilePath} from '../utils/firmwareManager';
 
 
 
-const socket = io(backendLink.replace(/\/$/, ''), {
-  transports: ['websocket'],
-  path: '/socket.io',
-  timeout: 10000,
-});
 
 const MySvgComponent = () => (
   <Svg
@@ -217,21 +211,6 @@ const DeviceDataScreen = () => {
     };
 
     getDeviceInfo();
-
-    socket.on('connect', () => console.log('Socket connected:', socket.id));
-    socket.on('connect_error', err =>
-      console.log('Socket connection error:', err.message),
-    );
-    socket.on('disconnect', reason =>
-      console.log('Socket disconnected:', reason),
-    );
-    socket.on('biometric data updated', () =>
-      console.log('Server acknowledged biometric data'),
-    );
-  
-    return () => {
-      socket.disconnect();
-    };
   }, []);
 
 
@@ -290,23 +269,12 @@ const DeviceDataScreen = () => {
     }
   };
 
-  const emitBiometricData = payload => {
-    const send = () => {
-      socket.emit('biometricData', payload);
-      console.log(
-        'Sent biometricData for user:',
-        payload.user,
-        'socket connected:',
-        socket.connected,
-      );
-    };
-
-    if (socket.connected) {
-      send();
-    } else {
-      console.log('Socket not connected. Attempting to connect...');
-      socket.connect();
-      socket.once('connect', send);
+  const emitBiometricData = async payload => {
+    try {
+      await postBiometricData(payload);
+      console.log('Sent biometricData for user:', payload.user);
+    } catch (err) {
+      console.log('Error sending biometric data:', err);
     }
   };
 
@@ -524,7 +492,7 @@ const disconnectDevice = async () => {
 
         console.log('Sync Ended')
 
-        // Sync ended, send data via email and socket
+        // Sync ended, send data via email and endpoint
         sendSyncedData(syncData.current);
         
       }, 5000);
