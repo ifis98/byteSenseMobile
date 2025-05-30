@@ -42,10 +42,7 @@ const SleepScoreBarChart = ({ data = [], selectedIndex = 0, onSelect }) => {
               <View
                 style={[
                   isSelected ? styles.selectedBarWrapper : styles.barWrapper,
-                  isSelected && {
-                    height: MAX_BAR_HEIGHT,
-                  },
-                  { height: isSelected ? MAX_BAR_HEIGHT : barHeight },
+                  { height: barHeight },
                 ]}
               >
                 <View style={{ height: 28, justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
