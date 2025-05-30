@@ -9,17 +9,28 @@ const GAP = 10;
 
 const SleepScoreBarChart = ({ data = [], selectedIndex = 0, onSelect }) => {
   const scrollRef = useRef(null);
+  const hasInitialScroll = useRef(false);
   const screenWidth = Dimensions.get('window').width;
+
+  const calculateOffset = () => {
+    const contentWidth = data.length * (BAR_WIDTH + GAP);
+    const offset =
+      selectedIndex * (BAR_WIDTH + GAP) - (screenWidth - BAR_WIDTH) / 2;
+    const minOffset = 0;
+    const maxOffset = Math.max(0, contentWidth - screenWidth);
+    return Math.max(minOffset, Math.min(maxOffset, offset));
+  };
 
   useEffect(() => {
     if (scrollRef.current && data.length > 0) {
-      const contentWidth = data.length * (BAR_WIDTH + GAP);
-      const offset =
-        selectedIndex * (BAR_WIDTH + GAP) - (screenWidth - BAR_WIDTH) / 2;
-      const minOffset = 0;
-      const maxOffset = Math.max(0, contentWidth - screenWidth);
-      const clampedOffset = Math.max(minOffset, Math.min(maxOffset, offset));
-      scrollRef.current.scrollTo({ x: clampedOffset, animated: true });
+      const clampedOffset = calculateOffset();
+      scrollRef.current.scrollTo({
+        x: clampedOffset,
+        animated: hasInitialScroll.current,
+      });
+      if (!hasInitialScroll.current) {
+        hasInitialScroll.current = true;
+      }
     }
   }, [selectedIndex, data.length, screenWidth]);
 
