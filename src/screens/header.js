@@ -6,20 +6,18 @@ import backArrow from '../assets/backArrow.png'; // Back arrow image
 
 const { width } = Dimensions.get('window'); // Get screen width
 
-const Header = ({ title = "Sleep Report", showBackArrow = true, onBack }) => {
+const Header = ({ title = "Sleep Report", showBackArrow = true }) => {
   const navigation = useNavigation(); // For handling navigation
 
   return (
     <View style={styles.headerContainer}>
       {/* Back Arrow */}
       {showBackArrow ? (
-        <TouchableOpacity
-          onPress={onBack ? onBack : () => navigation.goBack('')}
-          style={styles.backArrowContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack('')} style={styles.backArrowContainer}>
           <Image source={backArrow} style={styles.backArrow} />
         </TouchableOpacity>
       ) : (
-        <View style={styles.backArrowContainer} /> // Empty view for spacing
+        <View style={styles.backArrowContainer} />  // Empty view for spacing
       )}
 
       {/* Title, centered */}
