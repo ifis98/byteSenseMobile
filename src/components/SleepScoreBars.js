@@ -1,5 +1,13 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, Platform, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 
 const MAX_SCORE = 100;
 const MAX_BAR_HEIGHT = 183;
@@ -8,74 +16,97 @@ const GAP = 10;
 
 
 const SleepScoreBarChart = ({ data = [], selectedIndex = 0, onSelect }) => {
-  const scrollRef = useRef(null);
+  const listRef = useRef(null);
+  const initialScrollDone = useRef(false);
   const screenWidth = Dimensions.get('window').width;
 
-  useEffect(() => {
-    if (scrollRef.current && data.length > 0) {
-      const contentWidth = data.length * (BAR_WIDTH + GAP);
-      const offset = (selectedIndex + 1) * (BAR_WIDTH + GAP) - screenWidth;
-      const minOffset = 0;
-      const maxOffset = Math.max(0, contentWidth - screenWidth);
-      const clampedOffset = Math.max(minOffset, Math.min(maxOffset, offset));
-      scrollRef.current.scrollTo({ x: clampedOffset, animated: true });
+  const paddingHorizontal = (screenWidth - BAR_WIDTH) / 2;
+
+  const getItemLayout = (_, index) => ({
+    length: BAR_WIDTH + GAP,
+    offset: (BAR_WIDTH + GAP) * index,
+    index,
+  });
+
+  const scrollToSelected = (animated = false) => {
+    if (!listRef.current) {
+      return;
     }
-  }, [selectedIndex, data.length, screenWidth]);
+    try {
+      listRef.current.scrollToIndex({
+        index: selectedIndex,
+        animated,
+        viewPosition: 0.5,
+      });
+    } catch (e) {
+      const offset =
+        selectedIndex * (BAR_WIDTH + GAP) - (screenWidth - BAR_WIDTH) / 2;
+      listRef.current.scrollToOffset({
+        offset: Math.max(0, offset),
+        animated,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (data.length > 0 && !initialScrollDone.current) {
+      const timer = setTimeout(() => {
+        scrollToSelected(false);
+        initialScrollDone.current = true;
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [data.length, selectedIndex, screenWidth]);
+
+  const renderItem = ({ item, index }) => {
+    const barHeight = Math.max(32, (item.score / MAX_SCORE) * MAX_BAR_HEIGHT);
+    const isSelected = index === selectedIndex;
+
+    return (
+      <TouchableOpacity onPress={() => onSelect && onSelect(index)} style={styles.barColumn}>
+        <View
+          style={[isSelected ? styles.selectedBarWrapper : styles.barWrapper, { height: barHeight }]}
+        >
+          <View style={{ height: 28, justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
+            <Text style={isSelected ? styles.selectedScoreText : styles.scoreText}>{item.score}</Text>
+          </View>
+          <View style={{ flex: 1, justifyContent: 'flex-end', zIndex: 2 }}>
+            {isSelected ? (
+              <View style={[styles.selectedBar, { height: barHeight - 28 }]} />
+            ) : (
+              <View style={[styles.bar, { height: barHeight - 28 }]} />
+            )}
+          </View>
+        </View>
+        <Text
+          style={[
+            styles.dayText,
+            isSelected && styles.selectedDayText,
+            !isSelected && (index === selectedIndex - 1 || index === selectedIndex + 1) && { opacity: 0.5 },
+            !isSelected && index !== selectedIndex - 1 && index !== selectedIndex + 1 && { opacity: 0.3 },
+          ]}
+        >
+          {item.day}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        ref={scrollRef}
+      <FlatList
+        ref={listRef}
+        data={data}
         horizontal
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.barGraphContainer}
+        contentContainerStyle={[styles.barGraphContainer, { paddingHorizontal }]}
+        getItemLayout={getItemLayout}
         snapToInterval={BAR_WIDTH + GAP}
         decelerationRate="fast"
-      >
-        {data.map((item, idx) => {
-          const barHeight = Math.max(32, (item.score / MAX_SCORE) * MAX_BAR_HEIGHT);
-          const isSelected = idx === selectedIndex;
-
-          return (
-            <TouchableOpacity onPress={() => onSelect && onSelect(idx)} style={styles.barColumn} key={idx}>
-              <View
-                style={[
-                  isSelected ? styles.selectedBarWrapper : styles.barWrapper,
-                  isSelected && {
-                    height: MAX_BAR_HEIGHT,
-                  },
-                  { height: isSelected ? MAX_BAR_HEIGHT : barHeight },
-                ]}
-              >
-                <View style={{ height: 28, justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
-                  <Text style={isSelected ? styles.selectedScoreText : styles.scoreText}>
-                    {item.score}
-                  </Text>
-                </View>
-                <View style={{ flex: 1, justifyContent: 'flex-end', zIndex: 2 }}>
-                  {isSelected ? (
-                    <View style={[styles.selectedBar, { height: barHeight - 28 }]} />
-                  ) : (
-                    <View style={[styles.bar, { height: barHeight - 28 }]} />
-                  )}
-                </View>
-              </View>
-              {/* Day label */}
-              <Text
-                style={[
-                  styles.dayText,
-                  isSelected && styles.selectedDayText,
-                  (!isSelected && (idx === selectedIndex - 1 || idx === selectedIndex + 1)) && { opacity: 0.5 },
-                  (!isSelected && idx !== selectedIndex - 1 && idx !== selectedIndex + 1) && { opacity: 0.3 },
-                ]}
-              >
-                {item.day}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView >
-    </View >
+      />
+    </View>
   );
 };
 

@@ -83,6 +83,24 @@ const SleepInsightsPage = ({ route, navigation }) => {
     });
   }, [selectedData]);
 
+  useEffect(() => {
+    if (selectedData) {
+      console.log('Selected day scores', {
+        date: selectedData.Date,
+        byteScore: Math.round(toNumber(selectedData.byteScore) || 0),
+        recoveryDepthScore: Math.round(
+          toNumber(selectedData.recoveryDepthScore) || 0,
+        ),
+        stressReliefScore: Math.round(
+          toNumber(selectedData.recoveryTrendScore) || 0,
+        ),
+        relaxationScore: Math.round(
+          toNumber(selectedData.stressLoadScore) || 0,
+        ),
+      });
+    }
+  }, [selectedData]);
+
   const totalSleepMinutes = useMemo(() => {
     if (!selectedData?.activities) return 0;
     return selectedData.activities
@@ -90,9 +108,10 @@ const SleepInsightsPage = ({ route, navigation }) => {
       .reduce((sum, a) => sum + (a.duration || 0), 0);
   }, [selectedData]);
 
-  const hours = Math.floor(totalSleepMinutes / 60);
-  const mins = totalSleepMinutes % 60;
-  const timeInBed = totalSleepMinutes ? `${hours}h${mins}m` : '--';
+  const roundedSleepMinutes = Math.round(totalSleepMinutes);
+  const hours = Math.floor(roundedSleepMinutes / 60);
+  const mins = roundedSleepMinutes % 60;
+  const timeInBed = roundedSleepMinutes ? `${hours}h${mins}m` : '--';
 
   const title = moment(selectedData?.Date || date).format('ddd, MMM DD');
 
