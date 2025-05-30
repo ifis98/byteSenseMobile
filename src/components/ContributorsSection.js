@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import rightArrow from '../assets/CaretRight.png';
 
-const ContributorCard = ({ title, status, statusColor, value, barColor }) => (
-  <TouchableOpacity activeOpacity={0.9} style={styles.card}>
+const ContributorCard = ({ title, status, statusColor, value, barColor, onPress }) => (
+  <TouchableOpacity activeOpacity={0.9} style={styles.card} onPress={onPress}>
     <View style={styles.cardHeader}>
       <Text style={styles.cardTitle}>{title}</Text>
       <View style={[styles.statusBadge, { backgroundColor: statusColor + '22' }]}>
@@ -22,7 +22,7 @@ const ContributorCard = ({ title, status, statusColor, value, barColor }) => (
               {
                 right: '50%',
                 width: `${(0.5 - value) * 100}%`,
-                backgroundColor: '#FD3637',
+                backgroundColor: barColor,
               },
             ]}
           />
@@ -36,7 +36,7 @@ const ContributorCard = ({ title, status, statusColor, value, barColor }) => (
               {
                 left: '50%',
                 width: `${(value - 0.5) * 100}%`,
-                backgroundColor: '#13DF74',
+                backgroundColor: barColor,
               },
             ]}
           />
@@ -47,12 +47,12 @@ const ContributorCard = ({ title, status, statusColor, value, barColor }) => (
   </TouchableOpacity>
 );
 
-const ContributorsSection = ({ contributors = [] }) => (
+const ContributorsSection = ({ contributors = [], onPress }) => (
   <View style={styles.section}>
     <Text style={styles.sectionTitle}>Contributors</Text>
     <View>
       {contributors.map((c) => (
-        <ContributorCard key={c.key} {...c} />
+        <ContributorCard key={c.key} {...c} onPress={() => onPress && onPress(c.title)} />
       ))}
     </View>
   </View>

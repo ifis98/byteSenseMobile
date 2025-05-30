@@ -435,7 +435,14 @@ const SplashScreen = () => {
             position: 'relative',
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("SleepInsightsScreen", { title: "Wed, May 28" })}>
+          <TouchableOpacity
+            onPress={() => {
+              const date = moment()
+                .subtract(selectedDateIndex + 1, "days")
+                .format("YYYY-MM-DD");
+              navigation.navigate("SleepInsightsScreen", { date });
+            }}
+          >
             <Image
               source={rightArrow}
               style={{ width: 15, height: 15, alignSelf: "flex-end", marginTop: 10, marginRight: 10 }}

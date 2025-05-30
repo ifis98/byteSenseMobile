@@ -1,45 +1,101 @@
-import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet, StatusBar, Image, ScrollView } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+import { toNumber } from '../utils/numberUtils';
 import Header from './header';
-import redLineVector from "../assets/redLineVector.png"
-import SleepScoreBars from '../components/SleepScoreBars'
+import redLineVector from '../assets/redLineVector.png';
+import SleepScoreBars from '../components/SleepScoreBars';
 import ContributorsSection from '../components/ContributorsSection';
 import SleepHypnogram from '../components/SleepHypnogram';
 
-//mock data
-const contributors = [
-  { key: 'recovery', title: 'Recovery Depth Score', status: 'Optimal', statusColor: '#13DF74', value: 0.95, barColor: '#13DF74' },
-  { key: 'stress', title: 'Stress Relief Score', status: 'Good', statusColor: '#49D365', value: 0.72, barColor: '#13DF74' },
-  { key: 'relaxation', title: 'Relaxation Score', status: 'Fair', statusColor: '#FDB438', value: 0.22, barColor: '#FDB438' },
-];
-
-const sleepStagesData = [
-  // This should be more granular for real data (per 5min/10min/epoch)
-  // Use 40-50 items for a real night.
-  { stage: 'awake' }, { stage: 'awake' }, { stage: 'light' }, { stage: 'light' }, { stage: 'deep' },
-  { stage: 'rem' }, { stage: 'light' }, { stage: 'light' }, { stage: 'deep' }, { stage: 'rem' },
-  // ...etc (repeat/mix as real data)
-];
-const sleepSummary = {
-  awake: '29m · 6%',
-  light: '3h10m · 40%',
-  rem: '2h18m · 29%',
-  deep: '1h59m · 25%',
-};
-
-const ByteSleepScore = ({ score = 90 }) => (
+const ByteSleepScore = ({ score }) => (
   <View style={styles.scoreContainer}>
     <Text style={styles.overallText}>OVERALL BYTE SLEEP SCORE</Text>
     <View style={styles.scoreRow}>
-      <Text style={styles.scoreText}>{score}</Text>
+      <Text style={styles.scoreText}>{score ?? '--'}</Text>
       <Text style={styles.outOfText}>/100</Text>
     </View>
   </View>
 );
 
-const SleepInsightsPage = ({ route }) => {
-  const { title = "Sleep Insights" } = route.params || {};
+const getStatus = score => {
+  if (score == null) {
+    return { label: 'Critical', color: '#FD3637' };
+  }
+  if (score >= 80) return { label: 'Optimal', color: '#13DF74' };
+  if (score >= 60) return { label: 'Good', color: '#13DF74' };
+  if (score >= 40) return { label: 'Fair', color: '#FDB438' };
+  if (score >= 20) return { label: 'Poor', color: '#FD8B02' };
+  return { label: 'Critical', color: '#FD3637' };
+};
+
+const SleepInsightsPage = ({ route, navigation }) => {
+  const { date } = route.params || {};
+  const patientData = useSelector(state => state.patientData.data);
+
+  const days = useMemo(() => {
+    if (!patientData?.appData) return [];
+    return [...patientData.appData]
+      .filter(d => d.Date)
+      .sort((a, b) => new Date(a.Date) - new Date(b.Date));
+  }, [patientData]);
+
+  const initialIndex = useMemo(() => {
+    const idx = days.findIndex(d => moment(d.Date).isSame(date, 'day'));
+    return idx === -1 ? days.length - 1 : idx;
+  }, [days, date]);
+
+  const [selectedIndex, setSelectedIndex] = useState(initialIndex);
+
+  useEffect(() => {
+    setSelectedIndex(initialIndex);
+  }, [initialIndex]);
+
+  const selectedData = days[selectedIndex];
+
+  const barData = days.map(d => ({
+    day: moment(d.Date).format('dd').charAt(0),
+    score: Math.round(toNumber(d.byteScore) || 0),
+  }));
+
+  const contributors = useMemo(() => {
+    if (!selectedData) return [];
+    const depth = Math.round(toNumber(selectedData.recoveryDepthScore) || 0);
+    const stress = Math.round(toNumber(selectedData.recoveryTrendScore) || 0);
+    const relax = Math.round(toNumber(selectedData.stressLoadScore) || 0);
+    const arr = [
+      { title: 'Recovery Depth Score', score: depth },
+      { title: 'Stress Relief Score', score: stress },
+      { title: 'Relaxation Score', score: relax },
+    ];
+    return arr.map(item => {
+      const { label, color } = getStatus(item.score);
+      return {
+        key: item.title,
+        title: item.title,
+        status: label,
+        statusColor: color,
+        value: (item.score ?? 0) / 100,
+        barColor: color,
+      };
+    });
+  }, [selectedData]);
+
+  const totalSleepMinutes = useMemo(() => {
+    if (!selectedData?.activities) return 0;
+    return selectedData.activities
+      .filter(a => a.type === 'Sleep')
+      .reduce((sum, a) => sum + (a.duration || 0), 0);
+  }, [selectedData]);
+
+  const hours = Math.floor(totalSleepMinutes / 60);
+  const mins = totalSleepMinutes % 60;
+  const timeInBed = totalSleepMinutes ? `${hours}h${mins}m` : '--';
+
+  const title = moment(selectedData?.Date || date).format('ddd, MMM DD');
+
   return (
     <LinearGradient
       colors={['#2C1012', '#232323', '#232323']}
@@ -54,51 +110,28 @@ const SleepInsightsPage = ({ route }) => {
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-
         <View style={{ marginTop: 10 }} />
-        <ByteSleepScore score={90} date="Wed, May 28" />
+        <ByteSleepScore score={selectedData ? Math.round(toNumber(selectedData.byteScore)) : '--'} />
         <Image source={redLineVector} style={styles.lineImage} />
-        <SleepScoreBars data={[
-          { day: 'S', score: 72 },
-          { day: 'M', score: 89 },
-          { day: 'T', score: 89 },
-          { day: 'W', score: 90, isCurrent: true },
-          { day: 'T', score: 89 },
-          { day: 'F', score: 73 },
-          { day: 'S', score: 77 },
-          { day: 'S', score: 74 },
-          { day: 'M', score: 92 },
-          { day: 'T', score: 87 },
-        ]} />
-        <ContributorsSection contributors={contributors} />
-        <SleepHypnogram
-          data={sleepStagesData}
-          summary={sleepSummary}
-          timeline={['11PM', '3AM', '8AM']}
+        <SleepScoreBars data={barData} selectedIndex={selectedIndex} onSelect={setSelectedIndex} />
+        <ContributorsSection
+          contributors={contributors}
+          onPress={title => navigation.navigate('ContributorScreen', { title })}
         />
+        <SleepHypnogram timeInBed={timeInBed} />
       </ScrollView>
     </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
+  scrollContent: { paddingBottom: 50 },
   scoreContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 32,
     marginHorizontal: 18,
     width: '90%',
-  },
-  dateText: {
-    color: '#A8A9AA',
-    fontSize: 16,
-    fontFamily: 'Ubuntu',
-    marginBottom: 7,
-    letterSpacing: 0.2,
   },
   overallText: {
     color: '#FFF',
