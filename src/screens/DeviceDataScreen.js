@@ -308,7 +308,6 @@ const disconnectDevice = async () => {
       await bleManager.disconnect(deviceRef.current.id);
       setIsConnected(false);
       console.log('Device disconnected');
-      await AsyncStorage.removeItem('selectedDevice');
     } catch (error) {
       console.error('Error disconnecting:', error);
     }
@@ -899,10 +898,7 @@ const disconnectDevice = async () => {
           start={{x: 0, y: 0}}
           end={{x: 0.8, y: 1}}
           style={styles.LinearView}>
-          <Header
-            title="byteGuard"
-            onBack={() => navigation.navigate('ProfileScreen')}
-          />
+          <Header title="byteGuard" />
           <LinearGradient
             colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
             start={{x: 0, y: 0}}
