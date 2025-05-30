@@ -47,6 +47,7 @@ import action from "../assets/action.png"
 import GraphComponent from '../components/GraphComponent';
 import CustomGraph from '../components/CustomGraph';
 import SleepReadiness from '../components/SleepReadiness';
+import ByteSleepScoreCard from '../components/ByteSleepScoreCard'
 import redLine from "../assets/redline.png"
 import moment from 'moment';
 
@@ -420,36 +421,7 @@ const SplashScreen = () => {
             </View>
           </LinearGradient>
         )}
-        <LinearGradient  // Sleep Insights Screen
-          colors={['#2D2D2D', '#991616', '#991616', '#991616', '#2D2D2D']}
-          locations={[0.0, 0.35, 0.5, 0.65, 1.0]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={{
-            flex: 1,
-            marginTop: 12,
-            marginHorizontal: 18,
-            height: 92,
-            borderRadius: 4,
-            overflow: 'hidden',
-            position: 'relative',
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              const date = moment()
-                .subtract(selectedDateIndex + 1, "days")
-                .format("YYYY-MM-DD");
-              navigation.navigate("SleepInsightsScreen", { date });
-            }}
-          >
-            <Image
-              source={rightArrow}
-              style={{ width: 15, height: 15, alignSelf: "flex-end", marginTop: 10, marginRight: 10 }}
-            />
-          </TouchableOpacity>
-
-        </LinearGradient>
+        <ByteSleepScoreCard navigation={navigation} selectedDateIndex={selectedDateIndex} />
 
         {/* <LinearGradient  // Your Action Focus hidden
           colors={['#2D2D2D', '#991616', '#991616', '#991616', '#2D2D2D']}
