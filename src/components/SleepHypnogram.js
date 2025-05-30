@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const SleepHypnogram = ({ summary }) => (
+const SleepHypnogram = ({ summary, timeInBed }) => (
   <View style={styles.container}>
     {/* Sleep Stage Title & Subtitle */}
     <Text style={styles.stageTitle}>Sleep Stage</Text>
-    <Text style={styles.stageSubtitle}>7h55m <Text style={styles.timeInBed}>time in bed</Text></Text>
+    <Text style={styles.stageSubtitle}>{timeInBed} <Text style={styles.timeInBed}>time in bed</Text></Text>
   
     {/* <View style={styles.legendGrid}>
       <View style={styles.legendRowGrid}>

@@ -25,7 +25,7 @@ import DeviceFoundScreen from '../screens/DeviceFoundScreen';
 import DeviceDataScreen from '../screens/DeviceDataScreen';
 import AppleHealth from '../screens/AppleHealth'; // Import the AppleHealth screen
 import SleepInsightsScreen from '../screens/SleepInsightsScreen';
-import RecoveryDepthScoreScreen from '../screens/RecoveryDepthScoreScreen'
+import ContributorScreen from '../screens/ContributorScreen'
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -171,8 +171,8 @@ const AppNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="RecoveryDepthScoreScreen"
-          component={RecoveryDepthScoreScreen}
+          name="ContributorScreen"
+          component={ContributorScreen}
           options={{ headerShown: false }}
         />
 

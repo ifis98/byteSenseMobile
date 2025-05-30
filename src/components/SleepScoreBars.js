@@ -1,45 +1,20 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions, Platform, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 const MAX_SCORE = 100;
 const MAX_BAR_HEIGHT = 183;
 const BAR_WIDTH = 32;
 const GAP = 10;
 
-const getBarGraphPadding = () => {
-  const totalBarWidth = data.length * (BAR_WIDTH + GAP) - GAP;
-  const screenWidth = Dimensions.get('window').width;
-  if (totalBarWidth < screenWidth) {
-    // Center all bars if they fit on screen
-    const sidePad = (screenWidth - totalBarWidth) / 2;
-    return { paddingLeft: sidePad, paddingRight: sidePad };
-  } else {
-    // Center selected bar when scrolled
-    const sidePad = (screenWidth - BAR_WIDTH) / 2;
-    return { paddingLeft: sidePad, paddingRight: sidePad };
-  }
-};
 
-const SleepScoreBarChart = ({ data = [] }) => {
+const SleepScoreBarChart = ({ data = [], selectedIndex = 0, onSelect }) => {
   const scrollRef = useRef(null);
   const screenWidth = Dimensions.get('window').width;
-  const navigation = useNavigation();
-  // Find index of selected/current
-  const selectedIndex = data.findIndex((item) => item.isCurrent);
 
   useEffect(() => {
-    if (
-      scrollRef.current &&
-      selectedIndex !== -1 &&
-      data.length > 0
-    ) {
-      // Calculate the scroll position to center the selected bar
+    if (scrollRef.current && data.length > 0) {
       const contentWidth = data.length * (BAR_WIDTH + GAP);
-      const offset =
-        selectedIndex * (BAR_WIDTH + GAP) +
-        BAR_WIDTH / 2 -
-        screenWidth / 2;
+      const offset = (selectedIndex + 1) * (BAR_WIDTH + GAP) - screenWidth;
       const minOffset = 0;
       const maxOffset = Math.max(0, contentWidth - screenWidth);
       const clampedOffset = Math.max(minOffset, Math.min(maxOffset, offset));
@@ -59,10 +34,10 @@ const SleepScoreBarChart = ({ data = [] }) => {
       >
         {data.map((item, idx) => {
           const barHeight = Math.max(32, (item.score / MAX_SCORE) * MAX_BAR_HEIGHT);
-          const isSelected = !!item.isCurrent;
+          const isSelected = idx === selectedIndex;
 
           return (
-            <TouchableOpacity onPress={() => navigation.navigate("RecoveryDepthScoreScreen")} style={styles.barColumn} key={idx} >
+            <TouchableOpacity onPress={() => onSelect && onSelect(idx)} style={styles.barColumn} key={idx}>
               <View
                 style={[
                   isSelected ? styles.selectedBarWrapper : styles.barWrapper,
