@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -27,6 +27,20 @@ const ProfileScreen = () => {
   const navigation = useNavigation(); // Initialize navigation using the hook
 
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [deviceConnected, setDeviceConnected] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      try {
+        const dev = await AsyncStorage.getItem('selectedDevice');
+        setDeviceConnected(!!dev);
+      } catch (e) {
+        console.error('Error reading device info', e);
+        setDeviceConnected(false);
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const toggleSwitch = () => setIsDarkMode(previousState => !previousState);
 
@@ -46,6 +60,20 @@ const ProfileScreen = () => {
         },
       },
     ]);
+  };
+
+  const handleDevicesPress = async () => {
+    try {
+      const dev = await AsyncStorage.getItem('selectedDevice');
+      if (dev) {
+        navigation.navigate('DeviceDataScreen');
+      } else {
+        navigation.navigate('ScanningForDeviceScreen');
+      }
+    } catch (e) {
+      console.error('Error reading device info', e);
+      navigation.navigate('ScanningForDeviceScreen');
+    }
   };
 
   const renderOption = (icon, title, subtitle, onPress, isSwitch) => (
@@ -89,10 +117,8 @@ const ProfileScreen = () => {
         {renderOption(
           devicesIcon,
           'Devices',
-          '0 Device Connected',
-          () => {
-            navigation.navigate('ScanningForDeviceScreen');
-          },
+          deviceConnected ? '1 Device Connected' : '0 Device Connected',
+          handleDevicesPress,
           false,
         )}
         {renderOption(
