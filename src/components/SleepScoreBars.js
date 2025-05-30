@@ -17,7 +17,7 @@ const GAP = 10;
 
 const SleepScoreBarChart = ({ data = [], selectedIndex = 0, onSelect }) => {
   const listRef = useRef(null);
-  const hasInitialScroll = useRef(false);
+  const initialScrollDone = useRef(false);
   const screenWidth = Dimensions.get('window').width;
 
   const paddingHorizontal = (screenWidth - BAR_WIDTH) / 2;
@@ -28,27 +28,35 @@ const SleepScoreBarChart = ({ data = [], selectedIndex = 0, onSelect }) => {
     index,
   });
 
-  useEffect(() => {
-    if (listRef.current && data.length > 0) {
-      try {
-        listRef.current.scrollToIndex({
-          index: selectedIndex,
-          animated: hasInitialScroll.current,
-          viewPosition: 0.5,
-        });
-      } catch (e) {
-        const offset =
-          selectedIndex * (BAR_WIDTH + GAP) - (screenWidth - BAR_WIDTH) / 2;
-        listRef.current.scrollToOffset({
-          offset: Math.max(0, offset),
-          animated: hasInitialScroll.current,
-        });
-      }
-      if (!hasInitialScroll.current) {
-        hasInitialScroll.current = true;
-      }
+  const scrollToSelected = (animated = false) => {
+    if (!listRef.current) {
+      return;
     }
-  }, [selectedIndex, data.length, screenWidth]);
+    try {
+      listRef.current.scrollToIndex({
+        index: selectedIndex,
+        animated,
+        viewPosition: 0.5,
+      });
+    } catch (e) {
+      const offset =
+        selectedIndex * (BAR_WIDTH + GAP) - (screenWidth - BAR_WIDTH) / 2;
+      listRef.current.scrollToOffset({
+        offset: Math.max(0, offset),
+        animated,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (data.length > 0 && !initialScrollDone.current) {
+      const timer = setTimeout(() => {
+        scrollToSelected(false);
+        initialScrollDone.current = true;
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [data.length, selectedIndex, screenWidth]);
 
   const renderItem = ({ item, index }) => {
     const barHeight = Math.max(32, (item.score / MAX_SCORE) * MAX_BAR_HEIGHT);
