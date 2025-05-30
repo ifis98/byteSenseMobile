@@ -117,4 +117,13 @@ export const fetchPatientData = async () => {
     throw new Error(handleApiError(error));
   }
 };
+
+export const postBiometricData = async (payload) => {
+  try {
+    const response = await api.post('/biometricData', payload);
+    return response.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
 export default api;
