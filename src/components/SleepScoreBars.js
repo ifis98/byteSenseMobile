@@ -14,7 +14,8 @@ const SleepScoreBarChart = ({ data = [], selectedIndex = 0, onSelect }) => {
   useEffect(() => {
     if (scrollRef.current && data.length > 0) {
       const contentWidth = data.length * (BAR_WIDTH + GAP);
-      const offset = (selectedIndex + 1) * (BAR_WIDTH + GAP) - screenWidth;
+      const offset =
+        selectedIndex * (BAR_WIDTH + GAP) - (screenWidth - BAR_WIDTH) / 2;
       const minOffset = 0;
       const maxOffset = Math.max(0, contentWidth - screenWidth);
       const clampedOffset = Math.max(minOffset, Math.min(maxOffset, offset));
