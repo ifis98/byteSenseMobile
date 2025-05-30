@@ -14,7 +14,7 @@ const BAR_HEIGHT = 24;
 const BAR_GAP = 2;
 const LABEL_WIDTH = 54;
 
-const HypnogramChart = ({ data }) => {
+export const HypnogramChart = ({ data }) => {
   const chartWidth = data.length * 13;
   const chartHeight = (BAR_HEIGHT + BAR_GAP) * STAGE_LABELS.length;
   return (

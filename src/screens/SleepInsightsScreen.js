@@ -6,7 +6,7 @@ import redLineVector from "../assets/redLineVector.png"
 import SleepScoreBars from '../components/SleepScoreBars'
 import ContributorsSection from '../components/ContributorsSection';
 import SleepHypnogram from '../components/SleepHypnogram';
-import HypnogramChart from '../components/HypnogramChart'
+
 //mock data
 const contributors = [
   { key: 'recovery', title: 'Recovery Depth Score', status: 'Optimal', statusColor: '#13DF74', value: 0.95, barColor: '#13DF74' },
@@ -42,8 +42,8 @@ const SleepInsightsPage = ({ route }) => {
   const { title = "Sleep Insights" } = route.params || {};
   return (
     <LinearGradient
-      colors={['#2C1012', '#2C1012', '#232323']}
-      locations={[0, 0.2, 1]}
+      colors={['#2C1012', '#232323', '#232323']}
+      locations={[0, 0.4, 1]}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={{ flex: 1 }}

@@ -427,7 +427,7 @@ const SplashScreen = () => {
           end={{ x: 1, y: 0 }}
           style={{
             flex: 1,
-            marginTop: 26,
+            marginTop: 12,
             marginHorizontal: 18,
             height: 92,
             borderRadius: 4,

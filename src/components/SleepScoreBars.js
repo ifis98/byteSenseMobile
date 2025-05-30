@@ -1,15 +1,30 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Platform, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const MAX_SCORE = 100;
 const MAX_BAR_HEIGHT = 183;
 const BAR_WIDTH = 32;
 const GAP = 10;
 
+const getBarGraphPadding = () => {
+  const totalBarWidth = data.length * (BAR_WIDTH + GAP) - GAP;
+  const screenWidth = Dimensions.get('window').width;
+  if (totalBarWidth < screenWidth) {
+    // Center all bars if they fit on screen
+    const sidePad = (screenWidth - totalBarWidth) / 2;
+    return { paddingLeft: sidePad, paddingRight: sidePad };
+  } else {
+    // Center selected bar when scrolled
+    const sidePad = (screenWidth - BAR_WIDTH) / 2;
+    return { paddingLeft: sidePad, paddingRight: sidePad };
+  }
+};
+
 const SleepScoreBarChart = ({ data = [] }) => {
   const scrollRef = useRef(null);
   const screenWidth = Dimensions.get('window').width;
-
+  const navigation = useNavigation();
   // Find index of selected/current
   const selectedIndex = data.findIndex((item) => item.isCurrent);
 
@@ -47,7 +62,7 @@ const SleepScoreBarChart = ({ data = [] }) => {
           const isSelected = !!item.isCurrent;
 
           return (
-            <View style={styles.barColumn} key={idx}>
+            <TouchableOpacity onPress={() => navigation.navigate("RecoveryDepthScoreScreen")} style={styles.barColumn} key={idx} >
               <View
                 style={[
                   isSelected ? styles.selectedBarWrapper : styles.barWrapper,
@@ -57,11 +72,6 @@ const SleepScoreBarChart = ({ data = [] }) => {
                   { height: isSelected ? MAX_BAR_HEIGHT : barHeight },
                 ]}
               >
-                {/* Glow effect for selected bar (works for Android and iOS) */}
-                {/* {isSelected && (
-                  <View style={styles.glow} pointerEvents="none" />
-                )} */}
-                {/* Score at the top inside the bar */}
                 <View style={{ height: 28, justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
                   <Text style={isSelected ? styles.selectedScoreText : styles.scoreText}>
                     {item.score}
@@ -86,11 +96,11 @@ const SleepScoreBarChart = ({ data = [] }) => {
               >
                 {item.day}
               </Text>
-            </View>
+            </TouchableOpacity>
           );
         })}
-      </ScrollView>
-    </View>
+      </ScrollView >
+    </View >
   );
 };
 
@@ -104,7 +114,7 @@ const styles = StyleSheet.create({
   barGraphContainer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    paddingHorizontal: (Dimensions.get('window').width - BAR_WIDTH) / 2,
+    paddingHorizontal: 0,
     paddingBottom: 0,
   },
   barColumn: {
@@ -137,7 +147,7 @@ const styles = StyleSheet.create({
         shadowColor: '#fff',
         shadowOpacity: 0.65,
         shadowRadius: 10,
-        shadowOffset: { width: 0, height:10 },
+        shadowOffset: { width: 0, height: 10 },
       },
       android: {
         // No shadow for Android; handled by the <View style={styles.glow} />
@@ -175,15 +185,15 @@ const styles = StyleSheet.create({
   },
   scoreText: {
     color: '#FFF',
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 10,
+    fontWeight: '600',
     fontFamily: 'Ubuntu',
     opacity: 0.8,
     textAlign: 'center',
   },
   selectedScoreText: {
     color: '#232323',
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: 'bold',
     fontFamily: 'Ubuntu',
     textAlign: 'center',

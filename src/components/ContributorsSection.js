@@ -61,7 +61,7 @@ const ContributorsSection = ({ contributors = [] }) => (
 const styles = StyleSheet.create({
   section: {
     width: '100%',
-    marginTop: 14,
+    marginTop: 30,
     marginBottom: 12,
     paddingHorizontal: 16,
   },
