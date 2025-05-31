@@ -9,6 +9,19 @@ const ByteSleepScoreCard = ({ navigation, selectedDateIndex, score }) => {
   const date = moment()
     .subtract(selectedDateIndex + 1, "days")
     .format("YYYY-MM-DD");
+
+  const getDescription = value => {
+    if (typeof value !== 'number') {
+      return '';
+    }
+    if (value <= 33) {
+      return 'Your sleep didn\u2019t provide the recovery your body needed.';
+    }
+    if (value <= 67) {
+      return 'Your sleep offered some recovery, but it wasn\u2019t fully restorative.';
+    }
+    return 'Your sleep was calm, effective, and deeply restorative.';
+  };
   return (
     <LinearGradient
       colors={['#302726', '#771C1D', '#771C1D', '#601F1F', '#302726']}
@@ -28,9 +41,7 @@ const ByteSleepScoreCard = ({ navigation, selectedDateIndex, score }) => {
               <Image source={bedIcon} style={styles.icon} />
               <Text style={styles.titleText}>byte Sleep Score</Text>
             </View>
-            <Text style={styles.descText}>
-              Your byte score was <Text style={styles.lowText}>low</Text>, which means your sleep wasn’t as recovery-focused.
-            </Text>
+            <Text style={styles.descText}>{getDescription(score)}</Text>
           </View>
           {/* Add score number here */}
           <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
