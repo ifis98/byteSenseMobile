@@ -133,6 +133,16 @@ const SuggestionCard = ({ text }) => (
   </View>
 );
 
+// Score Header (without label)
+const ContributorScore = ({ score }) => (
+  <View style={styles.scoreContainer}>
+    <View style={styles.scoreRow}>
+      <Text style={styles.scoreText}>{score ?? '--'}</Text>
+      <Text style={styles.outOfText}>/100</Text>
+    </View>
+  </View>
+);
+
 const RecoveryDepthScoreScreen = ({ route }) => {
   const {
     title = 'Recovery Depth Score',
@@ -159,6 +169,7 @@ const RecoveryDepthScoreScreen = ({ route }) => {
         bounces={false}
       >
         <View style={{ marginTop: 10 }} />
+        <ContributorScore score={score} />
         {/* Info cards */}
         <InfoCard
           icon={iconSearch}
@@ -206,12 +217,38 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  scoreContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    marginHorizontal: 18,
+    width: '90%',
+  },
   dateText: {
     color: '#A8A9AA',
     fontSize: 16,
     fontFamily: 'Ubuntu',
     marginBottom: 7,
     letterSpacing: 0.2,
+  },
+  scoreRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  scoreText: {
+    color: '#FFF',
+    fontSize: 44,
+    fontWeight: '500',
+    fontFamily: 'Ubuntu',
+    lineHeight: 44,
+    marginRight: 4,
+  },
+  outOfText: {
+    color: '#A8A9AA',
+    fontSize: 14,
+    fontFamily: 'Ubuntu',
+    fontWeight: '500',
+    marginBottom: 6,
   },
   subsectionTitle: {
     color: '#FFF',
