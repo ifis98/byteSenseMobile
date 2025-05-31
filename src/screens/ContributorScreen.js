@@ -132,16 +132,6 @@ const SuggestionCard = ({ text }) => (
     <Text style={styles.suggestionText}>{text}</Text>
   </View>
 );
-// Score Header
-const ByteSleepScore = ({ score }) => (
-  <View style={styles.scoreContainer}>
-    <Text style={styles.overallText}>OVERALL BYTE SLEEP SCORE</Text>
-    <View style={styles.scoreRow}>
-      <Text style={styles.scoreText}>{score ?? '--'}</Text>
-      <Text style={styles.outOfText}>/100</Text>
-    </View>
-  </View>
-);
 
 const RecoveryDepthScoreScreen = ({ route }) => {
   const {
@@ -169,8 +159,6 @@ const RecoveryDepthScoreScreen = ({ route }) => {
         bounces={false}
       >
         <View style={{ marginTop: 10 }} />
-        <ByteSleepScore score={score} />
-
         {/* Info cards */}
         <InfoCard
           icon={iconSearch}
@@ -218,47 +206,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  scoreContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-    marginHorizontal: 18,
-    width: '90%',
-  },
   dateText: {
     color: '#A8A9AA',
     fontSize: 16,
     fontFamily: 'Ubuntu',
     marginBottom: 7,
     letterSpacing: 0.2,
-  },
-  overallText: {
-    color: '#FFF',
-    fontSize: 12,
-    fontFamily: 'Ubuntu',
-    opacity: 0.6,
-    marginBottom: 8,
-    fontWeight: '500',
-    letterSpacing: 1,
-  },
-  scoreRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-  },
-  scoreText: {
-    color: '#FFF',
-    fontSize: 44,
-    fontWeight: '500',
-    fontFamily: 'Ubuntu',
-    lineHeight: 44,
-    marginRight: 4,
-  },
-  outOfText: {
-    color: '#A8A9AA',
-    fontSize: 14,
-    fontFamily: 'Ubuntu',
-    fontWeight: '500',
-    marginBottom: 6,
   },
   subsectionTitle: {
     color: '#FFF',
