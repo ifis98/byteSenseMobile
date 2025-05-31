@@ -385,7 +385,7 @@ const SplashScreen = () => {
             <View style={styles.statisItemView}>
 
               <View style={{ flex: 1, marginTop: 10 }}>
-                <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20, paddingTop: 20 }}>
+                <View style={{ flexDirection: "row", alignItems: "center", paddingLeft: 20}}>
                   <View style={styles.statisticIconView}>
                     <Text style={styles.statisticIconText}>{byteScoreFeedback.icon}</Text>
                   </View>
@@ -421,7 +421,7 @@ const SplashScreen = () => {
             </View>
           </LinearGradient>
         )}
-        <ByteSleepScoreCard navigation={navigation} selectedDateIndex={selectedDateIndex} />
+        <ByteSleepScoreCard navigation={navigation} selectedDateIndex={selectedDateIndex} score={72} />
 
         {/* <LinearGradient  // Your Action Focus hidden
           colors={['#2D2D2D', '#991616', '#991616', '#991616', '#2D2D2D']}

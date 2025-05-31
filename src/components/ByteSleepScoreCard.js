@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import bedIcon from '../assets/bed.png';        
-import rightArrow from '../assets/CaretRight.png'; 
+import bedIcon from '../assets/bed.png';
+import rightArrow from '../assets/CaretRight.png';
 import moment from 'moment';
-const ByteSleepScoreCard = ({ navigation, selectedDateIndex }) => {
+const ByteSleepScoreCard = ({ navigation, selectedDateIndex, score }) => {
   const date = moment()
     .subtract(selectedDateIndex + 1, "days")
     .format("YYYY-MM-DD");
@@ -32,10 +32,15 @@ const ByteSleepScoreCard = ({ navigation, selectedDateIndex }) => {
               Your byte score was <Text style={styles.lowText}>low</Text>, which means your sleep wasn’t as recovery-focused.
             </Text>
           </View>
-          <Image source={rightArrow} style={styles.arrow} />
+          {/* Add score number here */}
+          <View style={{ flexDirection: "row", alignItems: "flex-start" }}>
+            <Text style={styles.scoreNumber}>{score}</Text>
+            <Image source={rightArrow} style={styles.arrow} />
+          </View>
+
         </View>
       </TouchableOpacity>
-    </LinearGradient >
+    </LinearGradient>
   )
 };
 
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
   },
   innerRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',  // <<--- align top
     height: '100%',
     paddingHorizontal: 18,
     paddingTop: 10,
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 3,
+    marginTop:5
   },
   icon: {
     width: 15,
@@ -101,9 +106,17 @@ const styles = StyleSheet.create({
   arrow: {
     width: 15,
     height: 15,
-    marginTop: 4,
+    marginTop: 5,
     tintColor: '#FFF',
     alignSelf: 'flex-start',
+  },
+  scoreNumber: {
+    color: '#FFF',
+    fontSize: 14,
+    marginTop: 4,
+    fontWeight: 'bold',
+    marginRight: 5,
+    alignSelf: 'flex-start', // or 'center' for center alignment within the row
   },
 });
 
