@@ -51,8 +51,12 @@ const ContributorsSection = ({ contributors = [], onPress }) => (
   <View style={styles.section}>
     <Text style={styles.sectionTitle}>Contributors</Text>
     <View>
-      {contributors.map((c) => (
-        <ContributorCard key={c.key} {...c} onPress={() => onPress && onPress(c.title)} />
+      {contributors.map(c => (
+        <ContributorCard
+          key={c.key}
+          {...c}
+          onPress={() => onPress && onPress(c)}
+        />
       ))}
     </View>
   </View>

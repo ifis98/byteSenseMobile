@@ -4,8 +4,100 @@ import LinearGradient from 'react-native-linear-gradient';
 import Header from './header';
 import iconSearch from '../assets/search.png';
 import iconInfo from "../assets/warning-circle.png"
-import arrow from "../assets/arrow.png"
+import arrow from "../assets/arrow.png";
 import RecoveryLineChart from '../components/RecoveryLineChart';
+
+const SCORE_DETAILS = {
+  'Recovery Depth Score': {
+    description:
+      'Measures how much time your body spent in deep, high-quality recovery during sleep.',
+    tiers: [
+      {
+        range: [0, 33],
+        main: 'You spent very little or no time in a deep recovery state.',
+        extra:
+          'Your body may have been under too much stress, had fragmented sleep, or lacked the conditions needed to drop into parasympathetic mode.',
+      },
+      {
+        range: [34, 67],
+        main:
+          'You had some recovery moments, but they were limited in duration or intensity.',
+        extra:
+          'This means your body partially entered recovery zones, but couldn\u2019t stay there long enough to fully benefit.',
+      },
+      {
+        range: [68, 100],
+        main: 'You spent a solid amount of time in deep recovery.',
+        extra:
+          'Your body was able to settle into restful states that promote healing, repair, and full-system recovery.',
+      },
+    ],
+    improvements: [
+      'Extend total sleep duration to give your body more opportunity to reach deep recovery states.',
+      'Avoid alcohol, caffeine, and late meals which can prevent parasympathetic activation.',
+      'Create a stable sleep environment (cool, dark, quiet) to reduce overnight arousals and movement.',
+    ],
+  },
+  'Stress Relief Score': {
+    description:
+      'Shows how much your body relaxed and released stress over the course of the night, based on changes in HRV.',
+    tiers: [
+      {
+        range: [0, 33],
+        main: 'Your stress levels stayed the same or increased during sleep.',
+        extra:
+          'Your body may have stayed tense or experienced disruptions, preventing it from shifting into recovery mode.',
+      },
+      {
+        range: [34, 67],
+        main: 'There was some progress, but your body didn\u2019t fully unwind.',
+        extra:
+          'This suggests partial recovery \u2014 you started to let go of stress but didn\u2019t sustain it.',
+      },
+      {
+        range: [68, 100],
+        main: 'You released stress steadily throughout the night.',
+        extra:
+          'Your HRV rose over time, a strong indicator that your nervous system transitioned into deep rest.',
+      },
+    ],
+    improvements: [
+      'Build a calming pre-sleep routine (e.g. journaling, stretching, or breathwork).',
+      'Reduce pre-bed screen time and mental stimulation to help your nervous system wind down.',
+      'Address potential sources of nighttime disruption (e.g. room temperature, noise, or inconsistent sleep timing).',
+    ],
+  },
+  'Relaxation Score': {
+    description:
+      'Reflects how calm or strained your body remained throughout the night.',
+    tiers: [
+      {
+        range: [0, 33],
+        main: 'Your body stayed in a high-alert or stressed state most of the night.',
+        extra:
+          'This likely interfered with your ability to recover and recharge effectively.',
+      },
+      {
+        range: [34, 67],
+        main:
+          'Your body was somewhat calm, but with periods of tension or elevated heart rate.',
+        extra:
+          'Your system may have oscillated between calm and strain, limiting recovery consistency.',
+      },
+      {
+        range: [68, 100],
+        main: 'You stayed relaxed and low-stress all night.',
+        extra:
+          'Your nervous system remained in a parasympathetic state, ideal for high-quality recovery.',
+      },
+    ],
+    improvements: [
+      'Prioritize stress management during the day (e.g. movement, breaks, breathwork) to avoid carrying stress into sleep.',
+      'Be consistent with your sleep schedule \u2014 irregular timing increases overnight strain.',
+      'Use blackout curtains or a white noise machine to reduce unconscious overnight stressors.',
+    ],
+  },
+};
 
 // Info Card
 const InfoCard = ({ icon, title, desc }) => (
@@ -41,18 +133,27 @@ const SuggestionCard = ({ text }) => (
   </View>
 );
 // Score Header
-const ByteSleepScore = ({ score = 90 }) => (
+const ByteSleepScore = ({ score }) => (
   <View style={styles.scoreContainer}>
     <Text style={styles.overallText}>OVERALL BYTE SLEEP SCORE</Text>
     <View style={styles.scoreRow}>
-      <Text style={styles.scoreText}>{score}</Text>
+      <Text style={styles.scoreText}>{score ?? '--'}</Text>
       <Text style={styles.outOfText}>/100</Text>
     </View>
   </View>
 );
 
 const RecoveryDepthScoreScreen = ({ route }) => {
-  const { title = "Recovery Depth Score" } = route?.params || {};
+  const {
+    title = 'Recovery Depth Score',
+    score = 0,
+    weekData = [],
+    highlightIdx = 0,
+  } = route?.params || {};
+
+  const details = SCORE_DETAILS[title] || SCORE_DETAILS['Recovery Depth Score'];
+
+  const tier = details.tiers.find(t => score <= t.range[1]) || details.tiers[details.tiers.length - 1];
   return (
     <LinearGradient
       colors={['#2C1012', '#0f0f0f', '#0f0f0f']}
@@ -68,35 +169,44 @@ const RecoveryDepthScoreScreen = ({ route }) => {
         bounces={false}
       >
         <View style={{ marginTop: 10 }} />
-        <ByteSleepScore score={90} />
+        <ByteSleepScore score={score} />
 
         {/* Info cards */}
         <InfoCard
           icon={iconSearch}
           title="What This Score Measures"
-          desc="You mostly had a low Byte Score this week. Your highest Byte Score was 94 on Friday."
+          desc={details.description}
         />
         <InfoCard
           icon={iconInfo}
           title="What Your Score Means"
-          desc="You mostly had a low Byte Score this week. Your highest Byte Score was 94 on Friday."
+          desc={
+            <Text>
+              <Text style={{ fontWeight: 'bold', color: '#F1F1F1' }}>{tier.main}</Text>
+              {'\n'}
+              {tier.extra}
+            </Text>
+          }
         />
 
         {/* Chart */}
-        <Text style={styles.subsectionTitle}>Recovery Depth Score</Text>
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <RecoveryLineChart data={[40, 30, 55, 50, 35, 75, 55]} highlightIdx={5} />
+        <Text style={styles.subsectionTitle}>{title}</Text>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <RecoveryLineChart data={weekData} highlightIdx={highlightIdx} />
         </View>
 
+        {/**
         <Text style={styles.chartDesc}>
           You mostly had a <Text style={{ fontWeight: 'bold', color: '#A8A9AA' }}>low</Text> Recovery Depth Score this week.{"\n"}
           Your highest Recovery Depth Score was <Text style={{ fontWeight: 'bold', color: '#FFF' }}>94 on Friday.</Text>
         </Text>
+        */}
 
         {/* Suggestions */}
         <Text style={styles.subsectionTitle}>Ways to Improve</Text>
-        <SuggestionCard text="Get 1.5 more hours of exercise per week" />
-        <SuggestionCard text="Consider Botox for frequent heavy episodes — consult your dentist." />
+        {details.improvements.map((t, idx) => (
+          <SuggestionCard key={idx} text={t} />
+        ))}
       </ScrollView>
     </LinearGradient>
   );

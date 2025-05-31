@@ -10,6 +10,12 @@ import SleepScoreBars from '../components/SleepScoreBars';
 import ContributorsSection from '../components/ContributorsSection';
 import SleepHypnogram from '../components/SleepHypnogram';
 
+const SCORE_KEYS = {
+  'Recovery Depth Score': 'recoveryDepthScore',
+  'Stress Relief Score': 'recoveryTrendScore',
+  'Relaxation Score': 'stressLoadScore',
+};
+
 const ByteSleepScore = ({ score }) => (
   <View style={styles.scoreContainer}>
     <Text style={styles.overallText}>OVERALL BYTE SLEEP SCORE</Text>
@@ -55,6 +61,20 @@ const SleepInsightsPage = ({ route, navigation }) => {
 
   const selectedData = days[selectedIndex];
 
+  const getWeekData = field => {
+    if (!selectedData) return { data: [], highlightIdx: 0 };
+    const selectedMoment = moment(selectedData.Date);
+    const startOfWeek = selectedMoment.clone().startOf('week');
+    const data = [];
+    for (let i = 0; i < 7; i++) {
+      const dayMoment = startOfWeek.clone().add(i, 'days');
+      const dayData = days.find(d => moment(d.Date).isSame(dayMoment, 'day'));
+      data.push(Math.round(toNumber(dayData?.[field]) || 0));
+    }
+    const highlightIdx = selectedMoment.diff(startOfWeek, 'days');
+    return { data, highlightIdx };
+  };
+
   const barData = days.map(d => ({
     day: moment(d.Date).format('dd').charAt(0),
     score: Math.round(toNumber(d.byteScore) || 0),
@@ -75,6 +95,7 @@ const SleepInsightsPage = ({ route, navigation }) => {
       return {
         key: item.title,
         title: item.title,
+        score: item.score,
         status: label,
         statusColor: color,
         value: (item.score ?? 0) / 100,
@@ -135,7 +156,16 @@ const SleepInsightsPage = ({ route, navigation }) => {
         <SleepScoreBars data={barData} selectedIndex={selectedIndex} onSelect={setSelectedIndex} />
         <ContributorsSection
           contributors={contributors}
-          onPress={title => navigation.navigate('ContributorScreen', { title })}
+          onPress={item => {
+            const field = SCORE_KEYS[item.title];
+            const { data, highlightIdx } = getWeekData(field);
+            navigation.navigate('ContributorScreen', {
+              title: item.title,
+              score: item.score,
+              weekData: data,
+              highlightIdx,
+            });
+          }}
         />
         <SleepHypnogram timeInBed={timeInBed} />
       </ScrollView>
