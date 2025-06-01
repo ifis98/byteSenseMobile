@@ -95,6 +95,7 @@ const SplashScreen = () => {
   const [hr, setHr] = useState('--');
   const [hrv, setHrv] = useState('--');
   const [score, setScore] = useState('--');
+  const [byteScore, setByteScore] = useState('--');
   const [activities, setActivities] = useState([]);
   const [prevAvgHR, setPrevAvgHR] = useState('--');
   const [prevAvgHRV, setPrevAvgHRV] = useState('--');
@@ -165,6 +166,7 @@ const SplashScreen = () => {
       const hrVal = toNumber(selectedDateData.averageHR);
       const hrvVal = toNumber(selectedDateData.averageHRV);
       const scoreVal = toNumber(selectedDateData.recoveryScore);
+      const byteScoreVal = toNumber(selectedDateData.byteScore);
       const prevHrVal = toNumber(selectedDateData.prevWeekAvgHR);
       const prevHrvVal = toNumber(selectedDateData.prevWeekAvgHRV);
       const bruxDurVal = toNumber(selectedDateData.totalDuration);
@@ -180,6 +182,7 @@ const SplashScreen = () => {
       setHr(hrVal != null ? Math.round(hrVal) : '--');
       setHrv(hrvVal != null ? Math.round(hrvVal) : '--');
       setScore(scoreVal != null ? Math.round(scoreVal) : '--');
+      setByteScore(byteScoreVal != null ? Math.round(byteScoreVal) : '--');
       setActivities(selectedDateData.activities || []);
       setPrevAvgHR(prevHrVal != null ? Math.round(prevHrVal) : '--');
       setPrevAvgHRV(prevHrvVal != null ? Math.round(prevHrvVal) : '--');
@@ -194,6 +197,7 @@ const SplashScreen = () => {
       setHr('--');
       setHrv('--');
       setScore('--');
+      setByteScore('--');
       setActivities([]);
       setPrevAvgHR('--');
       setPrevAvgHRV('--');
@@ -421,7 +425,11 @@ const SplashScreen = () => {
             </View>
           </LinearGradient>
         )}
-        <ByteSleepScoreCard navigation={navigation} selectedDateIndex={selectedDateIndex} score={72} />
+        <ByteSleepScoreCard
+          navigation={navigation}
+          selectedDateIndex={selectedDateIndex}
+          score={byteScore}
+        />
 
         {/* <LinearGradient  // Your Action Focus hidden
           colors={['#2D2D2D', '#991616', '#991616', '#991616', '#2D2D2D']}
