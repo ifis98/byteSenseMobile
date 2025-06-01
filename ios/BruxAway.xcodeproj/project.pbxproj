@@ -14,9 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		25FBE8028CDA45A580D1BBBC /* Ubuntu-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C76F0E729E6406CB90108AF /* Ubuntu-BoldItalic.ttf */; };
 		61C5E3A52CDF7D416E2DF4DD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13712AF39321E1BBFF79B5DB /* PrivacyInfo.xcprivacy */; };
-		65F5FE652CE48FFC00C47EDE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65F5FE642CE48FFC00C47EDE /* Images.xcassets */; };
 		7FDF74B53F45BFC297F789C6 /* Pods_BruxAway.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21FA16A2062CB37A30B7C85E /* Pods_BruxAway.framework */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8650102204C14BD99248DA56 /* Ubuntu-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441B77A63F30432FBCD45DC6 /* Ubuntu-Light.ttf */; };
 		86906CB74C0349FC9E0E2910 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DAEECE5745ED482CA7DEC069 /* Ubuntu-Medium.ttf */; };
 		8D8C5D425026475E8BAF7614 /* Ubuntu-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF1E6721A3744F37AD0A9F6B /* Ubuntu-Italic.ttf */; };
@@ -27,8 +25,10 @@
 		A3D6041C2D641A9900586456 /* ppgv3.0.zip in Resources */ = {isa = PBXBuildFile; fileRef = A3D6041B2D641A9900586456 /* ppgv3.0.zip */; };
 		B5A470B5CACB4A63AF660E46 /* UFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 54D2EECBC7BF4DE19AB36719 /* UFL.txt */; };
 		BC5E9C21FDE740BB88A23346 /* Ubuntu-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F98963356384EA9B113F277 /* Ubuntu-MediumItalic.ttf */; };
+		C56BEF4CDBC64970A0AEAD91 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1E277DB501B426082ADAA84 /* Colors.xcassets */; };
 		CA17C44B06EAD077C30B11A3 /* Pods_BruxAway_BruxAwayTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F6CEC9EC684AE5333EF972 /* Pods_BruxAway_BruxAwayTests.framework */; };
 		D99B7BC80659452EA3C2AD0E /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 716593EEB41F4C429E523C7B /* Ubuntu-Regular.ttf */; };
+		E13CF5D394E44A97B660836F /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B7E9A6403C8465997D109B3 /* BootSplash.storyboard */; };
 		E55371C21E5849EC8A7D5748 /* Ubuntu-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 277970B0AFA940C5B2D0B7AE /* Ubuntu-LightItalic.ttf */; };
 /* End PBXBuildFile section */
 
@@ -61,18 +61,18 @@
 		441B77A63F30432FBCD45DC6 /* Ubuntu-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Light.ttf"; path = "../src/assets/fonts/Ubuntu-Light.ttf"; sourceTree = "<group>"; };
 		54D2EECBC7BF4DE19AB36719 /* UFL.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = UFL.txt; path = ../src/assets/fonts/UFL.txt; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-BruxAway.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BruxAway.release.xcconfig"; path = "Target Support Files/Pods-BruxAway/Pods-BruxAway.release.xcconfig"; sourceTree = "<group>"; };
+		5B7E9A6403C8465997D109B3 /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = BruxAway/BootSplash.storyboard; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-BruxAway-BruxAwayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BruxAway-BruxAwayTests.debug.xcconfig"; path = "Target Support Files/Pods-BruxAway-BruxAwayTests/Pods-BruxAway-BruxAwayTests.debug.xcconfig"; sourceTree = "<group>"; };
 		65712E8C2D1674B20093B3D8 /* BruxAway.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = BruxAway.entitlements; path = BruxAway/BruxAway.entitlements; sourceTree = "<group>"; };
 		65F5FE632CE48FCE00C47EDE /* File.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = File.txt; sourceTree = "<group>"; };
-		65F5FE642CE48FFC00C47EDE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		716593EEB41F4C429E523C7B /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Regular.ttf"; path = "../src/assets/fonts/Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
 		816CB05308554A9DA6AAEF58 /* Ubuntu-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Bold.ttf"; path = "../src/assets/fonts/Ubuntu-Bold.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BruxAway/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-BruxAway-BruxAwayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BruxAway-BruxAwayTests.release.xcconfig"; path = "Target Support Files/Pods-BruxAway-BruxAwayTests/Pods-BruxAway-BruxAwayTests.release.xcconfig"; sourceTree = "<group>"; };
 		9C76F0E729E6406CB90108AF /* Ubuntu-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-BoldItalic.ttf"; path = "../src/assets/fonts/Ubuntu-BoldItalic.ttf"; sourceTree = "<group>"; };
 		A34458822DDFD1850049152F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3D604192D641A6900586456 /* v7.5.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = v7.5.zip; sourceTree = "<group>"; };
 		A3D6041B2D641A9900586456 /* ppgv3.0.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = ppgv3.0.zip; sourceTree = "<group>"; };
+		B1E277DB501B426082ADAA84 /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = BruxAway/Colors.xcassets; sourceTree = "<group>"; };
 		D8F6CEC9EC684AE5333EF972 /* Pods_BruxAway_BruxAwayTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BruxAway_BruxAwayTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAEECE5745ED482CA7DEC069 /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Medium.ttf"; path = "../src/assets/fonts/Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
 		DF1E6721A3744F37AD0A9F6B /* Ubuntu-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Italic.ttf"; path = "../src/assets/fonts/Ubuntu-Italic.ttf"; sourceTree = "<group>"; };
@@ -123,14 +123,14 @@
 			children = (
 				65712E8C2D1674B20093B3D8 /* BruxAway.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				65F5FE642CE48FFC00C47EDE /* Images.xcassets */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 				13712AF39321E1BBFF79B5DB /* PrivacyInfo.xcprivacy */,
+				5B7E9A6403C8465997D109B3 /* BootSplash.storyboard */,
+				B1E277DB501B426082ADAA84 /* Colors.xcassets */,
 			);
 			name = BruxAway;
 			sourceTree = "<group>";
@@ -302,8 +302,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				65F5FE652CE48FFC00C47EDE /* Images.xcassets in Resources */,
 				A3D6041C2D641A9900586456 /* ppgv3.0.zip in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				61C5E3A52CDF7D416E2DF4DD /* PrivacyInfo.xcprivacy in Resources */,
@@ -318,6 +316,8 @@
 				BC5E9C21FDE740BB88A23346 /* Ubuntu-MediumItalic.ttf in Resources */,
 				D99B7BC80659452EA3C2AD0E /* Ubuntu-Regular.ttf in Resources */,
 				B5A470B5CACB4A63AF660E46 /* UFL.txt in Resources */,
+				E13CF5D394E44A97B660836F /* BootSplash.storyboard in Resources */,
+				C56BEF4CDBC64970A0AEAD91 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,10 +660,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -747,10 +744,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = false;

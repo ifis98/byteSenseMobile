@@ -39,6 +39,8 @@
 #import "react/renderer/components/safeareacontext/States.h"
 #import "rnasyncstorage/rnasyncstorage.h"
 #import "rnasyncstorageJSI.h"
+#import "RNBootSplashSpec/RNBootSplashSpec.h"
+#import "RNBootSplashSpecJSI.h"
 #import "rngesturehandler_codegen/rngesturehandler_codegen.h"
 #import "rngesturehandler_codegenJSI.h"
 #import "RNPermissionsSpec/RNPermissionsSpec.h"

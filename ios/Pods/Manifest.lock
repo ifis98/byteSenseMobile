@@ -1490,6 +1490,8 @@ PODS:
     - React-utils (= 0.75.3)
   - RNAppleHealthKit (1.7.0):
     - React
+  - RNBootSplash (6.3.8):
+    - React-Core
   - RNCAsyncStorage (2.1.2):
     - React-Core
   - RNCMaskedView (0.3.2):
@@ -1765,6 +1767,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNAppleHealthKit (from `../node_modules/react-native-health`)
+  - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - RNFS (from `../node_modules/react-native-fs`)
@@ -1916,6 +1919,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNAppleHealthKit:
     :path: "../node_modules/react-native-health"
+  RNBootSplash:
+    :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
@@ -2006,6 +2011,7 @@ SPEC CHECKSUMS:
   ReactCodegen: 858a5ab83a907b369f991a5ca4d6d0d2e64640b1
   ReactCommon: 8ec8f3bf7ae4c4644c61533c8240db61104587dd
   RNAppleHealthKit: 60a6beefdd89a75811e9a8873a5e24f351dee681
+  RNBootSplash: 95181f0d573171efb0dec33f96aebdb64203f8e3
   RNCAsyncStorage: addfc2cb6511dbe199c56c6b26ede383b6c38919
   RNCMaskedView: a8374cd330ac51e72b44d81934ff1baf238b6ed0
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
