@@ -123,18 +123,9 @@ const DeviceDataScreen = () => {
   ]);
   const [xAxisData, setXAxisData] = useState(['0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0']);
   const [optionsVisible, setOptionsVisible] = useState(false);
-  const [settingsBtnLayout, setSettingsBtnLayout] = useState(null);
-  const settingsBtnRef = useRef(null);
 
   const toggleOptionsMenu = () => {
-    if (settingsBtnRef.current && settingsBtnRef.current.measureInWindow) {
-      settingsBtnRef.current.measureInWindow((x, y, width, height) => {
-        setSettingsBtnLayout({y, height});
-        setOptionsVisible(prev => !prev);
-      });
-    } else {
-      setOptionsVisible(prev => !prev);
-    }
+    setOptionsVisible(prev => !prev);
   };
   // const [graphData, setGraphData] = useState([
   //   { data: [318, 150, 80, 120, 90, 60, 0], color: 'rgba(0, 190, 42, 1)' },
@@ -866,12 +857,8 @@ const disconnectDevice = async () => {
     <SafeAreaView style={styles.container}>
       {optionsVisible && (
         <View
-          style={[
-            styles.dropdownMenu,
-            settingsBtnLayout && {
-              top: settingsBtnLayout.y + settingsBtnLayout.height + 8,
-            },
-          ]}>
+          style={[styles.dropdownMenu, {top: 60}]}
+        >
           <TouchableOpacity
             style={styles.dropdownItem}
             onPress={handleDFUUpdate}>
@@ -898,19 +885,12 @@ const disconnectDevice = async () => {
           start={{x: 0, y: 0}}
           end={{x: 0.8, y: 1}}
           style={styles.LinearView}>
-          <Header title="byteGuard" />
+          <Header title="byteGuard" rightText="Settings" onRightPress={toggleOptionsMenu} />
           <LinearGradient
             colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}
             style={styles.deviceInfoContainer}>
-            <TouchableOpacity
-              ref={settingsBtnRef}
-              style={styles.optionsButton}
-              activeOpacity={0.7}
-              onPress={toggleOptionsMenu}>
-              <Text style={styles.settingsText}>Settings</Text>
-            </TouchableOpacity>
             <View style={styles.deviceInfoContainerImage}>
               <View style={styles.imageBackground}>
                 <Image source={teethLogo} style={styles.teethlogo} />
@@ -1225,23 +1205,9 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     // lineHeight: 12,
   },
-  settingsText: {
-    color: '#27FFE9',
-    fontFamily: 'Ubuntu',
-    fontSize: 16,
-  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 90,
-  },
-  optionsButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 101,
-    elevation: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
   },
   dropdownMenu: {
     position: 'absolute',

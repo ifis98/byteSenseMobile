@@ -6,7 +6,12 @@ import backArrow from '../assets/backArrow.png'; // Back arrow image
 
 const { width } = Dimensions.get('window'); // Get screen width
 
-const Header = ({ title = "Sleep Report", showBackArrow = true }) => {
+const Header = ({
+  title = 'Sleep Report',
+  showBackArrow = true,
+  rightText,
+  onRightPress,
+}) => {
   const navigation = useNavigation(); // For handling navigation
 
   return (
@@ -23,10 +28,16 @@ const Header = ({ title = "Sleep Report", showBackArrow = true }) => {
       {/* Title, centered */}
       <Text style={styles.title}>{title}</Text>
 
-      {/* Profile Image */}
-      <View style={styles.profileContainer}>
-        <Image source={profileLogo} style={styles.profileImage} />
-      </View>
+      {/* Right side */}
+      {rightText ? (
+        <TouchableOpacity onPress={onRightPress} style={styles.profileContainer}>
+          <Text style={styles.rightText}>{rightText}</Text>
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.profileContainer}>
+          <Image source={profileLogo} style={styles.profileImage} />
+        </View>
+      )}
     </View>
   );
 };
@@ -69,6 +80,11 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 20, // Circular profile image
+  },
+  rightText: {
+    color: '#27FFE9',
+    fontFamily: 'Ubuntu',
+    fontSize: 16,
   },
 });
 
