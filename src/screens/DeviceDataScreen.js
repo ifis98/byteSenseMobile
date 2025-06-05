@@ -123,6 +123,7 @@ const DeviceDataScreen = () => {
   ]);
   const [xAxisData, setXAxisData] = useState(['0', '0.5', '1.0', '1.5', '2.0', '2.5', '3.0']);
   const [optionsVisible, setOptionsVisible] = useState(false);
+  const [settingsBtnLayout, setSettingsBtnLayout] = useState(null);
 
   const toggleOptionsMenu = () => {
     setOptionsVisible(prev => !prev);
@@ -240,11 +241,9 @@ const DeviceDataScreen = () => {
       (error, event) => {
         if (error) {
           console.error('Error sending email:', error);
-          Alert.alert('Error', 'Failed to send email.');
         } else {
           console.log('Email sent successfully:', event);
-          Alert.alert('Success', 'Email sent with JSON file!');
-          syncData.current = []
+          syncData.current = [];
         }
       }
     );
@@ -260,20 +259,17 @@ const DeviceDataScreen = () => {
     }
   };
 
-  const emitBiometricData = async payload => {
-    try {
-      await postBiometricData(payload);
-      console.log('Sent biometricData for user:', payload.user);
-    } catch (err) {
-      console.log('Error sending biometric data:', err);
-    }
-  };
-
   const sendSyncedData = async data => {
     await handleSendEmail(data);
 
     if (userIdRef.current) {
-      emitBiometricData({user: userIdRef.current, data});
+      try {
+        await postBiometricData({user: userIdRef.current, data});
+        Alert.alert('Sync Successful');
+        syncData.current = [];
+      } catch (err) {
+        Alert.alert('Sync Failed', err.message || 'Unknown error');
+      }
     } else {
       console.warn('No userId found, cannot send biometricData');
     }
@@ -857,8 +853,12 @@ const disconnectDevice = async () => {
     <SafeAreaView style={styles.container}>
       {optionsVisible && (
         <View
-          style={[styles.dropdownMenu, {top: 60}]}
-        >
+          style={[
+            styles.dropdownMenu,
+            settingsBtnLayout && {
+              top: settingsBtnLayout.y + settingsBtnLayout.height + 8,
+            },
+          ]}>
           <TouchableOpacity
             style={styles.dropdownItem}
             onPress={handleDFUUpdate}>
@@ -885,12 +885,19 @@ const disconnectDevice = async () => {
           start={{x: 0, y: 0}}
           end={{x: 0.8, y: 1}}
           style={styles.LinearView}>
-          <Header title="byteGuard" rightText="Settings" onRightPress={toggleOptionsMenu} />
+          <Header title="byteGuard" />
           <LinearGradient
             colors={['rgba(255, 255, 255, 0.04)', 'rgba(255, 255, 255, 0.02)']}
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}
             style={styles.deviceInfoContainer}>
+            <TouchableOpacity
+              style={styles.optionsButton}
+              activeOpacity={0.7}
+              onLayout={e => setSettingsBtnLayout(e.nativeEvent.layout)}
+              onPress={() => setOptionsVisible(!optionsVisible)}>
+              <Text style={styles.settingsText}>Settings</Text>
+            </TouchableOpacity>
             <View style={styles.deviceInfoContainerImage}>
               <View style={styles.imageBackground}>
                 <Image source={teethLogo} style={styles.teethlogo} />
@@ -1208,6 +1215,20 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 90,
+  },
+  optionsButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 101,
+    elevation: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  settingsText: {
+    color: '#27FFE9',
+    fontFamily: 'Ubuntu',
+    fontSize: 16,
   },
   dropdownMenu: {
     position: 'absolute',
