@@ -484,21 +484,43 @@ const disconnectDevice = async () => {
         
       }, 5000);
     }
-    else if (hexValue.length >= 100) {
-      hexValue = hexValue.slice(4);
-      let samples = hexValue.match(/.{1,8}/g); // Split into chunks
-      processSamples(samples); // Process these samples (implement processSamples)
-      console.log('Long Hex value:' + hexValue + ' '+ hexValue.length);
-      let hexHR = hexValue.slice(-4)
-      //console.log(hexHR)
-      let nibbles = hexHR.match(/.{1,2}/g);
-      let bigEndian =  nibbles[1] + nibbles[0];
-      let HRvalue = (parseInt(bigEndian, 16))/256
-      HRvalue = Math.round(HRvalue)
-      console.log("HR stream: "+HRvalue)
-      setHR(HRvalue)
-      setTestHR(HRvalue)
-      //console.log('Hex value:', hexValue);
+    else if (hexValue.length >= 312) {
+      // Remove the packet number (first two bytes)
+      const payload = hexValue.slice(4);
+
+      // Bytes 2-51 -> filtered output (25 int16 values)
+      const filteredHex = payload.slice(0, 100);
+      const samples = [];
+      for (let i = 0; i < filteredHex.length; i += 4) {
+        const little = filteredHex.slice(i, i + 4).match(/.{1,2}/g);
+        if (little) {
+          let val = parseInt(little[1] + little[0], 16);
+          if (val & 0x8000) {
+            val = val - 0x10000; // convert to signed
+          }
+          samples.push(val);
+        }
+      }
+
+      processSamples(samples);
+
+      // Bytes 152-153 -> heart rate (uint16)
+      const hrBytes = payload.slice(300, 304).match(/.{1,2}/g);
+      if (hrBytes) {
+        const hr = parseInt(hrBytes[1] + hrBytes[0], 16);
+        setHR(hr);
+        setTestHR(hr);
+      }
+
+      // Bytes 154-155 -> HRV (uint16)
+      const hrvBytes = payload.slice(304, 308).match(/.{1,2}/g);
+      if (hrvBytes) {
+        const hrv = parseInt(hrvBytes[1] + hrvBytes[0], 16);
+        setHRV(hrv);
+        setTestHRV(hrv);
+      }
+
+      console.log('Stream Hex value:' + hexValue + ' ' + hexValue.length);
     } 
     else if (stringValue.includes(',')) {
       // Handle data with commas (e.g., CSV-like data)
@@ -624,63 +646,30 @@ const disconnectDevice = async () => {
   };
 
   const processSamples = samples => {
-    let sampleLength = 8;
-    let data = [];
-    let debugObj = {
-      values: '',
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-      milliseconds: 0,
-    };
-    let filteredArray = [];
-    //console.log("Unfiltered: "+samples)
-    //console.log('packet: ' + samples);
-    let samplesCopy = samples.slice();
-    //this.sampleQueue = [];
-    //console.log("Filtered: "+samplesCopy)
-    // console.log("in function sample length: "+samplesCopy.length)
+    const samplesCopy = samples.slice();
 
     for (let i = 0; i < samplesCopy.length; i++) {
-      //console.log(sample)
-      let sample = samplesCopy[i];
+      const sample = samplesCopy[i];
 
-      if (sample != '00000000' && sample.length == sampleLength) {
-        let nibbles = sample.match(/.{1,2}/g);
-        let bigEndian = nibbles[3] + nibbles[2] + nibbles[1] + nibbles[0];
-        let PPGValue = HRNextY(parseInt(bigEndian, 16));
-        let respValue = RespNextY(parseInt(bigEndian, 16));
-        //console.log("Translation: "+sample+" "+PPGValue)
-        let invPPGValue = PPGValue * -1;
-        let invRespValue = respValue * -1;
-        //console.log("PPG: "+PPGValue)
-        //console.log("resp: "+respValue)
+      if (typeof sample === 'number') {
+        const PPGValue = HRNextY(sample);
+        const respValue = RespNextY(sample);
+
+        const invPPGValue = PPGValue * -1;
+        const invRespValue = respValue * -1;
+
         pushValue(ppgPeakBuffer, 100, invPPGValue);
         pushValue(respPeakBuffer, 300, invRespValue);
 
         pushValue(ppgGraphBuffer, 100, PPGValue);
         pushValue(respGraphBuffer, 100, respValue);
 
-        //console.log("Buffer Length:" + ppgGraphBuffer.length)
-
-        let graphPayload = [
+        const graphPayload = [
           {data: ppgGraphBuffer, color: 'rgba(0, 190, 42, 1)'},
-          //{ data: respGraphBuffer, color: 'rgba(255, 139, 2, 1)' },
         ];
         if (doUpdate()) {
           setGraphData(graphPayload);
         }
-        //this.props.thresholdCheck(PPGValue, respValue, 0, 0);
-        //console.log('Sample number: ' + i + ' Sample: ' + sample);
-        /*
-          setTimeout( () => {
-            this.props.thresholdCheck(PPGValue, 0, 0, 0);
-            console.log("Timeout number: "+i+" Sample: "+sample)
-            //this.sampleQueue.shift()
-            //console.log("Queue: "+this.sampleQueue)
-            //console.log(this.sampleQueue.length)
-          }, i*15)
-          */
       }
     }
     //console.log(ppgPeakBuffer)
