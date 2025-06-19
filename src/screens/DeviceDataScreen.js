@@ -360,14 +360,16 @@ const disconnectDevice = async () => {
 
   // Function to decipher the received notification data
   const parseReading = value => {
-    // value is expected to be 4 hex digits representing HR and HRV
+    // The device sends 4 hex digits where the first byte is HRV and the second
+    // byte is HR. Swap the values here so that the returned object follows the
+    // {hr, hrv} structure used throughout the app.
     let bytes = value.match(/.{1,2}/g);
     if (!bytes || bytes.length < 2) {
       return {hr: 0, hrv: 0};
     }
 
-    let hr = parseInt(bytes[0], 16);
-    let hrv = parseInt(bytes[1], 16);
+    let hrv = parseInt(bytes[0], 16);
+    let hr = parseInt(bytes[1], 16);
 
     return {hr, hrv};
   };
@@ -407,8 +409,9 @@ const disconnectDevice = async () => {
           HR: hr,
           HRV: hrv,
           ts: time,
-          hrhex: readingHex.slice(0, 2),
-          hrvhex: readingHex.slice(2, 4),
+          // Hex representations aligned with the swapped parsing above
+          hrhex: readingHex.slice(2, 4),
+          hrvhex: readingHex.slice(0, 2),
           timehex: timeHex,
         };
 
